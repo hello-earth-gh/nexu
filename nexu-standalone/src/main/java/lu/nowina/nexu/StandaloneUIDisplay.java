@@ -38,6 +38,7 @@ import lu.nowina.nexu.view.core.NonBlockingUIOperation;
 import lu.nowina.nexu.view.core.UIDisplay;
 import lu.nowina.nexu.view.core.UIOperation;
 
+// Unisystems change: added cachedPassword + logic
 /**
  * Implementation of {@link UIDisplay} used for standalone mode.
  *
@@ -51,6 +52,7 @@ public class StandaloneUIDisplay implements UIDisplay {
 	private Stage nonBlockingStage;
 	private UIOperation<?> currentBlockingOperation;
 	private OperationFactory operationFactory;
+        private char[] cachedPassword = null;
 	
 	public StandaloneUIDisplay() {
 		this.blockingStage = createStage(true, null);
@@ -130,18 +132,31 @@ public class StandaloneUIDisplay implements UIDisplay {
 	private final class FlowPasswordCallback implements NexuPasswordInputCallback {
 		
 		private String passwordPrompt;
-		
+		private char[] cachedPassword = null;
+                private StandaloneUIDisplay parent = null;
+                
 		public FlowPasswordCallback() {
 			this.passwordPrompt = null;
 		}
+                
+                public FlowPasswordCallback(StandaloneUIDisplay parent, char[] cachedPassword) {
+                    this.parent = parent;
+                    this.cachedPassword = cachedPassword;
+                }
 		
 		@Override
 		public char[] getPassword() {
+                        if (cachedPassword != null) {
+                            LOGGER.info("Returning cached password");
+                            return cachedPassword;
+                        }
+                    
 			LOGGER.info("Request password");
 			@SuppressWarnings("unchecked")
 			final OperationResult<char[]> passwordResult = StandaloneUIDisplay.this.operationFactory.getOperation(
 					UIOperation.class, "/fxml/password-input.fxml", passwordPrompt, NexuLauncher.getConfig().getApplicationName()).perform();
 			if(passwordResult.getStatus().equals(BasicOperationStatus.SUCCESS)) {
+                                parent.setCachedPassword(passwordResult.getResult());
 				return passwordResult.getResult();
 			} else if(passwordResult.getStatus().equals(BasicOperationStatus.USER_CANCEL)) {
 				throw new CancelledOperationException();
@@ -167,7 +182,7 @@ public class StandaloneUIDisplay implements UIDisplay {
 
 	@Override
 	public PasswordInputCallback getPasswordInputCallback() {
-		return new FlowPasswordCallback();
+		return new FlowPasswordCallback(this, this.cachedPassword);
 	}
 	
 	private final class FlowMessageDisplayCallback implements MessageDisplayCallback {
@@ -222,4 +237,12 @@ public class StandaloneUIDisplay implements UIDisplay {
 	public void display(NonBlockingUIOperation operation) {
 		display(operation.getRoot(), false);
 	}
+
+    /**
+     * @param cachedPassword the cachedPassword to set
+     */
+    @Override
+    public void setCachedPassword(char[] cachedPassword) {
+        this.cachedPassword = cachedPassword;
+    }
 }

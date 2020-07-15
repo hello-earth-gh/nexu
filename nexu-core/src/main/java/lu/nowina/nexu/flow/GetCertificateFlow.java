@@ -26,6 +26,7 @@ import eu.europa.esig.dss.x509.CertificateToken;
 import lu.nowina.nexu.api.Execution;
 import lu.nowina.nexu.api.GetCertificateRequest;
 import lu.nowina.nexu.api.GetCertificateResponse;
+import lu.nowina.nexu.api.LogoutRequest;
 import lu.nowina.nexu.api.Match;
 import lu.nowina.nexu.api.NexuAPI;
 import lu.nowina.nexu.api.Product;
@@ -46,6 +47,7 @@ import lu.nowina.nexu.flow.operation.TokenOperationResultKey;
 import lu.nowina.nexu.view.core.UIDisplay;
 import lu.nowina.nexu.view.core.UIOperation;
 
+// unisystems change : setDefaultProduct on product selection for multiple signing
 class GetCertificateFlow extends AbstractCoreFlow<GetCertificateRequest, GetCertificateResponse> {
 
     static final Logger logger = LoggerFactory.getLogger(GetCertificateFlow.class);
@@ -58,6 +60,7 @@ class GetCertificateFlow extends AbstractCoreFlow<GetCertificateRequest, GetCert
     @SuppressWarnings("unchecked")
     protected Execution<GetCertificateResponse> process(final NexuAPI api, final GetCertificateRequest req) throws Exception {
     	SignatureTokenConnection token = null;
+      TokenId tokenId = null;
     	try {
     		Product defaultProduct = api.getAppConfig().getDefaultProduct();
     		while (true) {
@@ -73,6 +76,9 @@ class GetCertificateFlow extends AbstractCoreFlow<GetCertificateRequest, GetCert
     				final OperationResult<Product> selectProductOperationResult = operation.perform();
     				if (selectProductOperationResult.getStatus().equals(BasicOperationStatus.SUCCESS)) {
     					selectedProduct = selectProductOperationResult.getResult();
+                                        if (api != null && api.getAppConfig() != null && api.getAppConfig().getDefaultProduct() == null) {
+                                            api.getAppConfig().setDefaultProduct(selectedProduct);
+                                        }
     				} else {
     					return this.handleErrorOperationResult(selectProductOperationResult);
     				}
@@ -91,8 +97,7 @@ class GetCertificateFlow extends AbstractCoreFlow<GetCertificateRequest, GetCert
     							.getOperation(CreateTokenOperation.class, api, matchingProductAdapters).perform();
     					if (createTokenOperationResult.getStatus().equals(BasicOperationStatus.SUCCESS)) {
     						final Map<TokenOperationResultKey, Object> map = createTokenOperationResult.getResult();
-    						final TokenId tokenId = (TokenId) map.get(TokenOperationResultKey.TOKEN_ID);
-
+    						tokenId = (TokenId) map.get(TokenOperationResultKey.TOKEN_ID);
     						final OperationResult<SignatureTokenConnection> getTokenConnectionOperationResult = this.getOperationFactory()
     								.getOperation(GetTokenConnectionOperation.class, api, tokenId).perform();
     						if (getTokenConnectionOperationResult.getStatus().equals(BasicOperationStatus.SUCCESS)) {
@@ -158,13 +163,7 @@ class GetCertificateFlow extends AbstractCoreFlow<GetCertificateRequest, GetCert
     		throw this.handleException(e);
     	} finally {
     		if (token != null) {
-    			if (req.isCloseToken()) {
-    				try {
-    					token.close();
-    				} catch (final Exception e) {
-    					logger.error("Exception when closing token", e);
-    				}
-    			}
+               api.logout(new LogoutRequest(tokenId, false, req.isCloseToken()));
     		}
     	}
     }

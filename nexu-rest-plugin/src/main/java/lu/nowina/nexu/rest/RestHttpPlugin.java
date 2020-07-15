@@ -34,6 +34,7 @@ import lu.nowina.nexu.api.Feedback;
 import lu.nowina.nexu.api.FeedbackStatus;
 import lu.nowina.nexu.api.GetCertificateRequest;
 import lu.nowina.nexu.api.GetIdentityInfoRequest;
+import lu.nowina.nexu.api.LogoutRequest;
 import lu.nowina.nexu.api.NexuAPI;
 import lu.nowina.nexu.api.NexuRequest;
 import lu.nowina.nexu.api.Purpose;
@@ -78,6 +79,8 @@ public class RestHttpPlugin implements HttpPlugin {
 			return getIdentityInfo(api, payload);
 		case "/authenticate":
 			return authenticate(api, req, payload);
+		case "/logout":
+			return logout(api, req, payload);
 		default:
 			throw new RuntimeException("Target not recognized " + target);
 		}
@@ -127,6 +130,36 @@ public class RestHttpPlugin implements HttpPlugin {
 		} else {
 			logger.info("Call API");
 			final Execution<?> respObj = api.sign(r);
+			return toHttpResponse(respObj);
+		}
+	}
+      
+      private HttpResponse logout(NexuAPI api, HttpRequest req, String payload) {
+		logger.info("Logout");
+            LogoutRequest r = null;
+            
+            if (StringUtils.isEmpty(payload)) {
+               String tokenIdString = req.getParameter("tokenId");
+               if (StringUtils.isEmpty(tokenIdString)) {
+                  throw new IllegalArgumentException("tokenId missing");
+               }
+               TokenId tokenId = new TokenId(tokenIdString);
+               r = new LogoutRequest(tokenId);               
+            } else {
+               // btw in case of missing fields, their default values will be overwritten with null values
+               // when deserializing with GSON, so - well, just suppose that whenever we call logout via REST endpoint
+               // we always want to close token and clear cache
+               r = GsonHelper.fromJson(payload, LogoutRequest.class);
+               r.setDoCloseToken(true);
+               r.setDoClearCache(true);
+            }
+            
+		final HttpResponse invalidRequestHttpResponse = checkRequestValidity(api, r);
+		if(invalidRequestHttpResponse != null) {
+			return invalidRequestHttpResponse;
+		} else {
+			logger.info("Call API");
+			final Execution<?> respObj = api.logout(r);
 			return toHttpResponse(respObj);
 		}
 	}

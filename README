@@ -7,3 +7,5 @@ signature tool called NexU.
 ## Overview 
 
 http://nowina.lu/solutions/java-less-browser-signing-nexu/
+
+The purpose of this fork is to provide caching ability for user entered data, for the length of the signing session

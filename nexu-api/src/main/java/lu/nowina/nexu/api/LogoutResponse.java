@@ -11,24 +11,10 @@
  * SANS GARANTIES OU CONDITIONS QUELLES QU’ELLES SOIENT, expresses ou implicites.
  * Consultez la Licence pour les autorisations et les restrictions linguistiques spécifiques relevant de la Licence.
  */
-package lu.nowina.nexu.flow;
+package lu.nowina.nexu.api;
 
-import lu.nowina.nexu.api.NexuAPI;
-import lu.nowina.nexu.view.core.UIDisplay;
+public class LogoutResponse {
 
-public interface FlowRegistry {
-
-	static final String SIGNATURE_FLOW = "signature";
-
-	static final String CERTIFICATE_FLOW = "certificate";
-
-	static final String GET_IDENTITY_INFO_FLOW = "getIdentityInfo";
-
-	static final String AUTHENTICATE_FLOW = "authenticate";
-    
-	// Unisystems change  
-    static final String LOGOUT_FLOW = "logout";
-	
-	<I, O> Flow<I, O> getFlow(String code, UIDisplay display, NexuAPI api);
-
+	public LogoutResponse() {
+	}
 }

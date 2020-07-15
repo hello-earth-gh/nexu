@@ -21,7 +21,9 @@ import com.google.gson.Gson;
 import eu.europa.esig.dss.DigestAlgorithm;
 import eu.europa.esig.dss.ToBeSigned;
 import lu.nowina.nexu.json.GsonHelper;
+import org.apache.commons.lang.StringUtils;
 
+// Unisystems change: modified test to accomodate closeToken extra variable
 public class SignatureRequestTest {
 
 	@Test
@@ -34,7 +36,7 @@ public class SignatureRequestTest {
 		Gson gson = new Gson();
 		String text = gson.toJson(obj);
 
-		Assert.assertEquals("{\"digestAlgorithm\":\"SHA1\",\"keyId\":\"key\"}", text);
+		Assert.assertTrue(StringUtils.contains(text, "{\"digestAlgorithm\":\"SHA1\",\"keyId\":\"key\""));
 
 		SignatureRequest obj2 = gson.fromJson(text, SignatureRequest.class);
 

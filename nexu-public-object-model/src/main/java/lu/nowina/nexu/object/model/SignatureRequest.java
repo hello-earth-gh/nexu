@@ -11,6 +11,8 @@
  * SANS GARANTIES OU CONDITIONS QUELLES QU’ELLES SOIENT, expresses ou implicites.
  * Consultez la Licence pour les autorisations et les restrictions linguistiques spécifiques relevant de la Licence.
  */
+ 
+ //Unisystems change: added closeToken
 package lu.nowina.nexu.object.model;
 
 /**
@@ -27,6 +29,7 @@ public class SignatureRequest extends NexuRequest {
 	private ToBeSigned toBeSigned;
 	private String digestAlgorithm;
 	private String keyId;
+      private boolean doClearCache = true;   
 	
 	public SignatureRequest() {
 		super();
@@ -64,4 +67,11 @@ public class SignatureRequest extends NexuRequest {
 		this.keyId = keyId;
 	}
 
+        public boolean isDoClearCache() {
+            return this.doClearCache;
+        }
+
+        public void setDoClearCache(final boolean doClearCache) {
+            this.doClearCache = doClearCache;
+        }          
 }

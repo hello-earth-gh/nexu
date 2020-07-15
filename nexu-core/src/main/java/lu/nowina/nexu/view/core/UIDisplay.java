@@ -35,4 +35,7 @@ public interface UIDisplay {
 	void display(NonBlockingUIOperation operation);
 	
 	void close(boolean blockingOperation);
+    
+	// Unisystems change    
+    void setCachedPassword(char[] cachedPassword);
 }

@@ -18,15 +18,11 @@
 			<artifactId>nexu-api</artifactId>
 			<version>${project.version}</version>
 		</dependency>
+		<!-- unisystems change -->
 		<dependency>
-			<groupId>eu.europa.ec.joinup.sd-dss</groupId>
-			<artifactId>sscd-mocca-adapter</artifactId>
-			<version>${dss.version}</version>
-		</dependency>
-		<dependency>
-			<groupId>at.gv.egiz</groupId>
-			<artifactId>smcc</artifactId>
-		</dependency>
+			<groupId>lu.nowina</groupId>
+			<artifactId>nexu_for_mocca</artifactId>
+		</dependency>      
 		<dependency>
 			<groupId>lu.nowina.apps</groupId>
 			<artifactId>nexu-model</artifactId>
