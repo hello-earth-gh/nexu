@@ -7,6 +7,24 @@
 	</parent>
 	<artifactId>nexu-bundle</artifactId>
 	<packaging>pom</packaging>
+      
+      <profiles>
+         <profile>
+            <id>win32</id>
+            <activation>
+                <activeByDefault>true</activeByDefault>
+            </activation>
+            <properties>
+               <platform.classifier>win32</platform.classifier>
+            </properties>
+         </profile>
+         <profile>
+            <id>win64</id>
+            <properties>
+               <platform.classifier>win64</platform.classifier>
+            </properties>
+         </profile>         
+      </profiles>
 
 	<dependencies>
 		<dependency>
@@ -18,18 +36,22 @@
 			<groupId>com.oracle.java</groupId>
 			<artifactId>jre</artifactId>
 			<version>1.8.0_131</version>
-			<classifier>win32</classifier>
+			<classifier>${platform.classifier}</classifier>
 			<type>tgz</type>
 		</dependency>
 	</dependencies>
 
 	<build>
+         <!--
+         <directory>${project.basedir}/target</directory>
+         <outputDirectory>${project.build.directory}/classes</outputDirectory> 
+-->                          
 		<plugins>
 			<plugin>
 				<artifactId>maven-assembly-plugin</artifactId>
 				<executions>
 					<execution>
-						<phase>generate-resources</phase>
+						<phase>process-resources</phase>
 						<goals>
 							<goal>single</goal>
 						</goals>
@@ -39,10 +61,75 @@
 					<descriptors>
 						<descriptor>src/main/assembly/assembly.xml</descriptor>
 					</descriptors>
-					<appendAssemblyId>false</appendAssemblyId>
+                              <finalName>nexu</finalName>
+                              <appendAssemblyId>false</appendAssemblyId>
+                              <outputDirectory>target</outputDirectory>                              
 				</configuration>
 			</plugin>
+		    <plugin>
+		        <groupId>org.apache.maven.plugins</groupId>
+		        <artifactId>maven-compiler-plugin</artifactId>
+		        <version>2.3.2</version>
+		        <configuration>
+		            <encoding>${project.build.sourceEncoding}</encoding>
+		        </configuration>
+		    </plugin>
+		    <plugin>
+		        <groupId>org.apache.maven.plugins</groupId>
+		        <artifactId>maven-resources-plugin</artifactId>
+		        <version>2.4.3</version>
+		        <configuration>
+		            <encoding>${project.build.sourceEncoding}</encoding>
+		        </configuration>                
+                    <executions>
+                      <execution>
+                        <id>execution1</id>
+                        <phase>generate-resources</phase>
+                        <goals>
+                          <goal>resources</goal>
+                        </goals>
+                      </execution> 
+                    </executions> 
+		    </plugin>
+                  <plugin>
+                    <groupId>org.codehaus.mojo</groupId>
+                    <artifactId>exec-maven-plugin</artifactId>
+                    <version>3.0.0</version>
+                    <executions>
+                      <execution>
+                        <phase>package</phase>
+                        <goals>
+                          <goal>exec</goal>
+                        </goals>
+                      </execution>
+                    </executions>
+                    <configuration>
+                      <executable>ISCC.exe</executable>     
+                      <arguments>
+                        <argument>target\nexu\nexu\inno-setup-script.iss</argument>
+                      </arguments>
+                    </configuration>
+                  </plugin>  
 		</plugins>
+            <resources>
+               <resource>
+                   <directory>src/main/assembly</directory>
+                   <filtering>true</filtering>
+                   <includes>
+                       <include>*.xml</include>
+                   </includes>
+               </resource>	
+               <resource>
+                   <directory>src/main/resources</directory>
+                   <filtering>true</filtering>
+                   <includes>
+                       <include>*.*</include>
+                   </includes>
+               </resource>               	
+            </resources>      
+                   
 	</build>
-
+    <properties>
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+    </properties>
 </project>

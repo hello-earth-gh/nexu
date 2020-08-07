@@ -91,7 +91,7 @@
 				<configuration>
 					<skip>${skip.package}</skip>
 				</configuration>
-			</plugin>
+			</plugin>                 
 		</plugins>
 	</build>
 </project>

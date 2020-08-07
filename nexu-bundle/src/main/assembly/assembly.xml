@@ -20,12 +20,12 @@ Consultez la Licence pour les autorisations et les restrictions linguistiques sp
 	<id>nexu</id>
 
 	<formats>
-		<format>zip</format>
+		<format>dir</format>
 	</formats>
 
 	<fileSets>
 		<fileSet>
-			<directory>src/main/resources</directory>
+			<directory>${project.build.directory}/classes</directory> <!-- copy from the result of maven filtering, rather then from the original source directory -->
 			<outputDirectory></outputDirectory>
 		</fileSet>
 	</fileSets>
@@ -34,7 +34,7 @@ Consultez la Licence pour les autorisations et les restrictions linguistiques sp
 		<dependencySet>
 			<unpack>true</unpack>
 			<includes>
-				<include>com.oracle.java:jre:tgz:win32</include>
+				<include>com.oracle.java:jre:tgz:${platform.classifier}</include>
 			</includes>
 			<outputDirectory></outputDirectory>
 			<fileMode>0644</fileMode>
