@@ -1,0 +1,5 @@
+(20200909) modified innosetup script to copy shortcut into startup folder
+           added flag to be able to bypass product selection dialog, if there is only one card detected,
+           changed README with a few clarifications
+(20200807) added innosetup script (iss) and license text
+(20200715) initial changes

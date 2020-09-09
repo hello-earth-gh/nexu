@@ -2,7 +2,8 @@
 ; SEE THE DOCUMENTATION FOR DETAILS ON CREATING INNO SETUP SCRIPT FILES!
 
 #define MyAppName "NexU (NSK ${platform.classifier})"
-#define MyAppVersion "1.23 ${platform.classifier}"
+#define MyDateTimeString GetDateTimeString('yyyymmdd', '-', ':')
+#define MyAppVersion "1.23 " + MyDateTimeString + " ${platform.classifier}"
 #define MyAppPublisher "Nowina Solutions (with modifications by Unisystems)"
 #define MyAppURL "https://nowina.lu/solutions/java-less-browser-signing-nexu/"
 #define MyAppSupportURL "https://github.com/hello-earth-gh/nexu"
@@ -29,23 +30,79 @@ OutputBaseFilename=nexu-setup-${platform.classifier}
 Compression=lzma
 SolidCompression=yes
 WizardStyle=modern
+SetupLogging=yes
 
 [Languages]
 Name: "english"; MessagesFile: "compiler:Default.isl"
 
 [Tasks]
-Name: "desktopicon"; Description: "{cm:CreateDesktopIcon}"; GroupDescription: "{cm:AdditionalIcons}"; Flags: unchecked
+; Name: "desktopicon"; Description: "{cm:CreateDesktopIcon}"; GroupDescription: "{cm:AdditionalIcons}"; Flags: unchecked
 
 [Files]
 Source: "java\*"; DestDir: "{app}\java"; Flags: ignoreversion recursesubdirs createallsubdirs
 Source: "nexu.jar"; DestDir: "{app}"; Flags: ignoreversion
 Source: "NexU-Startup.bat"; DestDir: "{app}"; Flags: ignoreversion
+Source: "tray_icon.ico"; DestDir: "{app}"; Flags: ignoreversion
 ; NOTE: Don't use "Flags: ignoreversion" on any shared system files
 
 [Icons]
-Name: "{autoprograms}\{#MyAppName}"; Filename: "{app}\{#MyAppExeName}"
-Name: "{autodesktop}\{#MyAppName}"; Filename: "{app}\{#MyAppExeName}"; Tasks: desktopicon
+Name: "{autoprograms}\{#MyAppName}"; Filename: "{app}\{#MyAppExeName}"; IconFilename: "{app}\tray_icon.ico"
+; Name: "{autodesktop}\{#MyAppName}"; Filename: "{app}\{#MyAppExeName}"; Tasks: desktopicon; IconFilename: "{app}\tray_icon.ico"
+Name: "{userstartup}\{#MyAppName}"; Filename: "{app}\{#MyAppExeName}"; IconFilename: "{app}\tray_icon.ico"; WorkingDir: "{app}"
 
 [Run]
+; don't need to create service - just place the shortcut into Startup folder - since we don't need a service, paths could have been left as is in the BAT file
+; but i'm substituting them into absolute paths anyway since it doesn't matter much
+; Filename: {sys}\sc.exe; Parameters: "create nexu-service start= auto binPath= ""\\""{app}\\java\\bin\\javaw.exe\\"" ""-Djavafx.preloader=lu.nowina.nexu.NexUPreLoader"" ""-Dglass.accessible.force=false"" ""-jar"" ""{app}\\nexu.jar""" ; Flags: runhidden
 Filename: "{app}\{#MyAppExeName}"; Description: "{cm:LaunchProgram,{#StringChange(MyAppName, '&', '&&')}}"; Flags: shellexec postinstall skipifsilent
+; Filename: "{cmd}"; Parameters: "sc create MySQL start= auto DisplayName= MySQL binPath= ""C:\MyApp\MySQL 5.5\bin\mysqld"" --defaults-file=""C:\MyApp\MySQL 5.5\my.ini"""; Flags: runhidden
 
+[UninstallRun]
+; Filename: {sys}\sc.exe; Parameters: "stop nexu-service" ; Flags: runhidden
+; Filename: {sys}\sc.exe; Parameters: "delete nexu-service" ; Flags: runhidden
+
+[Code]
+// https://stackoverflow.com/questions/20174359/replace-a-text-in-a-file-with-inno-setup
+function FileReplaceString(const FileName, SearchString, ReplaceString: string):boolean;
+var
+  MyFile : TStrings;
+  MyText : string;
+begin
+  MyFile := TStringList.Create;
+
+  try
+    result := true;
+
+    try
+      MyFile.LoadFromFile(FileName);
+      MyText := MyFile.Text;
+
+      { Only save if text has been changed. }
+      if StringChangeEx(MyText, SearchString, ReplaceString, True) > 0 then
+      begin;
+        MyFile.Text := MyText;
+        MyFile.SaveToFile(FileName);
+      end;
+    except
+      result := false;
+    end;
+  finally
+    MyFile.Free;
+  end;
+end;
+
+procedure CurStepChanged(CurStep: TSetupStep);
+var
+  ExeFilePath: String;
+  AppPath: String;
+begin
+  // note that this is not needed anymore, since we are not running NexU as a service
+  // but okay i am leaving this anyway
+  if CurStep = ssPostInstall then
+  begin
+    AppPath := ExpandConstant('{app}')
+    ExeFilePath := AppPath + '\' + ExpandConstant('{#MyAppExeName}');
+    Log('Substituting absolute paths in ' + ExeFilePath);
+    FileReplaceString(ExeFilePath, '__{app}', AppPath);
+  end;
+end;

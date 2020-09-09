@@ -1,8 +1,13 @@
+This software is provided "as-is," without any express or implied warranty. In no event shall the
+author be held liable for any damages arising from the use of this software.
+
 DSS (Digital Signature Services library) used in unmodified form and distributed under GNU Lesser General Public License v2.1 (LGPL-2.1)
 https://ec.europa.eu/cefdigital/DSS/webapp-demo/home contains links to GitHub and Bitbucket code repositories
 
 NexU by Nowina (https://github.com/nowina-solutions/nexu)
 The version being installed is a fork of 1.23 version (https://github.com/hello-earth-gh/nexu)
+
+This installation package was created using Inno Setup by Jordan Russel / Martijn Laan
 
 GNU LGPL text as appears on https://www.gnu.org/licenses/old-licenses/lgpl-2.1.txt
 

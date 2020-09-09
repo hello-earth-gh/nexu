@@ -37,6 +37,7 @@ import org.slf4j.LoggerFactory;
  *
  * @author David Naramski
  */
+// Unisystems change: added makeSingleCardDefault
 public class AppConfig {
 
     private static final String ADVANCED_MODE_AVAILABLE = "advanced_mode_available";
@@ -80,6 +81,8 @@ public class AppConfig {
     private static final String DISPLAY_BACK_BUTTON = "display_back_button";
 
     private static final String DEFAULT_PRODUCT = "default_product_";
+    
+    private static final String MAKE_SINGLE_CARD_DEFAULT = "make_single_card_default";
 
     private static final Logger logger = LoggerFactory.getLogger(AppConfig.class.getName());
 
@@ -146,6 +149,8 @@ public class AppConfig {
     private boolean displayBackButton;
 
     private Product defaultProduct;
+    
+    private boolean makeSingleCardDefault;
 
     public AppConfig() {
         try {
@@ -324,6 +329,14 @@ public class AppConfig {
     public void setUserPreferencesEditable(final boolean userPreferencesEditable) {
         this.userPreferencesEditable = userPreferencesEditable;
     }
+    
+    public boolean isMakeSingleCardDefault() {
+        return this.makeSingleCardDefault;
+    }
+
+    public void setMakeSingleCardDefault(final boolean makeSingleCardDefault) {
+        this.makeSingleCardDefault = makeSingleCardDefault;
+    }    
 
     public String getRequestProcessorClass() {
         return this.requestProcessorClass;
@@ -448,6 +461,7 @@ public class AppConfig {
         this.setEnableIncidentReport(Boolean.parseBoolean(props.getProperty(ENABLE_INCIDENT_REPORT, "false")));
         this.setShowSplashScreen(Boolean.parseBoolean(props.getProperty(SHOW_SPLASH_SCREEN, "false")));
         this.setDisplayBackButton(Boolean.parseBoolean(props.getProperty(DISPLAY_BACK_BUTTON, "false")));
+        this.setMakeSingleCardDefault(Boolean.parseBoolean(props.getProperty(MAKE_SINGLE_CARD_DEFAULT, "false")));
     }
 
     public void initDefaultProduct(final Properties props) {

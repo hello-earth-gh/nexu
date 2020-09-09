@@ -23,6 +23,7 @@ import org.slf4j.LoggerFactory;
 import eu.europa.esig.dss.token.DSSPrivateKeyEntry;
 import eu.europa.esig.dss.token.SignatureTokenConnection;
 import eu.europa.esig.dss.x509.CertificateToken;
+import lu.nowina.nexu.api.DetectedCard;
 import lu.nowina.nexu.api.Execution;
 import lu.nowina.nexu.api.GetCertificateRequest;
 import lu.nowina.nexu.api.GetCertificateResponse;
@@ -69,19 +70,27 @@ class GetCertificateFlow extends AbstractCoreFlow<GetCertificateRequest, GetCert
     				selectedProduct = defaultProduct;
     				defaultProduct = null;
     			} else {
-    				final Object[] params = {
-    						api.getAppConfig().getApplicationName(), api.detectCards(), api.detectProducts(), api
-    				};
-    				final Operation<Product> operation = this.getOperationFactory().getOperation(UIOperation.class, "/fxml/product-selection.fxml", params);
-    				final OperationResult<Product> selectProductOperationResult = operation.perform();
-    				if (selectProductOperationResult.getStatus().equals(BasicOperationStatus.SUCCESS)) {
-    					selectedProduct = selectProductOperationResult.getResult();
-                                        if (api != null && api.getAppConfig() != null && api.getAppConfig().getDefaultProduct() == null) {
-                                            api.getAppConfig().setDefaultProduct(selectedProduct);
-                                        }
-    				} else {
-    					return this.handleErrorOperationResult(selectProductOperationResult);
-    				}
+                        // Unisystems change
+                        List<DetectedCard> cards = api.detectCards();
+                        if (api.getAppConfig().isMakeSingleCardDefault() && cards != null && cards.size() == 1) {
+                              selectedProduct = cards.get(0);
+                        }
+                        else {
+                           // end of Unisystems change
+                              final Object[] params = {
+                                          api.getAppConfig().getApplicationName(), api.detectCards(), api.detectProducts(), api
+                              };
+                              final Operation<Product> operation = this.getOperationFactory().getOperation(UIOperation.class, "/fxml/product-selection.fxml", params);
+                              final OperationResult<Product> selectProductOperationResult = operation.perform();
+                              if (selectProductOperationResult.getStatus().equals(BasicOperationStatus.SUCCESS)) {
+                                    selectedProduct = selectProductOperationResult.getResult();
+                                              if (api != null && api.getAppConfig() != null && api.getAppConfig().getDefaultProduct() == null) {
+                                                  api.getAppConfig().setDefaultProduct(selectedProduct);
+                                              }
+                              } else {
+                                    return this.handleErrorOperationResult(selectProductOperationResult);
+                              }                        
+                        }
     			}
 
     			final OperationResult<List<Match>> getMatchingCardAdaptersOperationResult = this.getOperationFactory()
