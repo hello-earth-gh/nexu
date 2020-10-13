@@ -129,6 +129,7 @@ class SignatureFlow extends AbstractCoreFlow<SignatureRequest, SignatureResponse
 			logger.error("Flow error", e);
 			throw handleException(e);
 		} finally {
+                  // unisystems
 			if(token != null) {
                      api.logout(new LogoutRequest(tokenId, req.isDoClearCache(), true)); // always need to close token, because get certificates operation requires login to be called(?)
 			}

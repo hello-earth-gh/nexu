@@ -169,6 +169,13 @@ class GetCertificateFlow extends AbstractCoreFlow<GetCertificateRequest, GetCert
     		}
     	} catch (final Exception e) {
     		logger.error("Flow error", e);
+            
+            // in case of NexU error have to logout completely too
+            if (token != null) {
+               api.logout(new LogoutRequest(tokenId, true, true));
+               token = null;
+            }
+            
     		throw this.handleException(e);
     	} finally {
     		if (token != null) {

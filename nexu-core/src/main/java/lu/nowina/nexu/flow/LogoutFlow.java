@@ -47,6 +47,8 @@ class LogoutFlow extends AbstractCoreFlow<LogoutRequest, LogoutResponse> {
    // 1) logout called manually when error occurs outside NexU - must clear cache, must close token
    // 2) logout called after getCertificates - must NOT clear cache, must NOT close token
    // 3) logout called after signing - must NOT clear cache for 1st etc. document, must close token, MUST clear cache for the last document
+   
+   // 4) (forgot it) - logout should be called manually when errors occur inside NexU operations, like in 1)
 
    @Override
    @SuppressWarnings("unchecked")

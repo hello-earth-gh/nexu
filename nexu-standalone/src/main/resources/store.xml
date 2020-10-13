@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<database>
+	<smartcard>
+		<atr>3BDD18008131FE4580F9A000000077010800079000FE</atr>
+		<connectionInfos>
+			<connectionInfo>
+				<env>
+					<jreVendor>ORACLE</jreVendor>
+					<osName>Windows 10</osName>
+					<osArch>amd64</osArch>
+					<osVersion>10.0</osVersion>
+					<arch>AMD64</arch>
+					<os>WINDOWS</os>
+				</env>
+				<selectedApi>PKCS11</selectedApi>
+				<apiParam>C:\Program Files\Oberthur Technologies\AWP\DLLs\OCSCryptoki.dll</apiParam>
+			</connectionInfo>
+		</connectionInfos>
+	</smartcard>
+	<smartcard>
+		<atr>3BFF9600008131804380318065B0850300EF120FFE82900066</atr>
+		<connectionInfos>
+			<connectionInfo>
+				<env>
+					<jreVendor>ORACLE</jreVendor>
+					<osName>Windows 10</osName>
+					<osArch>amd64</osArch>
+					<osVersion>10.0</osVersion>
+					<arch>AMD64</arch>
+					<os>WINDOWS</os>
+				</env>
+				<selectedApi>PKCS11</selectedApi>
+				<apiParam>C:\Windows\System32\eTPKCS11.dll</apiParam>
+			</connectionInfo>
+		</connectionInfos>
+	</smartcard>
+</database>
