@@ -38,7 +38,7 @@
 			<version>1.8.0_131</version>
 			<classifier>${platform.classifier}</classifier>
 			<type>tgz</type>
-		</dependency>
+		</dependency>            
 	</dependencies>
 
 	<build>
@@ -88,9 +88,28 @@
                         <goals>
                           <goal>resources</goal>
                         </goals>
-                      </execution> 
+                      </execution>                    
                     </executions> 
 		    </plugin>
+                <!-- CANNOT distribute JPS.exe outside JDK bundle - found solution with wmic instead
+               <plugin>
+                 <artifactId>maven-antrun-plugin</artifactId>
+                 <version>1.8</version>
+                 <executions>
+                   <execution>
+                     <phase>process-resources</phase>
+                     <configuration>
+                       <target>
+                         <echo message="Copying jps_${platform.classifier}.exe to ${project.build.directory}/nexu/nexu/java/bin/jps.exe" />
+                         <copy file="${basedir}/src/main/resources/jps_${platform.classifier}.exe" tofile="${project.build.directory}/nexu/nexu/java/bin/jps.exe" />
+                       </target>
+                     </configuration>
+                     <goals>
+                       <goal>run</goal>
+                     </goals>
+                   </execution>
+                 </executions>
+               </plugin>          -->     
                   <plugin>
                     <groupId>org.codehaus.mojo</groupId>
                     <artifactId>exec-maven-plugin</artifactId>
@@ -123,9 +142,28 @@
                    <directory>src/main/resources</directory>
                    <filtering>true</filtering>
                    <includes>
-                       <include>*.*</include>
+                       <include>*.bat</include>
+                       <include>*.iss</include>
+                       <include>*.txt</include>
                    </includes>
-               </resource>               	
+                   <excludes>
+                       <exclude>*.exe</exclude>
+                       <exclude>*.ico</exclude>
+                   </excludes>                   
+               </resource>      
+               <resource>
+                   <directory>src/main/resources</directory>
+                   <filtering>false</filtering>
+                   <includes>
+                       <include>*.exe</include>
+                       <include>*.ico</include>
+                   </includes>
+                   <excludes>
+                       <exclude>*.bat</exclude>
+                       <exclude>*.iss</exclude>
+                       <exclude>*.txt</exclude>
+                   </excludes>                   
+               </resource>                          	
             </resources>      
                    
 	</build>

@@ -42,6 +42,8 @@ Name: "english"; MessagesFile: "compiler:Default.isl"
 Source: "java\*"; DestDir: "{app}\java"; Flags: ignoreversion recursesubdirs createallsubdirs
 Source: "nexu.jar"; DestDir: "{app}"; Flags: ignoreversion
 Source: "NexU-Startup.bat"; DestDir: "{app}"; Flags: ignoreversion
+Source: "NexU-Startup_debug.bat"; DestDir: "{app}"; Flags: ignoreversion
+Source: "NexU-Kill.bat"; DestDir: "{app}"; Flags: ignoreversion
 Source: "tray_icon.ico"; DestDir: "{app}"; Flags: ignoreversion
 ; NOTE: Don't use "Flags: ignoreversion" on any shared system files
 
@@ -60,6 +62,10 @@ Filename: "{app}\{#MyAppExeName}"; Description: "{cm:LaunchProgram,{#StringChang
 [UninstallRun]
 ; Filename: {sys}\sc.exe; Parameters: "stop nexu-service" ; Flags: runhidden
 ; Filename: {sys}\sc.exe; Parameters: "delete nexu-service" ; Flags: runhidden
+Filename: {app}\NexU-Kill.bat; Flags: runhidden
+
+[UninstallDelete]
+Type: filesandordirs; Name: "{localappdata}\Nowina"
 
 [Code]
 // https://stackoverflow.com/questions/20174359/replace-a-text-in-a-file-with-inno-setup

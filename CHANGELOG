@@ -1,3 +1,6 @@
+(20201123) added info to store.xml - that was the problem with weird but with workaround from 20201121
+           BUT: need to revert changes from 20201121
+           (ok - using wmic now) BUT2: distributing jps.exe which is a no-go from license - need to find alternative way
 (20201121) added code to select index 0 detected driver in case environments do not match (GenericCardAdapter)
 (20200909) modified innosetup script to copy shortcut into startup folder
            added flag to be able to bypass product selection dialog, if there is only one card detected,
