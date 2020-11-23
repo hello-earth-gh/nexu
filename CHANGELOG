@@ -1,3 +1,4 @@
+(20201121) added code to select index 0 detected driver in case environments do not match (GenericCardAdapter)
 (20200909) modified innosetup script to copy shortcut into startup folder
            added flag to be able to bypass product selection dialog, if there is only one card detected,
            changed README with a few clarifications
