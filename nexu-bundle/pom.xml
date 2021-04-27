@@ -3,7 +3,7 @@
 	<parent>
 		<groupId>lu.nowina.apps</groupId>
 		<artifactId>nexu</artifactId>
-		<version>1.23-SNAPSHOT</version>
+		<version>1.23-modified-02-SNAPSHOT</version>
 	</parent>
 	<artifactId>nexu-bundle</artifactId>
 	<packaging>pom</packaging>
@@ -47,6 +47,32 @@
          <outputDirectory>${project.build.directory}/classes</outputDirectory> 
 -->                          
 		<plugins>
+            <plugin>
+              <groupId>org.apache.maven.plugins</groupId>
+              <artifactId>maven-dependency-plugin</artifactId>
+              <executions>
+                <execution>
+                   <id>unpack</id>
+                   <phase>process-resources</phase>
+                   <goals>
+                     <goal>unpack</goal>
+                   </goals>
+                   <configuration>
+                     <artifactItems>
+                       <artifactItem>
+                         <groupId>lu.nowina.apps</groupId>
+                         <artifactId>nexu-app</artifactId>
+                         <type>jar</type>
+                         <overWrite>true</overWrite>
+                         <outputDirectory>${project.build.directory}/nexu/nexu</outputDirectory>
+                         <includes>store.xml</includes>
+                       </artifactItem>
+                     </artifactItems>
+                     <outputDirectory>${project.build.directory}</outputDirectory>
+                   </configuration>
+                 </execution>
+              </executions>
+            </plugin>             
 			<plugin>
 				<artifactId>maven-assembly-plugin</artifactId>
 				<executions>
@@ -61,9 +87,9 @@
 					<descriptors>
 						<descriptor>src/main/assembly/assembly.xml</descriptor>
 					</descriptors>
-                              <finalName>nexu</finalName>
-                              <appendAssemblyId>false</appendAssemblyId>
-                              <outputDirectory>target</outputDirectory>                              
+                    <finalName>nexu</finalName>
+                    <appendAssemblyId>false</appendAssemblyId>
+                    <outputDirectory>target</outputDirectory>                              
 				</configuration>
 			</plugin>
 		    <plugin>
@@ -116,19 +142,36 @@
                     <version>3.0.0</version>
                     <executions>
                       <execution>
+                          <id>create_main_setup</id>
                         <phase>package</phase>
                         <goals>
                           <goal>exec</goal>
                         </goals>
+                        <configuration>
+                          <executable>c:/Program Files (x86)/Inno Setup 5/ISCC</executable>     
+                          <arguments>
+                            <argument>target\nexu\nexu\inno-setup-script.iss</argument>
+                          </arguments>
+                        </configuration>
                       </execution>
+                      <execution>
+                          <id>create_update_setup</id>
+                        <phase>package</phase>
+                        <goals>
+                          <goal>exec</goal>
+                        </goals>
+                        <configuration>
+                          <executable>c:/Program Files (x86)/Inno Setup 5/ISCC</executable>     
+                          <arguments>
+                            <argument>target\nexu\nexu\inno-update-script.iss</argument>
+                          </arguments>
+                        </configuration>
+                      </execution>
+
                     </executions>
-                    <configuration>
-                      <executable>ISCC.exe</executable>     
-                      <arguments>
-                        <argument>target\nexu\nexu\inno-setup-script.iss</argument>
-                      </arguments>
-                    </configuration>
+
                   </plugin>  
+                 
 		</plugins>
             <resources>
                <resource>

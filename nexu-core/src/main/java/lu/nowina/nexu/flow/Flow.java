@@ -20,6 +20,7 @@ import lu.nowina.nexu.api.flow.Operation;
 import lu.nowina.nexu.api.flow.OperationFactory;
 import lu.nowina.nexu.view.core.UIDisplay;
 import lu.nowina.nexu.view.core.UIOperation;
+import org.slf4j.LoggerFactory;
 
 /**
  * A flow is a sequence of {@link Operation}.
@@ -76,12 +77,26 @@ public abstract class Flow<I, O> {
 								api.getAppConfig() })
 						.perform();
 			} else {
+                
+                String detailsText = "Details: " + findExceptionDetails(e, 0);
 				getOperationFactory()
 						.getOperation(UIOperation.class, "/fxml/message.fxml",
-								new Object[] { "exception.failure.message", api.getAppConfig().getApplicationName() })
+								new Object[] { "exception.failure.message", api.getAppConfig().getApplicationName(), detailsText })
 						.perform();
 			}
 		}
+        
 		return e;
 	}
+    
+    private static String findExceptionDetails(Throwable ex, int currentDepth) {
+        String ret = "";
+        if (ex != null) {
+            ret = ex.getMessage();
+            if (ex.getCause() != null && currentDepth < 10) {
+                ret += "\n" + "Caused by: " + findExceptionDetails(ex.getCause(), ++currentDepth);
+            }
+        }
+        return ret;
+    }    
 }

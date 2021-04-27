@@ -83,6 +83,8 @@ public class AppConfig {
     private static final String DEFAULT_PRODUCT = "default_product_";
     
     private static final String MAKE_SINGLE_CARD_DEFAULT = "make_single_card_default";
+    
+    private static final String FILTER_ONLY_CERT_WITH_DIGITAL_SIGNATURE_USAGE_BIT = "filter_only_cert_with_digital_signature_usage_bit";
 
     private static final Logger logger = LoggerFactory.getLogger(AppConfig.class.getName());
 
@@ -151,6 +153,8 @@ public class AppConfig {
     private Product defaultProduct;
     
     private boolean makeSingleCardDefault;
+    
+    private boolean filterOnlyCertWithDigitalSignatureUsageBit;
 
     public AppConfig() {
         try {
@@ -336,7 +340,15 @@ public class AppConfig {
 
     public void setMakeSingleCardDefault(final boolean makeSingleCardDefault) {
         this.makeSingleCardDefault = makeSingleCardDefault;
-    }    
+    }
+
+    public boolean isFilterOnlyCertWithDigitalSignatureUsageBit() {
+        return this.filterOnlyCertWithDigitalSignatureUsageBit;
+    }
+    
+    public void setFilterOnlyCertWithDigitalSignatureUsageBit(final boolean value) {
+        this.filterOnlyCertWithDigitalSignatureUsageBit = value;
+    }
 
     public String getRequestProcessorClass() {
         return this.requestProcessorClass;
@@ -462,6 +474,7 @@ public class AppConfig {
         this.setShowSplashScreen(Boolean.parseBoolean(props.getProperty(SHOW_SPLASH_SCREEN, "false")));
         this.setDisplayBackButton(Boolean.parseBoolean(props.getProperty(DISPLAY_BACK_BUTTON, "false")));
         this.setMakeSingleCardDefault(Boolean.parseBoolean(props.getProperty(MAKE_SINGLE_CARD_DEFAULT, "false")));
+        this.setFilterOnlyCertWithDigitalSignatureUsageBit(Boolean.parseBoolean(props.getProperty(FILTER_ONLY_CERT_WITH_DIGITAL_SIGNATURE_USAGE_BIT, "false")));
     }
 
     public void initDefaultProduct(final Properties props) {

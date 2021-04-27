@@ -136,24 +136,9 @@ public class RestHttpPlugin implements HttpPlugin {
       
       private HttpResponse logout(NexuAPI api, HttpRequest req, String payload) {
 		logger.info("Logout");
-            LogoutRequest r = null;
-            
-            if (StringUtils.isEmpty(payload)) {
-               String tokenIdString = req.getParameter("tokenId");
-               if (StringUtils.isEmpty(tokenIdString)) {
-                  throw new IllegalArgumentException("tokenId missing");
-               }
-               TokenId tokenId = new TokenId(tokenIdString);
-               r = new LogoutRequest(tokenId);               
-            } else {
-               // btw in case of missing fields, their default values will be overwritten with null values
-               // when deserializing with GSON, so - well, just suppose that whenever we call logout via REST endpoint
-               // we always want to close token and clear cache
-               r = GsonHelper.fromJson(payload, LogoutRequest.class);
-               r.setDoCloseToken(true);
-               r.setDoClearCache(true);
-            }
-            
+        
+        // just logout from everywhere regardless of tokenId when this gets called through HTTP API
+        LogoutRequest r = new LogoutRequest(null, true, true);
 		final HttpResponse invalidRequestHttpResponse = checkRequestValidity(api, r);
 		if(invalidRequestHttpResponse != null) {
 			return invalidRequestHttpResponse;

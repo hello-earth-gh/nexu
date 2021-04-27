@@ -56,6 +56,8 @@ class SignatureFlow extends AbstractCoreFlow<SignatureRequest, SignatureResponse
 	@Override
 	@SuppressWarnings("unchecked")
 	protected Execution<SignatureResponse> process(NexuAPI api, SignatureRequest req) throws Exception {
+        logger.info("SignatureFlow.process called with doClearCache = " + req.getDoClearCache());
+        
 		if ((req.getToBeSigned() == null) || (req.getToBeSigned().getBytes() == null)) {
 			throw new NexuException("ToBeSigned is null");
 		}
@@ -129,9 +131,9 @@ class SignatureFlow extends AbstractCoreFlow<SignatureRequest, SignatureResponse
 			logger.error("Flow error", e);
 			throw handleException(e);
 		} finally {
-                  // unisystems
+            // unisystems
 			if(token != null) {
-                     api.logout(new LogoutRequest(tokenId, req.isDoClearCache(), true)); // always need to close token, because get certificates operation requires login to be called(?)
+                api.logout(new LogoutRequest(tokenId, req.isDoClearCache(), true)); // always need to close token, because get certificates operation requires login to be called(?)
 			}
 		}
 	}

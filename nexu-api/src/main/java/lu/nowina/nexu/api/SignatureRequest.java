@@ -27,7 +27,7 @@ public class SignatureRequest extends NexuRequest {
 
 	private String keyId;
    
-        private boolean doClearCache = true;   
+    private String doClearCache;
 	
 	public SignatureRequest() {
 	}
@@ -64,11 +64,15 @@ public class SignatureRequest extends NexuRequest {
 		this.keyId = keyId;
 	}
 
-        public boolean isDoClearCache() {
-            return this.doClearCache;
-        }
+    public boolean isDoClearCache() {
+        return !"false".equals(this.doClearCache);
+    }
 
-        public void setDoClearCache(final boolean doClearCache) {
-            this.doClearCache = doClearCache;
-        }   
+    public void setDoClearCache(final String doClearCache) {
+        this.doClearCache = doClearCache;
+    }
+    
+    public String getDoClearCache() {
+        return this.doClearCache;
+    }
 }

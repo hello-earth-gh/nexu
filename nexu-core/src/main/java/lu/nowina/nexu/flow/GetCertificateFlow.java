@@ -52,7 +52,8 @@ import lu.nowina.nexu.view.core.UIOperation;
 class GetCertificateFlow extends AbstractCoreFlow<GetCertificateRequest, GetCertificateResponse> {
 
     static final Logger logger = LoggerFactory.getLogger(GetCertificateFlow.class);
-
+    private boolean bShouldLogoutCompletely = false;
+    
     public GetCertificateFlow(final UIDisplay display, final NexuAPI api) {
         super(display, api);
     }
@@ -61,36 +62,39 @@ class GetCertificateFlow extends AbstractCoreFlow<GetCertificateRequest, GetCert
     @SuppressWarnings("unchecked")
     protected Execution<GetCertificateResponse> process(final NexuAPI api, final GetCertificateRequest req) throws Exception {
     	SignatureTokenConnection token = null;
-      TokenId tokenId = null;
+        TokenId tokenId = null;
     	try {
     		Product defaultProduct = api.getAppConfig().getDefaultProduct();
     		while (true) {
     			final Product selectedProduct;
     			if(defaultProduct != null) {
     				selectedProduct = defaultProduct;
-    				defaultProduct = null;
+    				defaultProduct = null; // this does not make sense - we should not reset the default product in case of multiple signatures, but we should reset it somewhere in case of an error, or a normal end of operation (i.e.logout)
     			} else {
-                        // Unisystems change
-                        List<DetectedCard> cards = api.detectCards();
-                        if (api.getAppConfig().isMakeSingleCardDefault() && cards != null && cards.size() == 1) {
-                              selectedProduct = cards.get(0);
-                        }
-                        else {
-                           // end of Unisystems change
-                              final Object[] params = {
-                                          api.getAppConfig().getApplicationName(), api.detectCards(), api.detectProducts(), api
-                              };
-                              final Operation<Product> operation = this.getOperationFactory().getOperation(UIOperation.class, "/fxml/product-selection.fxml", params);
-                              final OperationResult<Product> selectProductOperationResult = operation.perform();
-                              if (selectProductOperationResult.getStatus().equals(BasicOperationStatus.SUCCESS)) {
-                                    selectedProduct = selectProductOperationResult.getResult();
-                                              if (api != null && api.getAppConfig() != null && api.getAppConfig().getDefaultProduct() == null) {
-                                                  api.getAppConfig().setDefaultProduct(selectedProduct);
-                                              }
-                              } else {
-                                    return this.handleErrorOperationResult(selectProductOperationResult);
-                              }                        
-                        }
+                    // Unisystems change
+                    List<DetectedCard> cards = api.detectCards();
+                    if (api.getAppConfig().isMakeSingleCardDefault() && cards != null && cards.size() == 1) {
+                        selectedProduct = cards.get(0); // setting of selectedProduct should be followed by setting of defaultProduct for the next operations to continue properly with this selected card
+                        if (api != null && api.getAppConfig() != null && api.getAppConfig().getDefaultProduct() == null) {
+                            api.getAppConfig().setDefaultProduct(selectedProduct);
+                        }                              
+                    }
+                    else {
+                        // end of Unisystems change
+                        final Object[] params = {
+                                    api.getAppConfig().getApplicationName(), api.detectCards(), api.detectProducts(), api
+                        };
+                        final Operation<Product> operation = this.getOperationFactory().getOperation(UIOperation.class, "/fxml/product-selection.fxml", params);
+                        final OperationResult<Product> selectProductOperationResult = operation.perform();
+                        if (selectProductOperationResult.getStatus().equals(BasicOperationStatus.SUCCESS)) {
+                            selectedProduct = selectProductOperationResult.getResult();
+                            if (api != null && api.getAppConfig() != null && api.getAppConfig().getDefaultProduct() == null) {
+                                api.getAppConfig().setDefaultProduct(selectedProduct);
+                            }
+                        } else {
+                            return this.handleErrorOperationResult(selectProductOperationResult);
+                        }                        
+                    }
     			}
 
     			final OperationResult<List<Match>> getMatchingCardAdaptersOperationResult = this.getOperationFactory()
@@ -152,35 +156,43 @@ class GetCertificateFlow extends AbstractCoreFlow<GetCertificateRequest, GetCert
     							} else if (selectPrivateKeyOperationResult.getStatus().equals(CoreOperationStatus.BACK)) {
     								continue;
     							} else {
-    								return this.handleErrorOperationResult(selectPrivateKeyOperationResult);
+    								return this.handleErrorOperationResult2(selectPrivateKeyOperationResult);
     							}
     						} else {
-    							return this.handleErrorOperationResult(getTokenConnectionOperationResult);
+    							return this.handleErrorOperationResult2(getTokenConnectionOperationResult);
     						}
     					} else {
-    						return this.handleErrorOperationResult(createTokenOperationResult);
+    						return this.handleErrorOperationResult2(createTokenOperationResult);
     					}
     				} else {
-    					return this.handleErrorOperationResult(configureProductOperationResult);
+    					return this.handleErrorOperationResult2(configureProductOperationResult);
     				}
     			} else {
-    				return this.handleErrorOperationResult(getMatchingCardAdaptersOperationResult);
+    				return this.handleErrorOperationResult2(getMatchingCardAdaptersOperationResult);
     			}
     		}
     	} catch (final Exception e) {
     		logger.error("Flow error", e);
             
-            // in case of NexU error have to logout completely too
-            if (token != null) {
-               api.logout(new LogoutRequest(tokenId, true, true));
-               token = null;
-            }
+            bShouldLogoutCompletely = true;
             
     		throw this.handleException(e);
     	} finally {
-    		if (token != null) {
-               api.logout(new LogoutRequest(tokenId, false, req.isCloseToken()));
-    		}
+            if (bShouldLogoutCompletely) {
+                // in case of NexU error have to logout completely too - will reset all cache related stuff
+                // but note that above handleErrorOperationResult methods do not always throw an exception - must call logout in those cases too!
+                // to reproduce this, choose New keystore, then cancel the operation, and try to sign again - New keystore will be selected silently by default
+                api.logout(new LogoutRequest(tokenId, true, true));
+                bShouldLogoutCompletely = false;
+            }
+            else {
+                api.logout(new LogoutRequest(tokenId, false, req.isCloseToken()));
+            }
     	}
     }
+    
+	private Execution<GetCertificateResponse> handleErrorOperationResult2(final OperationResult<?> operationResult) throws Exception {
+		bShouldLogoutCompletely = true;
+        return super.handleErrorOperationResult(operationResult);
+	}    
 }

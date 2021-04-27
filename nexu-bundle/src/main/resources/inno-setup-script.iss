@@ -8,6 +8,7 @@
 #define MyAppURL "https://nowina.lu/solutions/java-less-browser-signing-nexu/"
 #define MyAppSupportURL "https://github.com/hello-earth-gh/nexu"
 #define MyAppExeName "NexU-Startup.bat"
+#define MyAppExeName2 "NexU-Startup_debug.bat"
 
 [Setup]
 ; NOTE: The value of AppId uniquely identifies this application. Do not use the same AppId value in installers for other applications.
@@ -31,6 +32,8 @@ Compression=lzma
 SolidCompression=yes
 WizardStyle=modern
 SetupLogging=yes
+CloseApplications=force
+MinVersion=0.0,5.0
 
 [Languages]
 Name: "english"; MessagesFile: "compiler:Default.isl"
@@ -48,16 +51,18 @@ Source: "tray_icon.ico"; DestDir: "{app}"; Flags: ignoreversion
 ; NOTE: Don't use "Flags: ignoreversion" on any shared system files
 
 [Icons]
-Name: "{autoprograms}\{#MyAppName}"; Filename: "{app}\{#MyAppExeName}"; IconFilename: "{app}\tray_icon.ico"
+Name: "{userprograms}\{#MyAppName}"; Filename: "{app}\{#MyAppExeName}"; IconFilename: "{app}\tray_icon.ico"
 ; Name: "{autodesktop}\{#MyAppName}"; Filename: "{app}\{#MyAppExeName}"; Tasks: desktopicon; IconFilename: "{app}\tray_icon.ico"
 Name: "{userstartup}\{#MyAppName}"; Filename: "{app}\{#MyAppExeName}"; IconFilename: "{app}\tray_icon.ico"; WorkingDir: "{app}"
+Name: "{userdesktop}\{#MyAppName}"; Filename: "{app}\{#MyAppExeName}"; IconFilename: "{app}\tray_icon.ico"; WorkingDir: "{app}"
+Name: "{group}\{#MyAppName}"; Filename: "{app}\{#MyAppExeName}"; IconFilename: "{app}\tray_icon.ico"; WorkingDir: "{app}"
 
 [Run]
 ; don't need to create service - just place the shortcut into Startup folder - since we don't need a service, paths could have been left as is in the BAT file
 ; but i'm substituting them into absolute paths anyway since it doesn't matter much
 ; Filename: {sys}\sc.exe; Parameters: "create nexu-service start= auto binPath= ""\\""{app}\\java\\bin\\javaw.exe\\"" ""-Djavafx.preloader=lu.nowina.nexu.NexUPreLoader"" ""-Dglass.accessible.force=false"" ""-jar"" ""{app}\\nexu.jar""" ; Flags: runhidden
-Filename: "{app}\{#MyAppExeName}"; Description: "{cm:LaunchProgram,{#StringChange(MyAppName, '&', '&&')}}"; Flags: shellexec postinstall skipifsilent
-; Filename: "{cmd}"; Parameters: "sc create MySQL start= auto DisplayName= MySQL binPath= ""C:\MyApp\MySQL 5.5\bin\mysqld"" --defaults-file=""C:\MyApp\MySQL 5.5\my.ini"""; Flags: runhidden
+
+Filename: "{app}\{#MyAppExeName}"; Description: "{cm:LaunchProgram,{#StringChange(MyAppName, '&', '&&')}}"; Flags: shellexec postinstall
 
 [UninstallRun]
 ; Filename: {sys}\sc.exe; Parameters: "stop nexu-service" ; Flags: runhidden
@@ -107,6 +112,11 @@ begin
   if CurStep = ssPostInstall then
   begin
     AppPath := ExpandConstant('{app}')
+
+    ExeFilePath := AppPath + '\' + ExpandConstant('{#MyAppExeName2}');
+    Log('Substituting absolute paths in ' + ExeFilePath);
+    FileReplaceString(ExeFilePath, '__{app}', AppPath);
+
     ExeFilePath := AppPath + '\' + ExpandConstant('{#MyAppExeName}');
     Log('Substituting absolute paths in ' + ExeFilePath);
     FileReplaceString(ExeFilePath, '__{app}', AppPath);

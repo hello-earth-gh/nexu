@@ -22,6 +22,7 @@ import org.slf4j.LoggerFactory;
 import com.sun.javafx.scene.SceneHelper;
 
 import eu.europa.esig.dss.token.PasswordInputCallback;
+import java.util.Date;
 import javafx.application.Platform;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
@@ -52,7 +53,9 @@ public class StandaloneUIDisplay implements UIDisplay {
 	private Stage nonBlockingStage;
 	private UIOperation<?> currentBlockingOperation;
 	private OperationFactory operationFactory;
-        private char[] cachedPassword = null;
+    private char[] cachedPassword = null;
+    private Date cacheLastAccessTime = new Date();
+    private static final long CACHE_TIME_TO_LIVE_MS = 5000;
 	
 	public StandaloneUIDisplay() {
 		this.blockingStage = createStage(true, null);
@@ -133,45 +136,51 @@ public class StandaloneUIDisplay implements UIDisplay {
 		
 		private String passwordPrompt;
 		private char[] cachedPassword = null;
-                private StandaloneUIDisplay parent = null;
+        private StandaloneUIDisplay parent = null;
                 
 		public FlowPasswordCallback() {
 			this.passwordPrompt = null;
 		}
                 
-                public FlowPasswordCallback(StandaloneUIDisplay parent, char[] cachedPassword) {
-                    this.parent = parent;
-                    this.cachedPassword = cachedPassword;
-                }
-		
+        public FlowPasswordCallback(StandaloneUIDisplay parent, char[] cachedPassword) {
+            this.parent = parent;
+            this.cachedPassword = cachedPassword;
+        }
+
 		@Override
 		public char[] getPassword() {
-                        if (cachedPassword != null) {
-                            LOGGER.info("Returning cached password");
-                            return cachedPassword;
-                        }
+            if (cachedPassword != null) {
+                LOGGER.info("Returning cached password");
+                char[] clone = cachedPassword.clone();
+                cachedPassword = null; // should need it only once per FlowPasswordCallback object
+                return clone;
+            }
                     
 			LOGGER.info("Request password");
 			@SuppressWarnings("unchecked")
 			final OperationResult<char[]> passwordResult = StandaloneUIDisplay.this.operationFactory.getOperation(
 					UIOperation.class, "/fxml/password-input.fxml", passwordPrompt, NexuLauncher.getConfig().getApplicationName()).perform();
 			if(passwordResult.getStatus().equals(BasicOperationStatus.SUCCESS)) {
-                                parent.setCachedPassword(passwordResult.getResult());
+                parent.setCachedPassword(passwordResult.getResult());
 				return passwordResult.getResult();
-			} else if(passwordResult.getStatus().equals(BasicOperationStatus.USER_CANCEL)) {
-				throw new CancelledOperationException();
-			} else if(passwordResult.getStatus().equals(BasicOperationStatus.EXCEPTION)) {
-				final Exception e = passwordResult.getException();
-				if(e instanceof RuntimeException) {
-					// Throw exception as is
-					throw (RuntimeException) e;
-				} else {
-					// Wrap in a runtime exception
-					throw new NexuException(e);
-				}
-			} else {
-				throw new IllegalArgumentException("Not managed operation status: " + passwordResult.getStatus().getCode());
-			}
+			} 
+            else {
+                parent.setCachedPassword(null);
+                if (passwordResult.getStatus().equals(BasicOperationStatus.USER_CANCEL)) {
+                    throw new CancelledOperationException();
+                } else if (passwordResult.getStatus().equals(BasicOperationStatus.EXCEPTION)) {
+                    final Exception e = passwordResult.getException();
+                    if (e instanceof RuntimeException) {
+                        // Throw exception as is
+                        throw (RuntimeException) e;
+                    } else {
+                        // Wrap in a runtime exception
+                        throw new NexuException(e);
+                    }
+                } else {
+                    throw new IllegalArgumentException("Not managed operation status: " + passwordResult.getStatus().getCode());
+                }
+            }
 		}
 
 		@Override
@@ -182,7 +191,7 @@ public class StandaloneUIDisplay implements UIDisplay {
 
 	@Override
 	public PasswordInputCallback getPasswordInputCallback() {
-		return new FlowPasswordCallback(this, this.cachedPassword);
+		return new FlowPasswordCallback(this, getCachedPassword());
 	}
 	
 	private final class FlowMessageDisplayCallback implements MessageDisplayCallback {
@@ -238,11 +247,29 @@ public class StandaloneUIDisplay implements UIDisplay {
 		display(operation.getRoot(), false);
 	}
 
-    /**
-     * @param cachedPassword the cachedPassword to set
-     */
     @Override
-    public void setCachedPassword(char[] cachedPassword) {
-        this.cachedPassword = cachedPassword;
+    public void setCachedPassword(char[] value) {
+        if (value != null) {
+            cacheLastAccessTime = new Date();
+        }
+        this.cachedPassword = value;
+    }
+    
+    private char[] getCachedPassword() {
+        if (cachedPassword != null) {
+            Date now = new Date();
+            if (now.getTime() - cacheLastAccessTime.getTime() > CACHE_TIME_TO_LIVE_MS) {
+                cachedPassword = null;
+            } else {
+                cacheLastAccessTime = now;
+            }
+        }
+        
+        return cachedPassword;
+    }
+    
+    private boolean hasCachedPassword() {
+        Date now = new Date();
+        return this.cachedPassword != null && now.getTime() - cacheLastAccessTime.getTime() < CACHE_TIME_TO_LIVE_MS;
     }
 }
