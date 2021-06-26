@@ -42,6 +42,7 @@ Name: "english"; MessagesFile: "compiler:Default.isl"
 [Files]
 Source: "nexu.jar"; DestDir: "{app}"; Flags: ignoreversion
 Source: "store.xml"; DestDir: "{localappdata}\Nowina\NexU"
+Source: "NexU-Kill.bat"; DestDir: "{app}"; Flags: ignoreversion 
 ; NOTE: Don't use "Flags: ignoreversion" on any shared system files
 
 [Icons]
@@ -68,8 +69,8 @@ function PrepareToInstall(var NeedsRestart: Boolean): String;
 var
   ResultCode : Integer;
 begin
-	// Launch Notepad and wait for it to terminate
-	if Exec(ExpandConstant('{app}\NexU-Kill.bat'), '', '', SW_SHOW, ewWaitUntilTerminated, ResultCode) then
+    ExtractTemporaryFile('NexU-Kill.bat');
+	if Exec(ExpandConstant('{tmp}\NexU-Kill.bat'), '', '', SW_SHOW, ewWaitUntilTerminated, ResultCode) then
 		begin
 			Log('Killed successfully');
 		end
