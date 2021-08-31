@@ -136,7 +136,7 @@
                    </execution>
                  </executions>
                </plugin>          -->     
-               
+               <!-- MOD 4535992
                   <plugin>
                     <groupId>org.codehaus.mojo</groupId>
                     <artifactId>exec-maven-plugin</artifactId>
@@ -155,7 +155,6 @@
                           </arguments>
                         </configuration>
                       </execution>
-                      <!-- MOD 4535992
                       <execution>
                           <id>create_update_setup</id>
                         <phase>package</phase>
@@ -169,11 +168,11 @@
                           </arguments>
                         </configuration>
                       </execution>
- 						END MOD 4535992 -->    
+
                     </executions>
 
                   </plugin>  
-            
+             END MOD 4535992 -->    
 		</plugins>
             <resources>
                <resource>
