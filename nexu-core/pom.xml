@@ -28,6 +28,25 @@
 		-->   
 		<!-- MOD 4535992 -->
 		<dependency>
+		    <groupId>io.github.jnasmartcardio</groupId>
+		    <artifactId>jnasmartcardio</artifactId>  
+		</dependency>
+		<dependency>
+		    <groupId>org.openjfx</groupId>
+		    <artifactId>javafx-controls</artifactId>
+		</dependency>
+		<dependency>
+		    <groupId>org.openjfx</groupId>
+		    <artifactId>javafx-fxml</artifactId>
+		</dependency>
+		<dependency>
+		    <groupId>org.xipki.iaik</groupId>
+		    <artifactId>sunpkcs11-wrapper</artifactId>
+		    <version>1.4.8</version>
+			<scope>system</scope>
+   			<systemPath>${project.basedir}/lib-override/sunpkcs11-wrapper-1.4.8.jar</systemPath> 
+		</dependency>
+		<dependency>
 			<groupId>eu.europa.ec.joinup.sd-dss</groupId>
 			<artifactId>sscd-mocca-adapter</artifactId>
 		</dependency>
@@ -82,4 +101,16 @@
 		<powermock.version>1.7.1</powermock.version>
 	</properties>
 
+    <build>
+        <plugins>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-compiler-plugin</artifactId>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-resources-plugin</artifactId>
+            </plugin>
+        </plugins>
+    </build>
 </project>

@@ -22,7 +22,7 @@ import org.slf4j.LoggerFactory;
 
 import eu.europa.esig.dss.token.DSSPrivateKeyEntry;
 import eu.europa.esig.dss.token.SignatureTokenConnection;
-import eu.europa.esig.dss.x509.CertificateToken;
+import eu.europa.esig.dss.model.x509.CertificateToken;
 import lu.nowina.nexu.api.DetectedCard;
 import lu.nowina.nexu.api.Execution;
 import lu.nowina.nexu.api.GetCertificateRequest;
@@ -135,7 +135,7 @@ class GetCertificateFlow extends AbstractCoreFlow<GetCertificateRequest, GetCert
     								final CertificateToken certificate = key.getCertificate();
     								resp.setCertificate(certificate);
     								resp.setKeyId(certificate.getDSSIdAsString());
-    								resp.setEncryptionAlgorithm(certificate.getEncryptionAlgorithm());
+//    								resp.setEncryptionAlgorithm(certificate.getEncryptionAlgorithm());
 
     								final CertificateToken[] certificateChain = key.getCertificateChain();
     								if (certificateChain != null) {
