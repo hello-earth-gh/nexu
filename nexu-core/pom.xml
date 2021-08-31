@@ -4,7 +4,7 @@
 		<groupId>lu.nowina.apps</groupId>
 		<artifactId>nexu</artifactId>
         <relativePath>../pom.xml</relativePath>
-		<version>1.23-modified-02-SNAPSHOT</version>
+		<version>1.23-modified-03-SNAPSHOT</version>
 	</parent>
 	<artifactId>nexu-core</artifactId>
 
@@ -20,10 +20,18 @@
 			<version>${project.version}</version>
 		</dependency>
 		<!-- unisystems change -->
+		<!-- MOD 4535992
 		<dependency>
 			<groupId>lu.nowina</groupId>
 			<artifactId>nexu_for_mocca</artifactId>
-		</dependency>      
+		</dependency>  
+		-->   
+		<!-- MOD 4535992 -->
+		<dependency>
+			<groupId>eu.europa.ec.joinup.sd-dss</groupId>
+			<artifactId>sscd-mocca-adapter</artifactId>
+		</dependency>
+		<!-- END MOD 4535992 --> 
 		<dependency>
 			<groupId>lu.nowina.apps</groupId>
 			<artifactId>nexu-model</artifactId>

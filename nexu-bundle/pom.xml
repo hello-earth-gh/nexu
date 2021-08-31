@@ -3,7 +3,7 @@
 	<parent>
 		<groupId>lu.nowina.apps</groupId>
 		<artifactId>nexu</artifactId>
-		<version>1.23-modified-02-SNAPSHOT</version>
+		<version>1.23-modified-03-SNAPSHOT</version>
 	</parent>
 	<artifactId>nexu-bundle</artifactId>
 	<packaging>pom</packaging>
@@ -136,6 +136,7 @@
                    </execution>
                  </executions>
                </plugin>          -->     
+               <!-- MOD 4535992
                   <plugin>
                     <groupId>org.codehaus.mojo</groupId>
                     <artifactId>exec-maven-plugin</artifactId>
@@ -171,7 +172,7 @@
                     </executions>
 
                   </plugin>  
-                 
+             END MOD 4535992 -->    
 		</plugins>
             <resources>
                <resource>

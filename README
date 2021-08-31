@@ -4,6 +4,8 @@ To fill in the gap left by the demise of Java Applets to communicate with smartc
 Nowina has developed an innovative, open-source multi-browser multi-platform remote 
 signature tool called NexU.
 
+## YOU MUST USE ORACLE JDK 1.8 NOT OPENJDK BECAUSE THE LIBRARY JAVAXFX IS ABSENT
+
 ## Overview 
 
 http://nowina.lu/solutions/java-less-browser-signing-nexu/

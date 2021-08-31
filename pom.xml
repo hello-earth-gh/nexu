@@ -2,7 +2,7 @@
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>lu.nowina.apps</groupId>
 	<artifactId>nexu</artifactId>
-	<version>1.23-modified-02-SNAPSHOT</version>
+	<version>1.23-modified-03-SNAPSHOT</version>
 	<packaging>pom</packaging>
 	<name>NexU</name>
 	<description>Multi-browser, multi-platform remote signature tool.</description>
@@ -169,11 +169,20 @@
 				<version>${dss.version}</version>
 				<scope>runtime</scope>
 			</dependency>
+			<!--  MOD 4535992
 			<dependency>
 				<groupId>lu.nowina</groupId>
 				<artifactId>nexu_for_mocca</artifactId>
 				<version>1.22</version>
 			</dependency>
+			-->
+			<!-- MOD 4535992 -->
+			<dependency>
+				<groupId>eu.europa.ec.joinup.sd-dss</groupId>
+				<artifactId>sscd-mocca-adapter</artifactId>
+				<version>${dss.version}</version>
+			</dependency>			
+			<!-- END MOD 4535992 -->
 		</dependencies>
 	</dependencyManagement>
 
@@ -226,6 +235,26 @@
 					<packaging>jar</packaging>
 				</configuration>
 			</plugin>
+			<plugin>
+              	  <groupId>org.apache.maven.plugins</groupId>
+                 <artifactId>maven-toolchains-plugin</artifactId>
+                 <version>3.0.0</version>
+                 <executions>
+                     <execution>
+                         <goals>
+                             <goal>toolchain</goal>
+                         </goals>
+                     </execution>
+                 </executions>
+                 <configuration>
+                     <toolchains>
+                         <jdk>
+                             <version>${maven.compiler.target}</version>
+                         </jdk>
+                     </toolchains>
+                     
+                 </configuration>
+             </plugin>			
 		</plugins>
 	</build>
 
