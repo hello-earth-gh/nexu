@@ -61,7 +61,9 @@ public class Pkcs11SignatureTokenAdapter extends Pkcs11SignatureToken {
                     ((AuthProvider) this.provider).logout();
                 }
                 // MOD 4535992 https://github.com/nowina-solutions/nexu/pull/20/files
-                if (this.provider instanceof SunPKCS11) {
+            	Class<?> sunPkcs11ProviderClass = (Class<?>) Class.forName("sun.security.pkcs11.SunPKCS11");
+            	
+            	if (this.provider.getClass().equals(sunPkcs11ProviderClass)) {
                     /*
                      * IN CASE WE WANT TO USE MORE THAN ONE TOKEN WITH PKCS#11,
                      * WE NEED TO FINALIZE AND REINITIALIZE THE MODULE EVERY
@@ -79,7 +81,7 @@ public class Pkcs11SignatureTokenAdapter extends Pkcs11SignatureToken {
                 // END MOD 4535992
             } catch (final LoginException e) {
                 logger.error("LoginException on logout of '" + this.provider.getName() + "'", e);
-	        } catch (IOException | PKCS11Exception | NoSuchFieldException | SecurityException | IllegalArgumentException | IllegalAccessException e) {
+	        } catch (IOException | PKCS11Exception | NoSuchFieldException | SecurityException | IllegalArgumentException | IllegalAccessException | ClassNotFoundException e) {
 	            logger.error("Exception finalizing '" + this.provider.getName() + "'", e);
 	        }
             this.provider.clear();

@@ -33,6 +33,7 @@
 			<artifactId>nexu-app</artifactId>
 			<version>${project.version}</version>
 		</dependency>
+		<!-- MOD 4535992
 		<dependency>
 			<groupId>com.oracle.java</groupId>
 			<artifactId>jre</artifactId>
@@ -40,6 +41,7 @@
 			<classifier>${platform.classifier}</classifier>
 			<type>tgz</type>
 		</dependency>
+		END MOD 4535992 -->
 	</dependencies>
 
 	<build>

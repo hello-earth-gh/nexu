@@ -16,4 +16,4 @@ rem because we have absolute paths here (because there no easy way to specify _s
 rem we have to wrap them in double-quotes for the very possible case that they have spaces in them
 rem start "" "__{app}"\java\bin\javaw.exe -Djavafx.preloader=lu.nowina.nexu.NexUPreLoader -Dglass.accessible.force=false -jar "__{app}"\nexu.jar
 rem start .\java\bin\javaw -Djavafx.preloader=lu.nowina.nexu.NexUPreLoader -Dglass.accessible.force=false -jar nexu.jar
-start .\java\bin\javaw --module-path .\javafx-sdk-11\lib --add-modules=javafx.controls --add-modules=javafx.swing -Djavafx.preloader=lu.nowina.nexu.NexUPreLoader -Dglass.accessible.force=false -jar nexu.jar
+start .\java\bin\javaw -verbose --module-path .\javafx-sdk-11\lib --add-modules=javafx.controls,javafx.fxml,javafx.swing -Djavafx.preloader=lu.nowina.nexu.NexUPreLoader -Dglass.accessible.force=false -jar nexu.jar

@@ -248,7 +248,7 @@ END MOD 4535992 -->
 			END MOD 4535992 -->
 			
 			<!-- MOD 4535992 -->
-			
+	
 			<!-- ============================ -->
 			<!-- XML DEPENDENCIES JDK 11      -->
 			<!-- ============================ -->
@@ -438,11 +438,38 @@ END MOD 4535992 -->
 			<!-- ====================== -->
 			<!-- OTHER DEPENDENCIES -->
 			<!-- ====================== -->
+			
 			<dependency>
 			    <groupId>io.github.jnasmartcardio</groupId>
 			    <artifactId>jnasmartcardio</artifactId>
 			    <version>${jnasmartcardio.version}</version>
 			</dependency>
+			
+			<!--			
+			<dependency>
+			    <groupId>com.github.martinpaljak</groupId>
+			    <artifactId>apdu4j</artifactId>
+			    <version>21.05.06</version>
+			    <type>pom</type>
+			    <scope>import</scope>
+			</dependency>
+			<dependency>
+			    <groupId>com.github.martinpaljak</groupId>
+			    <artifactId>apdu4j-core</artifactId>
+			    <version>2020r3</version>
+			</dependency>			
+			<dependency>
+			    <groupId>com.github.martinpaljak</groupId>
+			    <artifactId>apdu4j-pcsc</artifactId>
+			    <version>21.05.06</version>
+			</dependency>		
+			<dependency>
+			    <groupId>com.github.martinpaljak</groupId>
+			    <artifactId>apdu4j-tool</artifactId>
+			    <version>21.05.06</version>
+			</dependency>
+			-->
+						
 			<dependency>
 			    <groupId>org.openjfx</groupId>
 			    <artifactId>javafx-controls</artifactId>
@@ -637,16 +664,6 @@ END MOD 4535992 -->
 	                    <encoding>${project.build.sourceEncoding}</encoding>
 						<source>11</source>
 						<target>11</target>
-	                       <compilerArgs>
-							<arg>--add-modules</arg>
-							<arg>java.smartcardio</arg>
-							<arg>--add-modules</arg>
-							<arg>jdk.crypto.cryptoki</arg>
-							<arg>--add-exports</arg>
-							<arg>jdk.crypto.cryptoki/sun.security.pkcs11.wrapper=ALL-UNNAMED</arg>
-							<arg>--add-exports</arg>
-							<arg>jdk.crypto.cryptoki/sun.security.pkcs11=ALL-UNNAMED</arg>
-						</compilerArgs>
 						<verbose>true</verbose>
 						<fork>true</fork>
 						<encoding>${project.build.targetEncoding}</encoding>
@@ -673,16 +690,6 @@ END MOD 4535992 -->
                     <encoding>${project.build.sourceEncoding}</encoding>
 					<source>11</source>
 					<target>11</target>
-                       <compilerArgs>
-						<arg>--add-modules</arg>
-						<arg>java.smartcardio</arg>
-						<arg>--add-modules</arg>
-						<arg>jdk.crypto.cryptoki</arg>
-						<arg>--add-exports</arg>
-						<arg>jdk.crypto.cryptoki/sun.security.pkcs11.wrapper=ALL-UNNAMED</arg>
-						<arg>--add-exports</arg>
-						<arg>jdk.crypto.cryptoki/sun.security.pkcs11=ALL-UNNAMED</arg>
-					</compilerArgs>
 					<verbose>true</verbose>
 					<fork>true</fork>
 					<encoding>${project.build.targetEncoding}</encoding>

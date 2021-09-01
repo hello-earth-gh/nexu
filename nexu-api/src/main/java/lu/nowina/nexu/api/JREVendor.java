@@ -39,8 +39,11 @@ public enum JREVendor {
 		} 
 		// MOD 4535992
 		else if (jreVendor.toLowerCase().contains("openjdk")) {
-			return ORACLE;
-		
+			return OPENJDK;
+		}else if(jreVendor.toLowerCase().contains("eclipse openj9")) {
+			return OPENJDK;
+		}else if(jreVendor.toLowerCase().contains("openj9")) {
+			return OPENJDK;
 		// END MOD 4535992
 		} else {
 			logger.warn("JRE not recognized " + jreVendor);

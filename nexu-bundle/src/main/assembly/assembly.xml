@@ -20,10 +20,14 @@ Consultez la Licence pour les autorisations et les restrictions linguistiques sp
 	<id>nexu</id>
 
 	<formats>
-		<format>dir</format>
+		<format>zip</format>
 	</formats>
 
 	<fileSets>
+		<fileSet>
+			<directory>src/main/resources</directory>
+			<outputDirectory></outputDirectory>
+		</fileSet>
 		<fileSet>
 			<directory>${project.build.directory}/classes</directory> <!-- copy from the result of maven filtering, rather then from the original source directory -->
 			<outputDirectory></outputDirectory>
@@ -31,6 +35,7 @@ Consultez la Licence pour les autorisations et les restrictions linguistiques sp
 	</fileSets>
 
 	<dependencySets>
+		<!-- MOD 4535992
 		<dependencySet>
 			<unpack>true</unpack>
 			<includes>
@@ -39,6 +44,7 @@ Consultez la Licence pour les autorisations et les restrictions linguistiques sp
 			<outputDirectory></outputDirectory>
 			<fileMode>0644</fileMode>
 		</dependencySet>
+		END MOD 4535992 -->
 		<dependencySet>
 			<includes>
 				<include>lu.nowina.apps:nexu-app:jar</include>

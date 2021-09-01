@@ -78,10 +78,31 @@
 		<!-- ====================== -->
 		<!-- OTHER DEPENDENCIES -->
 		<!-- ====================== -->
+		
 		<dependency>
 		    <groupId>io.github.jnasmartcardio</groupId>
-		    <artifactId>jnasmartcardio</artifactId>
-		</dependency>        
+		    <artifactId>jnasmartcardio</artifactId>  
+		</dependency>
+		
+		<!--
+		<dependency>
+		    <groupId>com.github.martinpaljak</groupId>
+		    <artifactId>apdu4j-core</artifactId>
+		</dependency>
+		<dependency>
+		    <groupId>com.github.martinpaljak</groupId>
+		    <artifactId>apdu4j-pcsc</artifactId>
+		</dependency>
+		<dependency>
+		    <groupId>com.github.martinpaljak</groupId>
+		    <artifactId>apdu4j-tool</artifactId>
+		</dependency>
+		-->
+		
+		<dependency>
+			<groupId>at.gv.egiz</groupId>
+			<artifactId>smcc</artifactId>
+		</dependency>
 		<dependency>
 			<groupId>eu.europa.ec.joinup.sd-dss</groupId>
 			<artifactId>sscd-mocca-adapter</artifactId>
