@@ -2,7 +2,7 @@
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>lu.nowina.apps</groupId>
 	<artifactId>nexu</artifactId>
-	<version>1.23-modified-03-SNAPSHOT</version>
+	<version>1.23-SNAPSHOT</version>
 	<packaging>pom</packaging>
 	<name>NexU</name>
 	<description>Multi-browser, multi-platform remote signature tool.</description>
@@ -52,9 +52,14 @@
 		<slf4j.version>1.7.12</slf4j.version>
 		<jna.version>4.2.2</jna.version>
 		<mocca.version>1.3.30</mocca.version>
-		<jnasmartcardio.version>0.2.7</jnasmartcardio.version>
 		
-		<!-- dependcies necessary for jdk 11 -->
+		<!-- added dss dependencies for jdk11 -->
+		<powermock.version>1.7.1</powermock.version>
+		<jnasmartcardio.version>0.2.7</jnasmartcardio.version>
+	    <!-- We MUST use last version because of https://github.com/mapstruct/mapstruct/issues/634. -->
+		<org.mapstruct.version>1.1.0.Final</org.mapstruct.version>		
+		
+		<!-- dependencies necessary for jdk 11 -->
 		
 		<jaxws-api.version>2.3.1</jaxws-api.version>
 	    <jsr181-api.version>1.0-MR1</jsr181-api.version>
@@ -84,6 +89,7 @@
 		<xstream.version>1.3.1</xstream.version>
 		
 		<!-- plugin maven -->
+		
 		<maven.plugin.version>3.6.0</maven.plugin.version>
         <maven.versions.version>2.8.1</maven.versions.version>
         <maven.enforcer.version>1.4.1</maven.enforcer.version>
@@ -99,16 +105,17 @@
         <maven.assembly.version>3.2.0</maven.assembly.version>
         <maven.war.version>3.2.3</maven.war.version>
         <maven.alfresco.version>1.1.1</maven.alfresco.version>
+        
 	</properties>
 
-<!--
+<!--MOD 4535992
 	<scm>
 		<connection>scm:git:https://github.com/nowina-solutions/nexu.git</connection>
 		<developerConnection>scm:git:https://github.com/nowina-solutions/nexu.git</developerConnection>
 		<url>http://github.com/nowina-solutions/nexu/tree/master</url>
         <tag>HEAD</tag>
 	</scm>
--->
+END MOD 4535992 -->
 
 	<licenses>
 		<license>
@@ -196,7 +203,7 @@
 				<artifactId>jna-platform</artifactId>
 				<version>${jna.version}</version>
 			</dependency>
-			<!-- TODO TO REMOVE -->
+			<!-- TODO TO REMOVE IN FAVOR OF LANG 3 -->
 			<dependency>
 				<groupId>commons-lang</groupId>
 				<artifactId>commons-lang</artifactId>
@@ -223,6 +230,12 @@
 				<version>${dss.version}</version>
 				<scope>runtime</scope>
 			</dependency>
+			<dependency>
+				<groupId>at.gv.egiz</groupId>
+				<artifactId>smcc</artifactId>
+				<version>${mocca.version}</version>
+			</dependency>
+
 			<!--  MOD 4535992
 			<dependency>
 				<groupId>lu.nowina</groupId>
@@ -649,7 +662,7 @@
 	            </plugin>			
 			</plugins>
 		</pluginManagement>
-		<plugins>			
+		<plugins>
 			<plugin>
 				<artifactId>maven-compiler-plugin</artifactId>
 				<version>${maven.compiler.version}</version>
@@ -683,20 +696,7 @@
                     <encoding>${project.build.sourceEncoding}</encoding>
                 </configuration>
             </plugin>
-		
-			<!--
-			<plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-javadoc-plugin</artifactId>
-                <configuration>
-                    <additionalJOptions>
-                     <additionalJOption>-html5</additionalJOption>
-                        <additionalJOption>\-\-add-modules</additionalJOption>
-                        <additionalJOption>java.smartcardio</additionalJOption>
-                    </additionalJOptions>
-                </configuration>
-			</plugin>
-			-->
+
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-release-plugin</artifactId>
@@ -725,26 +725,6 @@
 					<packaging>jar</packaging>
 				</configuration>
 			</plugin>
-			<plugin>
-              	  <groupId>org.apache.maven.plugins</groupId>
-                 <artifactId>maven-toolchains-plugin</artifactId>
-                 <version>${maven.toolchain.version}</version>
-                 <executions>
-                     <execution>
-                         <goals>
-                             <goal>toolchain</goal>
-                         </goals>
-                     </execution>
-                 </executions>
-                 <configuration>
-                     <toolchains>
-                         <jdk>
-                             <version>${maven.compiler.target}</version>
-                         </jdk>
-                     </toolchains>
-                     
-                 </configuration>
-             </plugin>			
 		</plugins>
 	</build>
 

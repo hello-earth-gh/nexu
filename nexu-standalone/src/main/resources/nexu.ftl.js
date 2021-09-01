@@ -49,12 +49,12 @@ function callUrl(url, type, data, success_callback, error_callback) {
 		  crossDomain: true, 
 		  contentType: "application/json; charset=utf-8",
 		  dataType: "json",
-		  success: function (result) {                    
-                  console.log(url + " : OK");
-                  success_callback.call(this, result);
+		  success: function (result) {
+			  console.log(url + " : OK");
+			  success_callback.call(this, result);
 		  }
 		}).fail(function (error) {
-               console.log(url + " : KO");
-               error_callback.call(this, error);
+			console.log(url + " : KO");
+			error_callback.call(this, error);
 		});
 } 

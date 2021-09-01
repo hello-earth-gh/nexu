@@ -3,15 +3,11 @@
 	<parent>
 		<groupId>lu.nowina.apps</groupId>
 		<artifactId>nexu</artifactId>
-		<version>1.23-modified-03-SNAPSHOT</version>
+		<relativePath>../pom.xml</relativePath>
+		<version>1.23-SNAPSHOT</version>
 	</parent>
 	<artifactId>nexu-util</artifactId>
 
-	<properties>
-		<project.encoding>UTF-8</project.encoding>
-		<maven.compiler.source>11</maven.compiler.source>
-		<maven.compiler.target>11</maven.compiler.target>
-	</properties>
 
 	<dependencies>
 		<dependency>

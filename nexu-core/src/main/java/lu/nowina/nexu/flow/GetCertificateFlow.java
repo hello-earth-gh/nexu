@@ -47,8 +47,7 @@ import lu.nowina.nexu.flow.operation.SelectPrivateKeyOperation;
 import lu.nowina.nexu.flow.operation.TokenOperationResultKey;
 import lu.nowina.nexu.view.core.UIDisplay;
 import lu.nowina.nexu.view.core.UIOperation;
-
-// unisystems change : setDefaultProduct on product selection for multiple signing
+//unisystems change : setDefaultProduct on product selection for multiple signing
 class GetCertificateFlow extends AbstractCoreFlow<GetCertificateRequest, GetCertificateResponse> {
 
     static final Logger logger = LoggerFactory.getLogger(GetCertificateFlow.class);
@@ -71,7 +70,7 @@ class GetCertificateFlow extends AbstractCoreFlow<GetCertificateRequest, GetCert
     				selectedProduct = defaultProduct;
     				defaultProduct = null; // this does not make sense - we should not reset the default product in case of multiple signatures, but we should reset it somewhere in case of an error, or a normal end of operation (i.e.logout)
     			} else {
-                    // Unisystems change
+                    // unisystems change : setDefaultProduct on product selection for multiple signing
                     List<DetectedCard> cards = api.detectCards();
                     if (api.getAppConfig().isMakeSingleCardDefault() && cards != null && cards.size() == 1) {
                         selectedProduct = cards.get(0); // setting of selectedProduct should be followed by setting of defaultProduct for the next operations to continue properly with this selected card
@@ -111,6 +110,7 @@ class GetCertificateFlow extends AbstractCoreFlow<GetCertificateRequest, GetCert
     					if (createTokenOperationResult.getStatus().equals(BasicOperationStatus.SUCCESS)) {
     						final Map<TokenOperationResultKey, Object> map = createTokenOperationResult.getResult();
     						tokenId = (TokenId) map.get(TokenOperationResultKey.TOKEN_ID);
+
     						final OperationResult<SignatureTokenConnection> getTokenConnectionOperationResult = this.getOperationFactory()
     								.getOperation(GetTokenConnectionOperation.class, api, tokenId).perform();
     						if (getTokenConnectionOperationResult.getStatus().equals(BasicOperationStatus.SUCCESS)) {

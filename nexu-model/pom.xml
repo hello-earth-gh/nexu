@@ -3,14 +3,11 @@
 	<parent>
 		<groupId>lu.nowina.apps</groupId>
 		<artifactId>nexu</artifactId>
-		<version>1.23-modified-03-SNAPSHOT</version>
+        	<relativePath>../pom.xml</relativePath>
+		<version>1.23-SNAPSHOT</version>
 	</parent>
 	<artifactId>nexu-model</artifactId>
-	<properties>
-		<project.encoding>UTF-8</project.encoding>
-		<maven.compiler.source>11</maven.compiler.source>
-		<maven.compiler.target>11</maven.compiler.target>
-	</properties>
+
 
 	<dependencies>
 		<dependency>
@@ -71,34 +68,6 @@
 		    <artifactId>javax.annotation-api</artifactId>
 		</dependency>
 
-		<!-- ================================= -->
-		<!-- XML UTILITIES -->
-		<!-- ================================= -->
-		
-		<dependency>
-		    <groupId>wsdl4j</groupId>
-		    <artifactId>wsdl4j</artifactId>
-		</dependency>
-		<dependency>
-		    <groupId>org.apache.ws.security</groupId>
-		    <artifactId>wss4j</artifactId>
-		</dependency>
-		<dependency>
-		    <groupId>xalan</groupId>
-		    <artifactId>xalan</artifactId>
-		</dependency>		
-		<!--  -->		
-		<dependency>
-			<groupId>com.thoughtworks.xstream</groupId>
-			<artifactId>xstream</artifactId>
-		</dependency>
-		<!-- 
-		<dependency>
-			<groupId>xpp3</groupId>
-			<artifactId>xpp3</artifactId>
-		</dependency>
-		 -->
-		 
 		 <!-- END MOD 4535992 -->
 		 
 		<dependency>

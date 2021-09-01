@@ -50,7 +50,7 @@ public interface NexuAPI {
 
 	Execution<SignatureResponse> sign(SignatureRequest request);
       
-      Execution<LogoutResponse> logout(LogoutRequest request);
+        Execution<LogoutResponse> logout(LogoutRequest request);
 
 	Execution<GetIdentityInfoResponse> getIdentityInfo(GetIdentityInfoRequest request);
 	

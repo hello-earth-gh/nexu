@@ -37,7 +37,7 @@ import org.slf4j.LoggerFactory;
  *
  * @author David Naramski
  */
-// Unisystems change: added makeSingleCardDefault
+//Unisystems change: added makeSingleCardDefault
 public class AppConfig {
 
     private static final String ADVANCED_MODE_AVAILABLE = "advanced_mode_available";
@@ -473,7 +473,8 @@ public class AppConfig {
         this.setEnableIncidentReport(Boolean.parseBoolean(props.getProperty(ENABLE_INCIDENT_REPORT, "false")));
         this.setShowSplashScreen(Boolean.parseBoolean(props.getProperty(SHOW_SPLASH_SCREEN, "false")));
         this.setDisplayBackButton(Boolean.parseBoolean(props.getProperty(DISPLAY_BACK_BUTTON, "false")));
-        this.setMakeSingleCardDefault(Boolean.parseBoolean(props.getProperty(MAKE_SINGLE_CARD_DEFAULT, "false")));
+	// Unisystems change: added makeSingleCardDefault        
+	this.setMakeSingleCardDefault(Boolean.parseBoolean(props.getProperty(MAKE_SINGLE_CARD_DEFAULT, "false")));
         this.setFilterOnlyCertWithDigitalSignatureUsageBit(Boolean.parseBoolean(props.getProperty(FILTER_ONLY_CERT_WITH_DIGITAL_SIGNATURE_USAGE_BIT, "false")));
     }
 

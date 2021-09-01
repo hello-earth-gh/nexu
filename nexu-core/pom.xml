@@ -3,8 +3,8 @@
 	<parent>
 		<groupId>lu.nowina.apps</groupId>
 		<artifactId>nexu</artifactId>
-        <relativePath>../pom.xml</relativePath>
-		<version>1.23-modified-03-SNAPSHOT</version>
+        	<relativePath>../pom.xml</relativePath>
+		<version>1.23-SNAPSHOT</version>
 	</parent>
 	<artifactId>nexu-core</artifactId>
 
@@ -19,14 +19,17 @@
 			<artifactId>nexu-api</artifactId>
 			<version>${project.version}</version>
 		</dependency>
+
 		<!-- unisystems change -->
 		<!-- MOD 4535992
 		<dependency>
 			<groupId>lu.nowina</groupId>
 			<artifactId>nexu_for_mocca</artifactId>
 		</dependency>  
-		-->   
+		-->
+
 		<!-- MOD 4535992 -->
+
 		<dependency>
 		    <groupId>io.github.jnasmartcardio</groupId>
 		    <artifactId>jnasmartcardio</artifactId>  
@@ -43,11 +46,17 @@
 		    <groupId>org.xipki.iaik</groupId>
 		    <artifactId>sunpkcs11-wrapper</artifactId>
 		</dependency>
+
+		<!-- END MOD 4535992 -->
+
 		<dependency>
 			<groupId>eu.europa.ec.joinup.sd-dss</groupId>
 			<artifactId>sscd-mocca-adapter</artifactId>
 		</dependency>
-		<!-- END MOD 4535992 --> 
+		<dependency>
+			<groupId>at.gv.egiz</groupId>
+			<artifactId>smcc</artifactId>
+		</dependency>
 		<dependency>
 			<groupId>lu.nowina.apps</groupId>
 			<artifactId>nexu-model</artifactId>
@@ -93,21 +102,6 @@
   		</dependency>
 	</dependencies>
 
-	<properties>
-		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-		<powermock.version>1.7.1</powermock.version>
-	</properties>
 
-    <build>
-        <plugins>
-            <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-compiler-plugin</artifactId>
-            </plugin>
-            <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-resources-plugin</artifactId>
-            </plugin>
-        </plugins>
-    </build>
+
 </project>

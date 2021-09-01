@@ -36,8 +36,8 @@ import org.slf4j.LoggerFactory;
 
 public class GenericCardAdapter extends AbstractCardProductAdapter {
 
-    private final SCInfo info;
     private final Logger logger = LoggerFactory.getLogger(GenericCardAdapter.class.getName());
+    private final SCInfo info;
 
     public GenericCardAdapter(final SCInfo info) {
         super();
@@ -84,7 +84,7 @@ public class GenericCardAdapter extends AbstractCardProductAdapter {
               cInfo = this.info.getInfos().get(0);
            }
         }
-        
+
         final ScAPI scApi = cInfo.getSelectedApi();
         switch (scApi) {
             case MSCAPI:
