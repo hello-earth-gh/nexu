@@ -84,8 +84,21 @@
 		<xstream.version>1.3.1</xstream.version>
 		
 		<!-- plugin maven -->
-		<maven.toolchain.version>3.0.0</maven.toolchain.version>
 		<maven.plugin.version>3.6.0</maven.plugin.version>
+        <maven.versions.version>2.8.1</maven.versions.version>
+        <maven.enforcer.version>1.4.1</maven.enforcer.version>
+        <maven.clean.version>3.1.0</maven.clean.version>
+        <maven.resources.version>3.1.0</maven.resources.version>
+        <maven.dependency.version>3.1.2</maven.dependency.version>
+        <maven.compiler.version>3.8.1</maven.compiler.version>
+        <maven.source.version>3.2.1</maven.source.version>
+        <maven.javadoc.version>3.2.0</maven.javadoc.version>
+        <maven.jar.version>3.2.0</maven.jar.version>
+        <maven.toolchain.version>3.0.0</maven.toolchain.version>
+        <maven.forbiddenapis.version>3.1</maven.forbiddenapis.version>
+        <maven.assembly.version>3.2.0</maven.assembly.version>
+        <maven.war.version>3.2.3</maven.war.version>
+        <maven.alfresco.version>1.1.1</maven.alfresco.version>
 	</properties>
 
 <!--
@@ -603,7 +616,7 @@
 		        </plugin>
 				<plugin>
 					<artifactId>maven-compiler-plugin</artifactId>
-					<version>2.3.2</version>
+					<version>${maven.compiler.version}</version>
 	                <configuration>
 	                    <encoding>${project.build.sourceEncoding}</encoding>
 						<source>11</source>
@@ -625,25 +638,33 @@
 			                <version>11</version>
 			            </jdkToolchain>							
 					</configuration>
-				</plugin>			
+				</plugin>
+				<plugin>
+	                <groupId>org.apache.maven.plugins</groupId>
+	                <artifactId>maven-resources-plugin</artifactId>
+	                <version>${maven.resources.version}</version>
+	                <configuration>
+	                    <encoding>${project.build.sourceEncoding}</encoding>
+	                </configuration>
+	            </plugin>			
 			</plugins>
 		</pluginManagement>
 		<plugins>			
 			<plugin>
 				<artifactId>maven-compiler-plugin</artifactId>
-				<version>2.3.2</version>
+				<version>${maven.compiler.version}</version>
                 <configuration>
                     <encoding>${project.build.sourceEncoding}</encoding>
 					<source>11</source>
 					<target>11</target>
                        <compilerArgs>
-						<arg>\-\-add-modules</arg>
+						<arg>--add-modules</arg>
 						<arg>java.smartcardio</arg>
-						<arg>\-\-add-modules</arg>
+						<arg>--add-modules</arg>
 						<arg>jdk.crypto.cryptoki</arg>
-						<arg>\-\-add-exports</arg>
+						<arg>--add-exports</arg>
 						<arg>jdk.crypto.cryptoki/sun.security.pkcs11.wrapper=ALL-UNNAMED</arg>
-						<arg>\-\-add-exports</arg>
+						<arg>--add-exports</arg>
 						<arg>jdk.crypto.cryptoki/sun.security.pkcs11=ALL-UNNAMED</arg>
 					</compilerArgs>
 					<verbose>true</verbose>
@@ -654,6 +675,14 @@
 		            </jdkToolchain>							
 				</configuration>
 			</plugin>
+			<plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-resources-plugin</artifactId>
+                <version>${maven.resources.version}</version>
+                <configuration>
+                    <encoding>${project.build.sourceEncoding}</encoding>
+                </configuration>
+            </plugin>
 		
 			<!--
 			<plugin>

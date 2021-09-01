@@ -21,6 +21,7 @@ import eu.europa.esig.dss.model.ToBeSigned;
 import eu.europa.esig.dss.token.DSSPrivateKeyEntry;
 import eu.europa.esig.dss.token.PasswordInputCallback;
 import eu.europa.esig.dss.token.Pkcs11SignatureToken;
+import eu.europa.esig.dss.token.SunPKCS11Initializer;
 import lu.nowina.nexu.CancelledOperationException;
 import java.io.IOException;
 import java.lang.reflect.Field;
@@ -59,6 +60,7 @@ public class Pkcs11SignatureTokenAdapter extends Pkcs11SignatureToken {
                 if (this.provider instanceof AuthProvider) {
                     ((AuthProvider) this.provider).logout();
                 }
+                // MOD 4535992 https://github.com/nowina-solutions/nexu/pull/20/files
                 if (this.provider instanceof SunPKCS11) {
                     /*
                      * IN CASE WE WANT TO USE MORE THAN ONE TOKEN WITH PKCS#11,
@@ -74,6 +76,7 @@ public class Pkcs11SignatureTokenAdapter extends Pkcs11SignatureToken {
                     privateStaticField.setAccessible(true);
                     ((Map) privateStaticField.get(null)).remove(this.getPkcs11Path());
                 }
+                // END MOD 4535992
             } catch (final LoginException e) {
                 logger.error("LoginException on logout of '" + this.provider.getName() + "'", e);
 	        } catch (IOException | PKCS11Exception | NoSuchFieldException | SecurityException | IllegalArgumentException | IllegalAccessException e) {
@@ -109,7 +112,8 @@ public class Pkcs11SignatureTokenAdapter extends Pkcs11SignatureToken {
             final String configString = pkcs11Config.toString();
 
             logger.debug("PKCS11 Config : \n{}", configString);
-
+            // MOD 4535992
+            /*
             try (ByteArrayInputStream confStream = new ByteArrayInputStream(configString.getBytes("ISO-8859-1"))) {
                 final sun.security.pkcs11.SunPKCS11 sunPKCS11 = new sun.security.pkcs11.SunPKCS11(confStream);
                 // we need to add the provider to be able to sign later
@@ -119,6 +123,16 @@ public class Pkcs11SignatureTokenAdapter extends Pkcs11SignatureToken {
             } catch (final Exception e) {
                 throw new DSSException("Unable to instantiate SunPKCS11", e);
             }
+            */
+			provider = SunPKCS11Initializer.getProvider(configString);
+
+			if (provider == null) {
+				throw new DSSException("Unable to create PKCS11 provider");
+			}
+			// we need to add the provider to be able to sign later
+			Security.addProvider(provider);
+    		return provider;
+    		// END MOD 4535992
         }
         return this.provider;
     }
