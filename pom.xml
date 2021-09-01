@@ -42,6 +42,7 @@
 	</modules>
 
 	<properties>
+		<java.version>11</java.version>
 		<maven.compiler.source>11</maven.compiler.source>
 		<maven.compiler.target>11</maven.compiler.target>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
@@ -57,7 +58,9 @@
 		<powermock.version>1.7.1</powermock.version>
 		<jnasmartcardio.version>0.2.7</jnasmartcardio.version>
 	    <!-- We MUST use last version because of https://github.com/mapstruct/mapstruct/issues/634. -->
-		<org.mapstruct.version>1.1.0.Final</org.mapstruct.version>		
+		<org.mapstruct.version>1.4.2.Final</org.mapstruct.version>
+		<javafx.version>11.0.2</javafx.version>	
+		<sunpkcs11-wrapper.version>1.4.8</sunpkcs11-wrapper.version>
 		
 		<!-- dependencies necessary for jdk 11 -->
 		
@@ -443,17 +446,17 @@ END MOD 4535992 -->
 			<dependency>
 			    <groupId>org.openjfx</groupId>
 			    <artifactId>javafx-controls</artifactId>
-			    <version>11.0.2</version>
+			    <version>${javafx.version}</version>
 			</dependency>
 			<dependency>
 			    <groupId>org.openjfx</groupId>
 			    <artifactId>javafx-fxml</artifactId>
-			    <version>11.0.2</version>
+			    <version>${javafx.version}</version>
 			</dependency>
 			<dependency>
 			    <groupId>org.xipki.iaik</groupId>
 			    <artifactId>sunpkcs11-wrapper</artifactId>
-			    <version>1.4.8</version>
+			    <version>${sunpkcs11-wrapper.version}</version>
 			</dependency>
 			<dependency>
 				<groupId>eu.europa.ec.joinup.sd-dss</groupId>
