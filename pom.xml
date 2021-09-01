@@ -39,6 +39,7 @@
 		<module>nexu-https-plugin</module>
 		<module>nexu-windows-keystore-plugin</module>
         <module>nexu-multi-user-support</module>
+        <module>nexu-proxy</module>
 	</modules>
 
 	<properties>
