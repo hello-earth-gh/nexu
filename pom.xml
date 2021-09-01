@@ -132,7 +132,6 @@ END MOD 4535992 -->
 			<id>ec.europa.eu-cefdigital</id>
 			<url>https://ec.europa.eu/cefdigital/artifact/content/groups/public/</url>
 		</repository>
-
 		<repository>
 			<id>egiz-mocca</id>
 			<url>https://apps.egiz.gv.at/maven/</url>
