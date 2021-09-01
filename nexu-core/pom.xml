@@ -50,11 +50,6 @@
 		    <artifactId>apdu4j-tool</artifactId>
 		</dependency>
 		-->
-		
-		<dependency>
-			<groupId>at.gv.egiz</groupId>
-			<artifactId>smcc</artifactId>
-		</dependency>
 		<dependency>
 		    <groupId>org.openjfx</groupId>
 		    <artifactId>javafx-controls</artifactId>

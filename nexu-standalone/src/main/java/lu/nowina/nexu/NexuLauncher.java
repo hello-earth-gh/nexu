@@ -47,7 +47,7 @@ public class NexuLauncher {
 		launcher.launch(args);
 	}
 
-	protected void launch(String[] args) throws IOException {
+	public void launch(String[] args) throws IOException {
 		props = loadProperties();
 		loadAppConfig(props);
 

@@ -222,11 +222,13 @@ END MOD 4535992 -->
 				<artifactId>commons-io</artifactId>
 				<version>2.5</version>
 			</dependency>
+			<!-- MOD 4535992
 			<dependency>
 				<groupId>org.apache.santuario</groupId>
 				<artifactId>xmlsec</artifactId>
 				<version>2.0.2</version>
 			</dependency>
+			END MOD 4535992 -->
 			<dependency>
 				<groupId>eu.europa.ec.joinup.sd-dss</groupId>
 				<artifactId>dss-utils-apache-commons</artifactId>
@@ -685,7 +687,6 @@ END MOD 4535992 -->
 		<plugins>
 			<plugin>
 				<artifactId>maven-compiler-plugin</artifactId>
-				<version>${maven.compiler.version}</version>
                 <configuration>
                     <encoding>${project.build.sourceEncoding}</encoding>
 					<source>11</source>
@@ -701,7 +702,6 @@ END MOD 4535992 -->
 			<plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-resources-plugin</artifactId>
-                <version>${maven.resources.version}</version>
                 <configuration>
                     <encoding>${project.build.sourceEncoding}</encoding>
                 </configuration>
