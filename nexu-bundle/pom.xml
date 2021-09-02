@@ -53,7 +53,30 @@
             <plugin>
               <groupId>org.apache.maven.plugins</groupId>
               <artifactId>maven-dependency-plugin</artifactId>
+              <version>${maven.dependency.version}</version>
               <executions>
+		<!-- MOD 4535992 -->
+		<!--
+				<execution>
+					<id>copy-dependencies</id>
+					<phase>process-resources</phase>
+					<goals>
+						<goal>copy-dependencies</goal>
+					</goals>
+					<configuration>		
+						<excludeScope>provided</excludeScope>
+						<excludeTransitive>false</excludeTransitive>
+						<outputDirectory>${project.build.directory}/lib</outputDirectory>
+						<overWriteReleases>true</overWriteReleases>
+						<overWriteSnapshots>true</overWriteSnapshots>
+						<overWriteIfNewer>true</overWriteIfNewer>
+						<stripClassifier>false</stripClassifier>
+						<prependGroupId>false</prependGroupId>
+						<transitive>false</transitive>
+					</configuration>
+				</execution>
+		-->
+		<!-- END MOD 4535992 -->
                 <execution>
                    <id>unpack</id>
                    <phase>process-resources</phase>

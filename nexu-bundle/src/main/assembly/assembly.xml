@@ -13,15 +13,26 @@ SANS GARANTIES OU CONDITIONS QUELLES QU’ELLES SOIENT, expresses ou implicites.
 Consultez la Licence pour les autorisations et les restrictions linguistiques spécifiques relevant de la Licence. 
 -->
 <assembly
-	xmlns="http://maven.apache.org/plugins/maven-assembly-plugin/assembly/1.1.2"
+	xmlns="http://maven.apache.org/plugins/maven-assembly-plugin/assembly/1.1.3"
 	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-	xsi:schemaLocation="http://maven.apache.org/plugins/maven-assembly-plugin/assembly/1.1.2 http://maven.apache.org/xsd/assembly-1.1.2.xsd">
+	xsi:schemaLocation="http://maven.apache.org/plugins/maven-assembly-plugin/assembly/1.1.3 http://maven.apache.org/xsd/assembly-1.1.3.xsd">
 
 	<id>nexu</id>
 
 	<formats>
 		<format>zip</format>
 	</formats>
+	
+	<files>
+		<!-- MOD 4535992 -->
+		<!--
+        <file>
+            <source>${project.build.directory}/${project.artifactId}-${project.version}.jar</source>
+            <outputDirectory>lib</outputDirectory>
+        </file>
+        -->
+        <!-- END MOD 4535992 -->
+    </files>
 
 	<fileSets>
 		<fileSet>
@@ -32,6 +43,15 @@ Consultez la Licence pour les autorisations et les restrictions linguistiques sp
 			<directory>${project.build.directory}/classes</directory> <!-- copy from the result of maven filtering, rather then from the original source directory -->
 			<outputDirectory></outputDirectory>
 		</fileSet>
+		<!-- MOD 4535992 -->
+		<fileSet>
+	      <directory>${project.build.directory}/lib</directory>
+	      <outputDirectory></outputDirectory>
+	      <includes>
+	        <include>*.*</include>
+	      </includes>
+    	</fileSet>
+    	<!-- END MOD 4535992 -->
 	</fileSets>
 
 	<dependencySets>

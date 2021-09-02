@@ -208,5 +208,5 @@ Ty to all the other developer with their contribution and all their fork...
 
 - [dlemaignent](https://github.com/dlemaignent/nexu) for [use jsonp to avoid cors errors](https://github.com/dlemaignent/nexu/commit/60aa14245f5e2ffce70aa21d214367e36f4b458b)
 - [sharedchains](https://github.com/sharedchains/nexu/) for [Fixed failure removing and inserting SmartCard Token ](https://github.com/sharedchains/nexu/commit/7b2d18f361d59ba5351efc4035a8f1c6aa19fbed)
-- [IntesysOpenway](https://github.com/IntesysOpenway) for (some modification)[https://github.com/IntesysOpenway]
-- [hello-earth-gh](https://github.com/hello-earth-gh) for (various changes and fixes)[https://github.com/hello-earth-gh]
+- [IntesysOpenway](https://github.com/IntesysOpenway) for [some modification](https://github.com/IntesysOpenway)
+- [hello-earth-gh](https://github.com/hello-earth-gh) for [various changes and fixes](https://github.com/hello-earth-gh)

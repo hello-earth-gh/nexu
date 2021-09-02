@@ -61,7 +61,12 @@ public class NexUPreLoader extends Preloader {
 			final Alert alert = new Alert(preloaderMessage.getMessageType());
 			alert.setTitle(preloaderMessage.getTitle());
 			alert.setHeaderText(preloaderMessage.getHeaderText());
-			alert.setContentText(preloaderMessage.getContentText());
+			// MOD 4535992
+			// alert.setContentText(preloaderMessage.getContentText());
+			alert.setContentText("PreLoaderMessage: type = " + preloaderMessage.getMessageType() + ", title = " + preloaderMessage.getTitle()
+			+", header = " + preloaderMessage.getHeaderText() + ", content = " + preloaderMessage.getContentText()
+			+ ", message = " + preloaderMessage.toString());
+			// END MOD 4535992
 			alert.showAndWait();
 		} else {
 			LOGGER.error("Unknown preloader notification class: " + info.getClass().getName());
@@ -79,21 +84,16 @@ public class NexUPreLoader extends Preloader {
 	 */
 	@Override
 	public void start(Stage primaryStage) throws Exception {
-		try {
-			if(getConfig().isShowSplashScreen()) {
-				final ImageView splash = new ImageView(new Image(NexUPreLoader.class.getResourceAsStream("/images/splash.jpg")));
-				final StackPane background = new StackPane(splash);
-				final Scene splashScene = new Scene(background, 600, 300);
-				primaryStage.setScene(splashScene);
-				primaryStage.initStyle(StageStyle.UNDECORATED);
-				primaryStage.show();
-				final PauseTransition delay = new PauseTransition(Duration.seconds(3));
-				delay.setOnFinished(event -> primaryStage.close());
-				delay.play();
-			}
-		}catch(Throwable ex) {
-			ex.printStackTrace();
-			throw ex;
+		if(getConfig().isShowSplashScreen()) {
+			final ImageView splash = new ImageView(new Image(NexUPreLoader.class.getResourceAsStream("/images/splash.jpg")));
+			final StackPane background = new StackPane(splash);
+			final Scene splashScene = new Scene(background, 600, 300);
+			primaryStage.setScene(splashScene);
+			primaryStage.initStyle(StageStyle.UNDECORATED);
+			primaryStage.show();
+			final PauseTransition delay = new PauseTransition(Duration.seconds(3));
+			delay.setOnFinished(event -> primaryStage.close());
+			delay.play();
 		}
     }
 
@@ -106,8 +106,10 @@ public class NexUPreLoader extends Preloader {
 		final Alert alert = new Alert(AlertType.WARNING);
 		alert.setTitle(resourceBundle.getString("preloader.error"));
 		alert.setHeaderText(MessageFormat.format(resourceBundle.getString("preloader.error.occurred"), getConfig().getApplicationName()));
-		alert.setContentText(resourceBundle.getString("contact.application.provider"));
-		
+		// MOD 4535992
+		//alert.setContentText(resourceBundle.getString("contact.application.provider"));
+		alert.setContentText(info.toString());
+		// END MOD 4535992
 		alert.showAndWait();
 		return true;
 	}

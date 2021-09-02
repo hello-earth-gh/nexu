@@ -109,7 +109,7 @@
         <maven.assembly.version>3.2.0</maven.assembly.version>
         <maven.war.version>3.2.3</maven.war.version>
         <maven.alfresco.version>1.1.1</maven.alfresco.version>
-        
+        <maven-install-plugin.version>3.0.0-M1</maven-install-plugin.version><!-- 2.5.2 -->
 	</properties>
 
 <!--MOD 4535992
@@ -504,22 +504,7 @@ END MOD 4535992 -->
 	<build>
 		<pluginManagement>
 			<plugins>
-				<plugin>
-					<groupId>org.jacoco</groupId>
-					<artifactId>jacoco-maven-plugin</artifactId>
-					<version>0.7.4.201502262128</version>
-				</plugin>
-				<plugin>
-					<groupId>org.codehaus.mojo</groupId>
-					<artifactId>sonar-maven-plugin</artifactId>
-					<version>2.6</version>
-				</plugin>
-				<plugin>
-					<groupId>org.apache.maven.plugins</groupId>
-					<artifactId>maven-assembly-plugin</artifactId>
-					<version>2.5.3</version>
-				</plugin>
-		        <!-- the following is only necessary if you are using eclipse and m2e -->
+				<!-- the following is only necessary if you are using eclipse and m2e -->
 		        <plugin>
 		            <groupId>org.eclipse.m2e</groupId>
 		            <artifactId>lifecycle-mapping</artifactId>
@@ -658,7 +643,22 @@ END MOD 4535992 -->
 		                    </pluginExecutions>
 		                </lifecycleMappingMetadata>
 		            </configuration>
-		        </plugin>
+		        </plugin>			
+				<plugin>
+					<groupId>org.jacoco</groupId>
+					<artifactId>jacoco-maven-plugin</artifactId>
+					<version>0.7.4.201502262128</version>
+				</plugin>
+				<plugin>
+					<groupId>org.codehaus.mojo</groupId>
+					<artifactId>sonar-maven-plugin</artifactId>
+					<version>2.6</version>
+				</plugin>
+				<plugin>
+					<groupId>org.apache.maven.plugins</groupId>
+					<artifactId>maven-assembly-plugin</artifactId>
+					<version>2.5.3</version>
+				</plugin>		        
 				<plugin>
 					<artifactId>maven-compiler-plugin</artifactId>
 					<version>${maven.compiler.version}</version>
@@ -715,7 +715,7 @@ END MOD 4535992 -->
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-install-plugin</artifactId>
-				<version>2.5.2</version>
+				<version>${maven-install-plugin.version}</version>
 				<inherited>false</inherited>
 				<executions>
 					<execution>
@@ -727,11 +727,11 @@ END MOD 4535992 -->
 					</execution>
 				</executions>
 				<configuration>
-					<file>nexu-standalone/lib/SystemTray-3.0.RC6.jar</file>
-					<sources>nexu-standalone/lib/SystemTray-3.0.RC6-sources.jar</sources>
+					<file>nexu-standalone/lib/SystemTray-4.1.jar</file>
+					<sources>nexu-standalone/lib/SystemTray-4.1-sources.jar</sources>
 					<groupId>com.dorkbox</groupId>
 					<artifactId>SystemTray</artifactId>
-					<version>3.0.RC6</version>
+					<version>4.1</version>
 					<packaging>jar</packaging>
 				</configuration>
 			</plugin>
