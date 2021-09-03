@@ -12,6 +12,7 @@ import org.thymeleaf.spring4.view.ThymeleafViewResolver;
 //import org.thymeleaf.templatemode.TemplateMode;
 import org.thymeleaf.templateresolver.ClassLoaderTemplateResolver;
 import org.thymeleaf.templateresolver.ITemplateResolver;
+import org.thymeleaf.templateresolver.ServletContextTemplateResolver;
 
 /**
  * @href https://o7planning.org/en/11257/using-multiple-viewresolvers-in-spring-boot
@@ -88,8 +89,33 @@ public class ThymeleafViewResolverConfig {
         resolver.setTemplateMode("HTML5"); 
         resolver.setCharacterEncoding("UTF-8");
         resolver.setCacheable(true);
-        resolver.setOrder(1);
+        resolver.setOrder(2);
         return resolver;
     }
+    
+	@Bean
+	public ServletContextTemplateResolver defaultTemplateResolver() {
+		ServletContextTemplateResolver resolver = new ServletContextTemplateResolver();
+    	resolver.setPrefix("templates/thymeleaf/");
+        resolver.setSuffix(".html");
+        resolver.setCharacterEncoding("UTF-8");
+        resolver.setOrder(1);
+        resolver.setCacheable(false);
+        return resolver;
+	}
+
+	@Bean
+	public SpringTemplateEngine templateEngine() {
+		SpringTemplateEngine templateEngine = new SpringTemplateEngine();
+		templateEngine.setTemplateResolver(defaultTemplateResolver());
+		return templateEngine;
+	}
+
+	@Bean
+	public ThymeleafViewResolver viewResolver() {
+		ThymeleafViewResolver viewResolver = new ThymeleafViewResolver();
+		viewResolver.setTemplateEngine(templateEngine());
+		return viewResolver;
+	}
 
 }

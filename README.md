@@ -51,13 +51,13 @@ For now this is tested on windows machine 64bit
 
 # Additional info
 
-Due to the lack of maven projects to download runtime for OpenJDK 11 and JavaFX 11 (or OpenJFX) and for ease of integration some unpacked versions of the two have been made for the integration of the bundle.
+- Due to the lack of maven projects to download runtime for OpenJDK 11 and JavaFX 11 (or OpenJFX) and for ease of integration some unpacked versions of the two have been made for the integration of the bundle. This mechanism needs to be revised.
 
-This mechanism needs to be revised.
+- The project "nexu-proxy" is still in developing...
 
-## [Setup the toolchain for maven](https://maven.apache.org/guides/mini/guide-using-toolchains.html)
+- [Setup the toolchain for maven](https://maven.apache.org/guides/mini/guide-using-toolchains.html)
 
-## [Setup Smartcardio for JDk 11](https://nicedoc.io/jnasmartcardio/jnasmartcardio)
+- [Setup Smartcardio for JDk 11](https://nicedoc.io/jnasmartcardio/jnasmartcardio)
 
 
 # LICENSE

@@ -214,28 +214,28 @@ public class WebConfigurer  implements ServletContextInitializer {//, WebServerF
 		return messageSource;
 	}
 
-	@Bean
-	public ServletContextTemplateResolver defaultTemplateResolver() {
-		ServletContextTemplateResolver templateResolver = new ServletContextTemplateResolver();
-		templateResolver.setPrefix("/WEB-INF/html/");
-		templateResolver.setSuffix(".html");
-		templateResolver.setCacheable(false);
-		return templateResolver;
-	}
-
-	@Bean
-	public SpringTemplateEngine templateEngine() {
-		SpringTemplateEngine templateEngine = new SpringTemplateEngine();
-		templateEngine.setTemplateResolver(defaultTemplateResolver());
-		return templateEngine;
-	}
-
-	@Bean
-	public ThymeleafViewResolver viewResolver() {
-		ThymeleafViewResolver viewResolver = new ThymeleafViewResolver();
-		viewResolver.setTemplateEngine(templateEngine());
-		return viewResolver;
-	}
+//	@Bean
+//	public ServletContextTemplateResolver defaultTemplateResolver() {
+//		ServletContextTemplateResolver templateResolver = new ServletContextTemplateResolver();
+//		templateResolver.setPrefix("/WEB-INF/html/");
+//		templateResolver.setSuffix(".html");
+//		templateResolver.setCacheable(false);
+//		return templateResolver;
+//	}
+//
+//	@Bean
+//	public SpringTemplateEngine templateEngine() {
+//		SpringTemplateEngine templateEngine = new SpringTemplateEngine();
+//		templateEngine.setTemplateResolver(defaultTemplateResolver());
+//		return templateEngine;
+//	}
+//
+//	@Bean
+//	public ThymeleafViewResolver viewResolver() {
+//		ThymeleafViewResolver viewResolver = new ThymeleafViewResolver();
+//		viewResolver.setTemplateEngine(templateEngine());
+//		return viewResolver;
+//	}
 	
 //	@Override
 //	public void configureDefaultServletHandling(DefaultServletHandlerConfigurer configurer) {
