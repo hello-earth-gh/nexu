@@ -32,8 +32,15 @@
 			<groupId>lu.nowina.apps</groupId>
 			<artifactId>nexu-app</artifactId>
 			<version>${project.version}</version>
+			<classifier>jar-with-dependencies</classifier>
+			<scope>compile</scope>
 		</dependency>
 		<!-- MOD 4535992
+		<dependency>
+			<groupId>lu.nowina.apps</groupId>
+			<artifactId>nexu-app</artifactId>
+			<version>${project.version}</version>
+		</dependency>
 		<dependency>
 			<groupId>com.oracle.java</groupId>
 			<artifactId>jre</artifactId>
@@ -77,6 +84,32 @@
 				</execution>
 		-->
 		<!-- END MOD 4535992 -->
+		<!-- MOD 4535992 -->
+			<!--
+                <execution>
+                   <id>copy-nexu-app</id>
+                   <phase>process-resources</phase>
+                   <goals>
+                     <goal>copy</goal>
+                   </goals>
+                   <configuration>
+                     <artifactItems>
+                       <artifactItem>
+                         <groupId>lu.nowina.apps</groupId>
+                         <artifactId>nexu-app</artifactId>
+                         <version>${project.version}</version>
+                         <type>jar</type>
+                         <classifier>jar-with-dependencies</classifier>
+                         <overWrite>true</overWrite>
+                         <outputDirectory>${project.build.directory}/nexu/nexu</outputDirectory>
+                         <includes>store.xml</includes>
+                       </artifactItem>
+                     </artifactItems>
+                     <outputDirectory>${project.build.directory}</outputDirectory>
+                   </configuration>
+                 </execution>
+                 -->
+              <!-- END MOD 4535992 -->
                 <execution>
                    <id>unpack</id>
                    <phase>process-resources</phase>

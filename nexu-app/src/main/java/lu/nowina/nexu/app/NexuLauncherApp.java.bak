@@ -42,7 +42,7 @@ public class NexuLauncherApp {
 		args = new String[list.size()];
 		list.toArray(args);
 		
-		NexuLauncher launcher = new NexuLauncher();
-		launcher.launch(args);
+		// Call main javafx11 application
+		NexuLauncher.main(args);
 	}
 }
