@@ -22,6 +22,7 @@ import org.slf4j.LoggerFactory;
 
 import eu.europa.esig.dss.token.DSSPrivateKeyEntry;
 import eu.europa.esig.dss.token.SignatureTokenConnection;
+import eu.europa.esig.dss.enumerations.EncryptionAlgorithm;
 import eu.europa.esig.dss.model.x509.CertificateToken;
 import lu.nowina.nexu.api.DetectedCard;
 import lu.nowina.nexu.api.Execution;
@@ -80,19 +81,19 @@ class GetCertificateFlow extends AbstractCoreFlow<GetCertificateRequest, GetCert
                     }
                     else {
                         // end of Unisystems change
-                        final Object[] params = {
-                                    api.getAppConfig().getApplicationName(), api.detectCards(), api.detectProducts(), api
-                        };
-                        final Operation<Product> operation = this.getOperationFactory().getOperation(UIOperation.class, "/fxml/product-selection.fxml", params);
-                        final OperationResult<Product> selectProductOperationResult = operation.perform();
-                        if (selectProductOperationResult.getStatus().equals(BasicOperationStatus.SUCCESS)) {
-                            selectedProduct = selectProductOperationResult.getResult();
-                            if (api != null && api.getAppConfig() != null && api.getAppConfig().getDefaultProduct() == null) {
-                                api.getAppConfig().setDefaultProduct(selectedProduct);
-                            }
-                        } else {
-                            return this.handleErrorOperationResult(selectProductOperationResult);
-                        }                        
+                    	final Object[] params = {
+                    			api.getAppConfig().getApplicationName(), api.detectCards(), api.detectProducts(), api
+                    	};
+                    	final Operation<Product> operation = this.getOperationFactory().getOperation(UIOperation.class, "/fxml/product-selection.fxml", params);
+                    	final OperationResult<Product> selectProductOperationResult = operation.perform();
+                    	if (selectProductOperationResult.getStatus().equals(BasicOperationStatus.SUCCESS)) {
+                    		selectedProduct = selectProductOperationResult.getResult();
+                    		if (api != null && api.getAppConfig() != null && api.getAppConfig().getDefaultProduct() == null) {
+                    			api.getAppConfig().setDefaultProduct(selectedProduct);
+                    		}
+                    	} else {
+                    		return this.handleErrorOperationResult(selectProductOperationResult);
+                    	}
                     }
     			}
 
@@ -135,8 +136,10 @@ class GetCertificateFlow extends AbstractCoreFlow<GetCertificateRequest, GetCert
     								final CertificateToken certificate = key.getCertificate();
     								resp.setCertificate(certificate);
     								resp.setKeyId(certificate.getDSSIdAsString());
-//    								resp.setEncryptionAlgorithm(certificate.getEncryptionAlgorithm());
-
+    								// MOD 4535992 NEW CERTIFICATE TOKEN NOT HAVE ENCRYPTYION ANYMORE
+    								//resp.setEncryptionAlgorithm(certificate.getEncryptionAlgorithm());
+    								resp.setEncryptionAlgorithm(certificate.getSignatureAlgorithm().getEncryptionAlgorithm());
+    								// END MOD 4535992
     								final CertificateToken[] certificateChain = key.getCertificateChain();
     								if (certificateChain != null) {
     									resp.setCertificateChain(certificateChain);

@@ -446,7 +446,13 @@ END MOD 4535992 -->
 			    <artifactId>jnasmartcardio</artifactId>
 			    <version>${jnasmartcardio.version}</version>
 			</dependency>
-			
+			<!--
+			<dependency>
+				<groupId>com.github.mkentaro1</groupId>
+				<artifactId>smartcard-io</artifactId>
+				<version>1.17.1</version>
+			</dependency>
+			-->
 			<!--			
 			<dependency>
 			    <groupId>com.github.martinpaljak</groupId>
