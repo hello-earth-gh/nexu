@@ -1,0 +1,348 @@
+Skip to content <#start-of-content>
+<https://github.com/>
+
+  *
+    In this repository All GitHub ↵
+    Jump to ↵
+
+  * No suggested jump to results
+
+  *
+    In this repository All GitHub ↵
+    Jump to ↵
+  *
+    In this organization All GitHub ↵
+    Jump to ↵
+  *
+    In this repository All GitHub ↵
+    Jump to ↵
+  *
+
+Dashboard <https://github.com/dashboard> Pullrequests
+<https://github.com/pulls> Issues <https://github.com/issues>
+Marketplace <https://github.com/marketplace>
+Explore <https://github.com/explore> Codespaces
+<https://github.com/codespaces> Sponsors
+<https://github.com/sponsors/accounts> Settings
+<https://github.com/settings/profile> @p4535992 p4535992
+<https://github.com/p4535992>
+Sign out
+
+<https://github.com/>
+<https://github.com/notifications>
+
+New repository <https://github.com/new> Import repository
+<https://github.com/new/import> New gist <https://gist.github.com/> New
+organization <https://github.com/organizations/new>
+
+@p4535992
+
+Sorry, something went wrong.
+
+{{ message }}
+
+
+  IntesysOpenway <https://github.com/IntesysOpenway> /
+  *nexu <https://github.com/IntesysOpenway/nexu>
+
+  *
+
+forked from nowina-solutions/nexu
+<https://github.com/nowina-solutions/nexu>
+
+  *
+    Unwatch Stop ignoring Watch
+
+
+          Notifications
+
+    Participating and @mentions
+    Only receive notifications from this repository when participating
+    or @mentioned.
+
+    All Activity
+    Notified of all notifications on this repository.
+
+    Ignore
+    Never be notified.
+
+    Custom
+    Select events you want to be notified of in addition to
+    participating and @mentions.
+
+    Get push notifications on iOS
+    <https://apps.apple.com/app/apple-store/id1477376905?ct=watch-dropdown&mt=8&pt=524675>
+    or Android
+    <https://play.google.com/store/apps/details?id=com.github.android&referrer=utm_campaign%3Dwatch-dropdown%26utm_medium%3Dweb%26utm_source%3Dgithub>.
+
+
+
+    Custom
+
+
+      Custom
+
+    Select events you want to be notified of in addition to
+    participating and @mentions.
+
+    Issues
+    Pull requests
+    Releases
+    Discussions
+    Security alerts
+
+    Apply
+
+    Cancel
+
+    2 <https://github.com/IntesysOpenway/nexu/watchers>
+
+  *
+    Unstar
+
+    0 <https://github.com/IntesysOpenway/nexu/stargazers>
+    Star
+
+    0 <https://github.com/IntesysOpenway/nexu/stargazers>
+
+  *
+    Fork
+
+
+      Fork nexu
+
+    If this dialog fails to load, you can visit the fork page
+    <https://github.com/IntesysOpenway/nexu/fork> directly.
+
+    36 <https://github.com/IntesysOpenway/nexu/network/members>
+
+  *
+
+    Code <https://github.com/IntesysOpenway/nexu>
+  *
+
+    Pull requests 0 <https://github.com/IntesysOpenway/nexu/pulls>
+  *
+
+    Actions <https://github.com/IntesysOpenway/nexu/actions>
+  *
+
+    Projects 0 <https://github.com/IntesysOpenway/nexu/projects>
+  *
+
+    Wiki <https://github.com/IntesysOpenway/nexu/wiki>
+  *
+
+    Security <https://github.com/IntesysOpenway/nexu/security>
+  *
+
+    Insights <https://github.com/IntesysOpenway/nexu/pulse>
+
+More
+
+  * Code <https://github.com/IntesysOpenway/nexu>
+  * Pull requests <https://github.com/IntesysOpenway/nexu/pulls>
+  * Actions <https://github.com/IntesysOpenway/nexu/actions>
+  * Projects <https://github.com/IntesysOpenway/nexu/projects>
+  * Wiki <https://github.com/IntesysOpenway/nexu/wiki>
+  * Security <https://github.com/IntesysOpenway/nexu/security>
+  * Insights <https://github.com/IntesysOpenway/nexu/pulse>
+
+Permalink
+<https://github.com/IntesysOpenway/nexu/commit/d19517b72cc93edbd3fdef73106e6777217a82b3>
+
+
+This commit does not belong to any branch on this repository, and may
+belong to a fork outside of the repository.
+Browse files
+<https://github.com/IntesysOpenway/nexu/tree/d19517b72cc93edbd3fdef73106e6777217a82b3>
+
+macOS bundle - Rename linux SH script
+
+Rename linux SH script
+
+  * nexu-1.6-iopenway
+    <https://github.com/IntesysOpenway/nexu/compare/nexu-1.6-iopenway>
+
+@luca86r <https://github.com/luca86r>
+luca86r <https://github.com/IntesysOpenway/nexu/commits?author=luca86r>
+committed on 6 Dec 2018 Verified
+This commit was created on GitHub.com and signed with GitHub’s *verified
+signature*.
+GPG key ID: 4AEE18F83AFDEB23 Learn about vigilant mode
+<https://docs.github.com/github/authenticating-to-github/displaying-verification-statuses-for-all-of-your-commits>.
+
+1 parent fb7d383
+<https://github.com/IntesysOpenway/nexu/commit/fb7d3835299956079fe59faaee70d40dafbbee0f>
+commit d19517b72cc93edbd3fdef73106e6777217a82b3
+Commenting on lines to
+Write Preview
+
+
+      Insert Link
+
+Link Text
+URL
+Add
+
+Select a reply
+|ctrl .
+
+|
+
+There was an error creating your Commit.
+
+Attach files by dragging & dropping, selecting or pasting them.
+Uploading your files… We don’t support that file type. Try again with a
+GIF, JPEG, JPG, MOV, MP4, PNG, CSV, DOCX, FODG, FODP, FODS, FODT, GZ,
+LOG, MD, ODF, ODG, ODP, ODS, ODT, PDF, PPTX, TXT, XLS, XLSX or ZIP.
+Attaching documents requires write permission to this repository. Try
+again with a GIF, JPEG, JPG, MOV, MP4, PNG, CSV, DOCX, FODG, FODP, FODS,
+FODT, GZ, LOG, MD, ODF, ODG, ODP, ODS, ODT, PDF, PPTX, TXT, XLS, XLSX or
+ZIP. We don’t support that file type. Try again with a GIF, JPEG, JPG,
+MOV, MP4, PNG, CSV, DOCX, FODG, FODP, FODS, FODT, GZ, LOG, MD, ODF, ODG,
+ODP, ODS, ODT, PDF, PPTX, TXT, XLS, XLSX or ZIP. This file is empty. Try
+again with a file that’s not empty. This file is hidden. Try again with
+another file. Something went really wrong, and we can’t process that
+file. Try again. <https://guides.github.com/features/mastering-markdown/>
+
+Nothing to preview
+
+Add single comment
+
+Cancel
+
+			
+
+Commenting on lines to
+Write Preview
+
+
+      Insert Link
+
+Link Text
+URL
+Add
+
+Select a reply
+|ctrl .
+
+|
+
+There was an error creating your Commit.
+
+Attach files by dragging & dropping, selecting or pasting them.
+Uploading your files… We don’t support that file type. Try again with a
+GIF, JPEG, JPG, MOV, MP4, PNG, CSV, DOCX, FODG, FODP, FODS, FODT, GZ,
+LOG, MD, ODF, ODG, ODP, ODS, ODT, PDF, PPTX, TXT, XLS, XLSX or ZIP.
+Attaching documents requires write permission to this repository. Try
+again with a GIF, JPEG, JPG, MOV, MP4, PNG, CSV, DOCX, FODG, FODP, FODS,
+FODT, GZ, LOG, MD, ODF, ODG, ODP, ODS, ODT, PDF, PPTX, TXT, XLS, XLSX or
+ZIP. We don’t support that file type. Try again with a GIF, JPEG, JPG,
+MOV, MP4, PNG, CSV, DOCX, FODG, FODP, FODS, FODT, GZ, LOG, MD, ODF, ODG,
+ODP, ODS, ODT, PDF, PPTX, TXT, XLS, XLSX or ZIP. This file is empty. Try
+again with a file that’s not empty. This file is hidden. Try again with
+another file. Something went really wrong, and we can’t process that
+file. Try again. <https://guides.github.com/features/mastering-markdown/>
+
+Nothing to preview
+
+Add single comment
+
+Cancel
+
+Unified
+<https://github.com/IntesysOpenway/nexu/commit/d19517b72cc93edbd3fdef73106e6777217a82b3?branch=d19517b72cc93edbd3fdef73106e6777217a82b3&diff=unified>
+Split
+<https://github.com/IntesysOpenway/nexu/commit/d19517b72cc93edbd3fdef73106e6777217a82b3?branch=d19517b72cc93edbd3fdef73106e6777217a82b3&diff=split>
+
+
+Showing 1 changed file with *0 additions* and *0 deletions*.
+
+ 1. 0
+    <#diff-0658f03efc2f77dbb1f8ce9bef3249555da9da33651c39573847ba1ab4e85d9f>
+    nexu-bundle/src/main/resources/{NexU-Startup.sh →
+    NexU-Startup-linux.sh}
+    <#diff-0658f03efc2f77dbb1f8ce9bef3249555da9da33651c39573847ba1ab4e85d9f>
+
+
+0 ...bundle/src/main/resources/NexU-Startup.sh →
+.../src/main/resources/NexU-Startup-linux.sh
+<#diff-0658f03efc2f77dbb1f8ce9bef3249555da9da33651c39573847ba1ab4e85d9f>
+
+Show comments
+
+View file
+<https://github.com/IntesysOpenway/nexu/blob/d19517b72cc93edbd3fdef73106e6777217a82b3/nexu-bundle/src/main/resources/NexU-Startup-linux.sh>
+
+Edit file
+
+Delete file
+
+File renamed without changes.
+Toggle all file notes Toggle all file annotations
+
+
+        0 comments on commit |d19517b|
+
+@p4535992 <https://github.com/p4535992>
+Write Preview
+
+
+      Insert Link
+
+Link Text
+URL
+Add
+
+Select a reply
+|ctrl .
+
+|
+
+There was an error creating your Commit.
+
+Attach files by dragging & dropping, selecting or pasting them.
+Uploading your files… We don’t support that file type. Try again with a
+GIF, JPEG, JPG, MOV, MP4, PNG, CSV, DOCX, FODG, FODP, FODS, FODT, GZ,
+LOG, MD, ODF, ODG, ODP, ODS, ODT, PDF, PPTX, TXT, XLS, XLSX or ZIP.
+Attaching documents requires write permission to this repository. Try
+again with a GIF, JPEG, JPG, MOV, MP4, PNG, CSV, DOCX, FODG, FODP, FODS,
+FODT, GZ, LOG, MD, ODF, ODG, ODP, ODS, ODT, PDF, PPTX, TXT, XLS, XLSX or
+ZIP. We don’t support that file type. Try again with a GIF, JPEG, JPG,
+MOV, MP4, PNG, CSV, DOCX, FODG, FODP, FODS, FODT, GZ, LOG, MD, ODF, ODG,
+ODP, ODS, ODT, PDF, PPTX, TXT, XLS, XLSX or ZIP. This file is empty. Try
+again with a file that’s not empty. This file is hidden. Try again with
+another file. Something went really wrong, and we can’t process that
+file. Try again. <https://guides.github.com/features/mastering-markdown/>
+
+Nothing to preview
+
+Comment on this commit
+
+Subscribe
+
+You’re not receiving notifications from this thread.
+
+  * © 2021 GitHub, Inc.
+  * Terms
+    <https://docs.github.com/en/github/site-policy/github-terms-of-service>
+  * Privacy
+    <https://docs.github.com/en/github/site-policy/github-privacy-statement>
+  * Security <https://github.com/security>
+  * Status <https://www.githubstatus.com/>
+  * Docs <https://docs.github.com/>
+
+<https://github.com/>
+
+  * Contact GitHub <https://support.github.com/>
+  * Pricing <https://github.com/pricing>
+  * API <https://docs.github.com/>
+  * Training <https://services.github.com/>
+  * Blog <https://github.blog/>
+  * About <https://github.com/about>
+
+You can’t perform that action at this time.
+You signed in with another tab or window. Reload to refresh your
+session. You signed out in another tab or window. Reload to refresh your
+session.

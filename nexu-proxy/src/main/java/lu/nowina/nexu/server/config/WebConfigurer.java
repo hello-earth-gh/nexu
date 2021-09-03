@@ -65,7 +65,7 @@ import org.thymeleaf.templateresolver.ServletContextTemplateResolver;
  * @href https://www.programmergate.com/serve-static-resources-with-spring-boot/
  */
 @Configuration
-@ComponentScan(basePackages = { "lu.nowina.nexu.server" })
+//@ComponentScan(basePackages = { "lu.nowina.nexu.server" })
 //@EnableWebMvc
 //@EnableWs
 @ImportResource({ "classpath:META-INF/cxf/cxf.xml", "classpath:META-INF/cxf/cxf-servlet.xml" })
@@ -76,11 +76,9 @@ public class WebConfigurer  implements ServletContextInitializer {//, WebServerF
 
     private final Environment env;
 
-    
-
     public WebConfigurer(Environment env) {
         this.env = env;
-       
+      
     }
     
 	@Override
@@ -206,12 +204,6 @@ public class WebConfigurer  implements ServletContextInitializer {//, WebServerF
 //	        // response.setHeader("Access-Control-Max-Age", "3600");
 //            .maxAge(3600);
 //    }
-
-	@Autowired
-	private ApplicationContext applicationContext;
-	
-	@Autowired
-	private ServletContext servletContext; 
 	
 	@Bean
 	public ReloadableResourceBundleMessageSource messageSource() {

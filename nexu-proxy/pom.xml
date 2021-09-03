@@ -408,7 +408,12 @@
 		    <artifactId>hibernate-validator</artifactId>
 		    <version>5.4.3.Final</version>
 		    <scope>compile</scope>
-		    <optional>true</optional>
+		</dependency>
+		<dependency>
+		    <groupId>org.hibernate</groupId>
+		    <artifactId>hibernate-validator-annotation-processor</artifactId>
+		    <version>5.4.3.Final</version>
+		    <scope>compile</scope>
 		</dependency>
 
 		<dependency>
@@ -563,6 +568,13 @@
                     <exclude>**/nexu-proxy.properties</exclude>
                 </excludes>
             </resource>
+            <resource>
+		        <filtering>true</filtering>
+		        <directory>src/main/resources</directory>
+		        <includes>
+		            <include>application.properties</include>
+		        </includes>
+		    </resource>
         </resources>
 
         <plugins>	
