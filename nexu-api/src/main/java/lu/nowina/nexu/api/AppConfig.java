@@ -85,6 +85,17 @@ public class AppConfig {
     private static final String MAKE_SINGLE_CARD_DEFAULT = "make_single_card_default";
     
     private static final String FILTER_ONLY_CERT_WITH_DIGITAL_SIGNATURE_USAGE_BIT = "filter_only_cert_with_digital_signature_usage_bit";
+    
+    // MOD 4535992
+    private static final String CLOSE_TOKEN = "close_token";
+    private boolean closeToken;
+    public boolean getCloseToken() {
+        return this.closeToken;
+    }
+    public void setCloseToken(final boolean closeToken) {
+        this.closeToken = closeToken;
+    }
+    // END MOD 4535992
 
     private static final Logger logger = LoggerFactory.getLogger(AppConfig.class.getName());
 
@@ -437,6 +448,9 @@ public class AppConfig {
         this.setServerUrl(props.getProperty(SERVER_URL, "http://lab.nowina.solutions/nexu"));
         this.setInstallUrl(props.getProperty(INSTALL_URL, "http://nowina.lu/nexu/"));
         this.setNexuHostname(props.getProperty(NEXU_HOSTNAME, "localhost"));
+        // MOD 4535992
+        this.setCloseToken(Boolean.parseBoolean(props.getProperty(CLOSE_TOKEN, "true")));
+        // END MOD 4535992
         this.setHttpServerClass(props.getProperty(HTTP_SERVER_CLASS, "lu.nowina.nexu.jetty.JettyServer"));
         this.setDebug(Boolean.parseBoolean(props.getProperty(DEBUG, "false")));
         this.setAdvancedModeAvailable(Boolean.parseBoolean(props.getProperty(ADVANCED_MODE_AVAILABLE, "true")));
@@ -473,8 +487,8 @@ public class AppConfig {
         this.setEnableIncidentReport(Boolean.parseBoolean(props.getProperty(ENABLE_INCIDENT_REPORT, "false")));
         this.setShowSplashScreen(Boolean.parseBoolean(props.getProperty(SHOW_SPLASH_SCREEN, "false")));
         this.setDisplayBackButton(Boolean.parseBoolean(props.getProperty(DISPLAY_BACK_BUTTON, "false")));
-	// Unisystems change: added makeSingleCardDefault        
-	this.setMakeSingleCardDefault(Boolean.parseBoolean(props.getProperty(MAKE_SINGLE_CARD_DEFAULT, "false")));
+        // Unisystems change: added makeSingleCardDefault        
+        this.setMakeSingleCardDefault(Boolean.parseBoolean(props.getProperty(MAKE_SINGLE_CARD_DEFAULT, "false")));
         this.setFilterOnlyCertWithDigitalSignatureUsageBit(Boolean.parseBoolean(props.getProperty(FILTER_ONLY_CERT_WITH_DIGITAL_SIGNATURE_USAGE_BIT, "false")));
     }
 

@@ -45,6 +45,14 @@ How to debug: (https://github.com/nowina-solutions/nexu/issues/31)
 java -Xdebug -Xrunjdwp:transport=dt_socket,server=y,suspend=y,address=8000 -jar nexu-app-1.23-SNAPSHOT-jar-with-dependencies.jar
 ```
 
+## The configuration
+
+### The "Close Token" Property
+
+On this fork we have implemented some drastic "features", which might be considered questionable security-wise - albeit very useful. On the file "nexu-config.properties" there is a new property called "close_token" by default is true if is setted to false the server-side caching the user PKCS11 token password for the duration of a single signing session. 
+
+There are use cases in which this can be very useful to the operator, but other cases in which precisely for safety reasons it must be avoided.
+
 ### System
 
 For now this is tested on windows machine 64bit
