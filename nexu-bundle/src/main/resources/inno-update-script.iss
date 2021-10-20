@@ -41,6 +41,7 @@ Name: "english"; MessagesFile: "compiler:Default.isl"
 
 [Files]
 Source: "nexu.jar"; DestDir: "{app}"; Flags: ignoreversion
+Source: "nexu-config.properties"; DestDir: "{app}"; Flags: ignoreversion
 Source: "store.xml"; DestDir: "{localappdata}\Nowina\NexU"
 Source: "NexU-Kill.bat"; DestDir: "{app}"; Flags: ignoreversion 
 ; NOTE: Don't use "Flags: ignoreversion" on any shared system files

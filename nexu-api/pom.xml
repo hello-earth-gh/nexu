@@ -4,7 +4,7 @@
         <groupId>lu.nowina.apps</groupId>
         <artifactId>nexu</artifactId>
         <relativePath>../pom.xml</relativePath>
-        <version>1.23-modified-02-SNAPSHOT</version>
+        <version>1.23-modified-03-SNAPSHOT</version>
     </parent>
     <artifactId>nexu-api</artifactId>
     <build>

@@ -44,6 +44,7 @@ Name: "english"; MessagesFile: "compiler:Default.isl"
 [Files]
 Source: "java\*"; DestDir: "{app}\java"; Flags: ignoreversion recursesubdirs createallsubdirs
 Source: "nexu.jar"; DestDir: "{app}"; Flags: ignoreversion
+Source: "nexu-config.properties"; DestDir: "{app}"; Flags: ignoreversion
 Source: "NexU-Startup.bat"; DestDir: "{app}"; Flags: ignoreversion
 Source: "NexU-Startup_debug.bat"; DestDir: "{app}"; Flags: ignoreversion
 Source: "NexU-Kill.bat"; DestDir: "{app}"; Flags: ignoreversion
@@ -95,6 +96,7 @@ begin
         MyFile.SaveToFile(FileName);
       end;
     except
+	  ShowExceptionMessage();
       result := false;
     end;
   finally
