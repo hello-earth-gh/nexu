@@ -25,6 +25,7 @@ The main features we are targeting are :
 * created InnoSetup script and incorporated the setup package build process in the Maven POM file for nexu-standalone project
 * added flag to be able to bypass product/token selection dialog, if exactly one card was found (as if the user selected it)
 * upgrade the esign DSS to 5.9RC1
+* added cache_time_to_live_ms option to nexu-config.properties, and added external configuration support (modifiable nexu-config.properties outside of nexu.jar)
 
 NB: ...\nexu-bundle\src\main\resources\inno-setup-script.iss is a handy script that creates a setup package with InnoSetup.
 
@@ -44,6 +45,30 @@ How to debug: (https://github.com/nowina-solutions/nexu/issues/31)
 ```
 java -Xdebug -Xrunjdwp:transport=dt_socket,server=y,suspend=y,address=8000 -jar nexu-app-1.23-SNAPSHOT-jar-with-dependencies.jar
 ```
+
+**Additional Info**
+
+(attention: java.exe should belong to x64 or x86 version of JDK, depending on what kind of driver was installed)
+"C:\Program Files\Java\jdk1.8.0_251\bin\java.exe" -Xdebug -Xrunjdwp:transport=dt_socket,server=y,suspend=y,address=8000 -jar nexu-app-shaded.jar
+
+take care of the project version - when it does not end with -SNAPSHOT then Maven will try to find artifacts in the remote repository first and will fail
+when compiling with netbeans, should explicitly change properties->build->compile JDK to 1.8 because higher JDK would need inclusion of extra modules
+
+full build order: nexu-api, nexu-model, nexu-util, nexu-core, nexu-standalone, nexu-rest-plugin, nexu-https-plugin, nexu-multi-user-support, nexu-windows-keystore-plugin, nexu-app, nexu-bundle
+usual build order: nexu-api (if e.g. added AppConfig setting), nexu-core (if e.g. changed one of the Operation's that take part in the Flow), nexu-standalone, nexu-app, nexu-bundle -
+carefull with that, because a change in nexu-standalone will not be detected automatically when building nexu-bundle (e.g. in netbeans)
+store.xml is in standalone
+
+to change version in all projects:
+cd nexu-master-modified
+c:\tools\apache-maven-3.6.3\bin\mvn versions:set -DnewVersion=1.23-modified-03-SNAPSHOT
+c:\tools\apache-maven-3.6.3\bin\mvn versions:commit
+
+to build win32 & win64 versions, always do clean & build, and check that the final setup packages have different sizes.
+
+Also, if you care to compile nexu to be able to debug it, egiz/smcc dependency is missing - to workaround this problem, just run install_as_mvn_artifact script, which installs the whole nexu.jar as the missing dependency (it contains the necessary classes inside)
+
+IMPORTANT: before installing nexu.jar as artifact, copy it to e.g. nexu1.jar and strip it of all class files apart from egiz ones
 
 ## The configuration
 

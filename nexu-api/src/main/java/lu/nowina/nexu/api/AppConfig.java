@@ -37,7 +37,7 @@ import org.slf4j.LoggerFactory;
  *
  * @author David Naramski
  */
-//Unisystems change: added makeSingleCardDefault
+//Unisystems change: added makeSingleCardDefault and other options
 public class AppConfig {
 
     private static final String ADVANCED_MODE_AVAILABLE = "advanced_mode_available";
@@ -96,6 +96,8 @@ public class AppConfig {
         this.closeToken = closeToken;
     }
     // END MOD 4535992
+
+    private static final String CACHE_TIME_TO_LIVE_MS = "cache_time_to_live_ms";
 
     private static final Logger logger = LoggerFactory.getLogger(AppConfig.class.getName());
 
@@ -166,6 +168,8 @@ public class AppConfig {
     private boolean makeSingleCardDefault;
     
     private boolean filterOnlyCertWithDigitalSignatureUsageBit;
+
+    private long cacheTimeToLiveMs;
 
     public AppConfig() {
         try {
@@ -360,6 +364,14 @@ public class AppConfig {
     public void setFilterOnlyCertWithDigitalSignatureUsageBit(final boolean value) {
         this.filterOnlyCertWithDigitalSignatureUsageBit = value;
     }
+    
+    public long getCacheTimeToLiveMs() {
+        return this.cacheTimeToLiveMs;
+    }
+
+    private void setCacheTimeToLiveMs(long ttl) {
+        this.cacheTimeToLiveMs = ttl;
+    }
 
     public String getRequestProcessorClass() {
         return this.requestProcessorClass;
@@ -490,6 +502,7 @@ public class AppConfig {
         // Unisystems change: added makeSingleCardDefault        
         this.setMakeSingleCardDefault(Boolean.parseBoolean(props.getProperty(MAKE_SINGLE_CARD_DEFAULT, "false")));
         this.setFilterOnlyCertWithDigitalSignatureUsageBit(Boolean.parseBoolean(props.getProperty(FILTER_ONLY_CERT_WITH_DIGITAL_SIGNATURE_USAGE_BIT, "false")));
+        this.setCacheTimeToLiveMs(Long.parseLong(props.getProperty(CACHE_TIME_TO_LIVE_MS, "5000")));
     }
 
     public void initDefaultProduct(final Properties props) {

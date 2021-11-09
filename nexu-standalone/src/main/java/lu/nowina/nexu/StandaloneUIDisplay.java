@@ -19,8 +19,6 @@ import java.util.ResourceBundle;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import com.sun.javafx.scene.SceneHelper;
-
 import eu.europa.esig.dss.token.PasswordInputCallback;
 import java.util.Date;
 import javafx.application.Platform;
@@ -28,6 +26,7 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
+import lu.nowina.nexu.api.AppConfig;
 import lu.nowina.nexu.api.MessageDisplayCallback;
 import lu.nowina.nexu.api.NexuPasswordInputCallback;
 import lu.nowina.nexu.api.flow.BasicOperationStatus;
@@ -53,6 +52,7 @@ public class StandaloneUIDisplay implements UIDisplay {
 	private Stage nonBlockingStage;
 	private UIOperation<?> currentBlockingOperation;
 	private OperationFactory operationFactory;
+	private AppConfig appConfig;
     private char[] cachedPassword = null;
     private Date cacheLastAccessTime = new Date();
     private static final long CACHE_TIME_TO_LIVE_MS = 5000;
@@ -61,6 +61,12 @@ public class StandaloneUIDisplay implements UIDisplay {
 		this.blockingStage = createStage(true, null);
 		this.nonBlockingStage = createStage(false, null);
 	}
+	
+    public StandaloneUIDisplay(AppConfig config) {
+        this();
+        this.appConfig = config;
+        LOGGER.info("Using cache_time_to_live_ms = " + config.getCacheTimeToLiveMs());
+    }
 
 	private void display(Parent panel, boolean blockingOperation) {
 		LOGGER.info("Display " + panel + " in display " + this + " from Thread " + Thread.currentThread().getName());
@@ -152,7 +158,7 @@ public class StandaloneUIDisplay implements UIDisplay {
             if (cachedPassword != null) {
                 LOGGER.info("Returning cached password");
                 char[] clone = cachedPassword.clone();
-                cachedPassword = null; // should need it only once per FlowPasswordCallback object
+                cachedPassword = null; // should need it only once per FlowPasswordCallback object, real cachedPassword saved in StandaloneUIDisplay, but check CACHE_TIME_TO_LIVE_MS
                 return clone;
             }
                     
@@ -258,7 +264,8 @@ public class StandaloneUIDisplay implements UIDisplay {
     private char[] getCachedPassword() {
         if (cachedPassword != null) {
             Date now = new Date();
-            if (now.getTime() - cacheLastAccessTime.getTime() > CACHE_TIME_TO_LIVE_MS) {
+            if (now.getTime() - cacheLastAccessTime.getTime() > appConfig.getCacheTimeToLiveMs()) {
+                LOGGER.info("Cache is stale, will request password");
                 cachedPassword = null;
             } else {
                 cacheLastAccessTime = now;
@@ -270,6 +277,6 @@ public class StandaloneUIDisplay implements UIDisplay {
     
     private boolean hasCachedPassword() {
         Date now = new Date();
-        return this.cachedPassword != null && now.getTime() - cacheLastAccessTime.getTime() < CACHE_TIME_TO_LIVE_MS;
+        return this.cachedPassword != null && now.getTime() - cacheLastAccessTime.getTime() < appConfig.getCacheTimeToLiveMs();
     }
 }

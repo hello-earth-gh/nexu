@@ -102,7 +102,7 @@
                          <classifier>jar-with-dependencies</classifier>
                          <overWrite>true</overWrite>
                          <outputDirectory>${project.build.directory}/nexu/nexu</outputDirectory>
-                         <includes>store.xml</includes>
+                         <includes>store.xml,nexu-config.properties</includes>
                        </artifactItem>
                      </artifactItems>
                      <outputDirectory>${project.build.directory}</outputDirectory>
@@ -124,7 +124,7 @@
                          <type>jar</type>
                          <overWrite>true</overWrite>
                          <outputDirectory>${project.build.directory}/nexu/nexu</outputDirectory>
-                         <includes>store.xml</includes>
+                         <includes>store.xml, nexu-config.properties</includes>
                        </artifactItem>
                      </artifactItems>
                      <outputDirectory>${project.build.directory}</outputDirectory>

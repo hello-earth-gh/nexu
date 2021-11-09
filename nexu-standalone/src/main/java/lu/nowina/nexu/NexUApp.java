@@ -58,7 +58,7 @@ public class NexUApp extends Application {
 	public void start(Stage primaryStage) throws Exception {
 		Platform.setImplicitExit(false);
 
-		final StandaloneUIDisplay uiDisplay = new StandaloneUIDisplay();
+		final StandaloneUIDisplay uiDisplay = new StandaloneUIDisplay(getConfig());
 		final OperationFactory operationFactory = new BasicOperationFactory();
 		((BasicOperationFactory)operationFactory).setDisplay(uiDisplay);
 		uiDisplay.setOperationFactory(operationFactory);
