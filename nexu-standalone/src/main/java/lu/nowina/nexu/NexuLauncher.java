@@ -48,7 +48,7 @@ public class NexuLauncher {
 		launcher.launch(args);
 	}
 
-	public void launch(String[] args) throws IOException {
+	protected void launch(String[] args) throws IOException {
 		props = loadProperties();
 		loadAppConfig(props);
 
@@ -144,15 +144,13 @@ public class NexuLauncher {
 	private final Properties loadProperties() throws IOException {
 
         Properties props = new Properties();
-		loadPropertiesFromClasspath(props);
-
+        
         if (!loadPropertiesFromJarFolder(props)) {        
             loadPropertiesFromClasspath(props);
         }
 		return props;
-
 	}
-	
+    
     private boolean loadPropertiesFromJarFolder(Properties props) {
         // check location just outside jar file, to see if we have externalized properties there
         try {
@@ -172,13 +170,13 @@ public class NexuLauncher {
         }
 
         return false;
-    }	
+    }
 
 	private void loadPropertiesFromClasspath(Properties props) throws IOException {
 		InputStream configFile = NexUApp.class.getClassLoader().getResourceAsStream("nexu-config.properties");
 		if (configFile != null) {
 			props.load(configFile);
-			logger.info("Loaded properties from inside JAR");
+            logger.info("Loaded properties from inside JAR");
 		}
 	}
 

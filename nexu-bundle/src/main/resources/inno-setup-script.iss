@@ -96,7 +96,7 @@ begin
         MyFile.SaveToFile(FileName);
       end;
     except
-     ShowExceptionMessage();
+	  ShowExceptionMessage();
       result := false;
     end;
   finally

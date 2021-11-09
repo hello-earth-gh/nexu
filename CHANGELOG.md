@@ -1,7 +1,4 @@
 (20211020) added cache_time_to_live_ms option to nexu-config.properties, and added external configuration support (modifiable nexu-config.properties outside of nexu.jar)
-
-(20210831) Upgrade the progect DSS 5.9.RC1, upgrade the JDK from "Oracle JDK 8" to "OpenJDK 11", upgrade the maven dependencies
-
 (20210426) created update installation package InnoSetup script (nexu-update), 
 		   added different versions to all pom.xml files - must use mvn versions:set / commit to increment
 		   fix bug to correctly parse requests from clean DSS CEF demo,
