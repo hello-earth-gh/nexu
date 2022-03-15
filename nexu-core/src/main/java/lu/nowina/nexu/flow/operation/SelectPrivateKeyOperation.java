@@ -13,13 +13,13 @@
  */
 package lu.nowina.nexu.flow.operation;
 
+import eu.europa.esig.dss.enumerations.KeyUsageBit;
+import eu.europa.esig.dss.model.x509.CertificateToken;
 import java.util.Iterator;
 import java.util.List;
 
 import eu.europa.esig.dss.token.DSSPrivateKeyEntry;
 import eu.europa.esig.dss.token.SignatureTokenConnection;
-import eu.europa.esig.dss.tsl.KeyUsageBit;
-import eu.europa.esig.dss.x509.CertificateToken;
 import java.util.HashSet;
 import lu.nowina.nexu.CancelledOperationException;
 import lu.nowina.nexu.api.CertificateFilter;
@@ -88,11 +88,13 @@ public class SelectPrivateKeyOperation extends AbstractCompositeOperation<DSSPri
     @Override
     public OperationResult<DSSPrivateKeyEntry> perform() {
         final List<DSSPrivateKeyEntry> keys;
-        
+        logger.debug("SelectPrivateKeyOperation.perform");
         try {
             if((this.productAdapter != null) && (this.product != null) && this.productAdapter.supportCertificateFilter(this.product) && (this.certificateFilter != null)) {
+                logger.debug("SelectPrivateKeyOperation.perform getting keys from productAdapter");
                 keys = this.productAdapter.getKeys(this.token, this.certificateFilter);
             } else {
+                logger.debug("SelectPrivateKeyOperation.perform getting keys from token");
                 keys = this.token.getKeys();
             }
         } catch(final CancelledOperationException e) {
@@ -107,6 +109,7 @@ public class SelectPrivateKeyOperation extends AbstractCompositeOperation<DSSPri
             if ("CN=Token Signing Public Key".equals(e.getCertificate().getCertificate().getIssuerDN().getName())) {
                 it.remove();
             }
+            logger.info("SelectPrivateKeyOperation found key " + e + " " + e.getCertificate().getCertificate().getSubjectDN() + " from " + e.getCertificate().getCertificate().getIssuerDN());
         }
 
         if (keys.isEmpty()) {
@@ -165,7 +168,7 @@ public class SelectPrivateKeyOperation extends AbstractCompositeOperation<DSSPri
                 logger.info("Checking cert " + (i++) + " with keyUsageBits: " + (cert != null && cert.getKeyUsageBits() != null ? cert.getKeyUsageBits().toString() : "null"));
                 if (cert != null &&
                     cert.getKeyUsageBits() != null &&
-                    cert.getKeyUsageBits().contains(KeyUsageBit.digitalSignature)) {
+                    cert.getKeyUsageBits().contains(KeyUsageBit.DIGITAL_SIGNATURE)) {
                     logger.info("Proper key found - selecting this key.");
                     ret = key;
                     break;

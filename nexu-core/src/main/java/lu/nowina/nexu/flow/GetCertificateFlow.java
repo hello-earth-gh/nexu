@@ -13,6 +13,7 @@
  */
 package lu.nowina.nexu.flow;
 
+import eu.europa.esig.dss.model.x509.CertificateToken;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
@@ -22,7 +23,6 @@ import org.slf4j.LoggerFactory;
 
 import eu.europa.esig.dss.token.DSSPrivateKeyEntry;
 import eu.europa.esig.dss.token.SignatureTokenConnection;
-import eu.europa.esig.dss.x509.CertificateToken;
 import lu.nowina.nexu.api.DetectedCard;
 import lu.nowina.nexu.api.Execution;
 import lu.nowina.nexu.api.GetCertificateRequest;
@@ -68,14 +68,18 @@ class GetCertificateFlow extends AbstractCoreFlow<GetCertificateRequest, GetCert
     		while (true) {
     			final Product selectedProduct;
     			if(defaultProduct != null) {
+               logger.info("defaultProduct is not null from previous operation - selecting it");
     				selectedProduct = defaultProduct;
     				defaultProduct = null; // this does not make sense - we should not reset the default product in case of multiple signatures, but we should reset it somewhere in case of an error, or a normal end of operation (i.e.logout)
     			} else {
+               logger.info("defaultProduct is null, getting it from api.detectCards");
                     // Unisystems change
                     List<DetectedCard> cards = api.detectCards();
                     if (api.getAppConfig().isMakeSingleCardDefault() && cards != null && cards.size() == 1) {
+                       logger.info("cards size is exactly 1, selecting it");
                         selectedProduct = cards.get(0); // setting of selectedProduct should be followed by setting of defaultProduct for the next operations to continue properly with this selected card
                         if (api != null && api.getAppConfig() != null && api.getAppConfig().getDefaultProduct() == null) {
+                            logger.info("setting default product to this card");
                             api.getAppConfig().setDefaultProduct(selectedProduct);
                         }                              
                     }
@@ -135,7 +139,7 @@ class GetCertificateFlow extends AbstractCoreFlow<GetCertificateRequest, GetCert
     								final CertificateToken certificate = key.getCertificate();
     								resp.setCertificate(certificate);
     								resp.setKeyId(certificate.getDSSIdAsString());
-    								resp.setEncryptionAlgorithm(certificate.getEncryptionAlgorithm());
+    								resp.setEncryptionAlgorithm(key.getEncryptionAlgorithm());
 
     								final CertificateToken[] certificateChain = key.getCertificateChain();
     								if (certificateChain != null) {

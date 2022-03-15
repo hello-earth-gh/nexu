@@ -13,6 +13,7 @@
  */
 package lu.nowina.nexu.view.ui;
 
+import eu.europa.esig.dss.enumerations.QCStatement;
 import java.awt.Desktop;
 import java.io.File;
 import java.io.FileWriter;
@@ -27,11 +28,12 @@ import java.util.ResourceBundle;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import eu.europa.esig.dss.DSSASN1Utils;
-import eu.europa.esig.dss.DSSUtils;
-import eu.europa.esig.dss.QCStatementOids;
+import eu.europa.esig.dss.spi.DSSASN1Utils;
+import eu.europa.esig.dss.spi.DSSUtils;
+import eu.europa.esig.dss.model.x509.CertificateToken;
+import eu.europa.esig.dss.model.x509.QcStatements;
+import eu.europa.esig.dss.spi.QcStatementUtils;
 import eu.europa.esig.dss.token.DSSPrivateKeyEntry;
-import eu.europa.esig.dss.x509.CertificateToken;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
@@ -162,11 +164,11 @@ public class KeySelectionController extends AbstractUIOperationController<DSSPri
 
     private List<ImageView> getQCIcons(final CertificateToken certificateToken) throws IOException {
         final List<ImageView> qcIconsImages = new ArrayList<>();
-        final List<String> qcStatements = DSSASN1Utils.getQCStatementsIdList(certificateToken);
-        if (qcStatements.contains(QCStatementOids.QC_COMPLIANCE.getOid())) {
+        final QcStatements qcStatements = QcStatementUtils.getQcStatements(certificateToken);
+        if (qcStatements.isQcCompliance()) {
             qcIconsImages.add(this.fetchImage(ICON_QC));
         }
-        if (qcStatements.contains(QCStatementOids.QC_SSCD.getOid())) {
+        if (qcStatements.isQcQSCD()) {
             qcIconsImages.add(this.fetchImage(ICON_QCSD));
         }
         if (qcIconsImages.isEmpty()) {

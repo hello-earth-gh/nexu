@@ -3,7 +3,8 @@
 	<parent>
 		<groupId>lu.nowina.apps</groupId>
 		<artifactId>nexu</artifactId>
-		<version>1.23-modified-03-SNAPSHOT</version>
+      <relativePath>../pom.xml</relativePath>
+		<version>1.23-modified-04-SNAPSHOT</version>
 	</parent>
 	<artifactId>nexu-app</artifactId>
 
@@ -61,7 +62,7 @@
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-shade-plugin</artifactId>
-				<version>2.4.1</version>
+				<version>2.4.3</version>
 				<executions>
 					<execution>
 						<phase>package</phase>

@@ -13,8 +13,9 @@
  */
 package lu.nowina.nexu.api;
 
-import eu.europa.esig.dss.SignatureValue;
-import eu.europa.esig.dss.x509.CertificateToken;
+import eu.europa.esig.dss.model.SignatureValue;
+import eu.europa.esig.dss.model.x509.CertificateToken;
+
 
 /**
  * This class holds data regarding signature of some identity information.

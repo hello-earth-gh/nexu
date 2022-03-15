@@ -1,3 +1,4 @@
+(20220216) bumped DSS version to 5.9
 (20211020) added cache_time_to_live_ms option to nexu-config.properties, and added external configuration support (modifiable nexu-config.properties outside of nexu.jar)
 (20210426) created update installation package InnoSetup script (nexu-update), 
 		   added different versions to all pom.xml files - must use mvn versions:set / commit to increment

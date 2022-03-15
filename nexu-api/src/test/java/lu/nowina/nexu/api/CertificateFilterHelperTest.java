@@ -1,5 +1,6 @@
 package lu.nowina.nexu.api;
 
+import eu.europa.esig.dss.enumerations.KeyUsageBit;
 import static org.hamcrest.CoreMatchers.equalTo;
 import static org.junit.Assert.*;
 import static org.mockito.Mockito.*;
@@ -13,7 +14,6 @@ import org.mockito.Mockito;
 
 import eu.europa.esig.dss.token.DSSPrivateKeyEntry;
 import eu.europa.esig.dss.token.SignatureTokenConnection;
-import eu.europa.esig.dss.tsl.KeyUsageBit;
 import lu.nowina.nexu.api.CertificateFilter;
 
 public class CertificateFilterHelperTest {
@@ -30,7 +30,7 @@ public class CertificateFilterHelperTest {
 		helper = new CertificateFilterHelper();
 		entries = new ArrayList<>();
 		DSSPrivateKeyEntry entry = mock(DSSPrivateKeyEntry.class, Mockito.RETURNS_DEEP_STUBS);
-		when(entry.getCertificate().checkKeyUsage(KeyUsageBit.nonRepudiation)).thenReturn(false);
+		when(entry.getCertificate().checkKeyUsage(KeyUsageBit.NON_REPUDIATION)).thenReturn(false);
 		when(entry.getCertificate().getDSSIdAsString()).thenReturn(NO_NON_REPUDIATION);
 		entries.add(entry);
 		token = mock(SignatureTokenConnection.class);
@@ -42,7 +42,7 @@ public class CertificateFilterHelperTest {
 		CertificateFilter filter = new CertificateFilter();
 		filter.setNonRepudiationBit(true);
 		DSSPrivateKeyEntry entry = mock(DSSPrivateKeyEntry.class, Mockito.RETURNS_DEEP_STUBS);
-		when(entry.getCertificate().checkKeyUsage(KeyUsageBit.nonRepudiation)).thenReturn(true);
+		when(entry.getCertificate().checkKeyUsage(KeyUsageBit.NON_REPUDIATION)).thenReturn(true);
 		when(entry.getCertificate().getDSSIdAsString()).thenReturn(NON_REPUDIATION);
 		entries.add(entry);
 		List<DSSPrivateKeyEntry> filteredEntries = helper.filterKeys(token, filter);
@@ -55,7 +55,7 @@ public class CertificateFilterHelperTest {
 		CertificateFilter filter = new CertificateFilter();
 		filter.setNonRepudiationBit(true);
 		DSSPrivateKeyEntry entry = mock(DSSPrivateKeyEntry.class, Mockito.RETURNS_DEEP_STUBS);
-		when(entry.getCertificate().checkKeyUsage(KeyUsageBit.nonRepudiation)).thenReturn(false);
+		when(entry.getCertificate().checkKeyUsage(KeyUsageBit.NON_REPUDIATION)).thenReturn(false);
 		when(entry.getCertificate().getDSSIdAsString()).thenReturn(NO_NON_REPUDIATION);
 		entries.add(entry);
 		List<DSSPrivateKeyEntry> filteredEntries = helper.filterKeys(token, filter);
@@ -67,7 +67,7 @@ public class CertificateFilterHelperTest {
 		CertificateFilter filter = new CertificateFilter();
 		filter.setNonRepudiationBit(false);
 		DSSPrivateKeyEntry entry = mock(DSSPrivateKeyEntry.class, Mockito.RETURNS_DEEP_STUBS);
-		when(entry.getCertificate().checkKeyUsage(KeyUsageBit.nonRepudiation)).thenReturn(false);
+		when(entry.getCertificate().checkKeyUsage(KeyUsageBit.NON_REPUDIATION)).thenReturn(false);
 		when(entry.getCertificate().getDSSIdAsString()).thenReturn(NON_REPUDIATION);
 		entries.add(entry);
 		List<DSSPrivateKeyEntry> filteredEntries = helper.filterKeys(token, filter);
