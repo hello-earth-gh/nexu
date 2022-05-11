@@ -18,6 +18,30 @@
 			<connectionInfo>
 				<env>
 					<jreVendor>ORACLE</jreVendor>
+					<osName>Windows 10</osName>
+					<osArch>x86</osArch>
+					<osVersion>10.0</osVersion>
+					<arch>X86</arch>
+					<os>WINDOWS</os>
+				</env>
+				<selectedApi>PKCS11</selectedApi>
+				<apiParam>C:\Program Files\oberthur Technologies\AWP\DLLs\OCSCryptoki.dll</apiParam>
+			</connectionInfo>	
+			<connectionInfo>
+				<env>
+					<jreVendor>ORACLE</jreVendor>
+					<osName>Windows 7</osName>
+					<osArch>amd64</osArch>
+					<osVersion>6.1</osVersion>
+					<arch>AMD64</arch>
+					<os>WINDOWS</os>
+				</env>
+				<selectedApi>PKCS11</selectedApi>
+				<apiParam>C:\Program Files\Oberthur Technologies\AWP\DLLs\OCSCryptoki.dll</apiParam>
+			</connectionInfo>			
+			<connectionInfo>
+				<env>
+					<jreVendor>ORACLE</jreVendor>
 					<osName>Windows 7</osName>
 					<osArch>x86</osArch>
 					<osVersion>6.1</osVersion>
@@ -26,7 +50,7 @@
 				</env>
 				<selectedApi>PKCS11</selectedApi>
 				<apiParam>C:\Program Files\oberthur Technologies\AWP\DLLs\OCSCryptoki.dll</apiParam> <!-- incidentally the path is the same as with 64-bit -->
-			</connectionInfo>                  
+			</connectionInfo>
 		</connectionInfos>
 	</smartcard>
 	<smartcard>
@@ -44,6 +68,18 @@
 				<selectedApi>PKCS11</selectedApi>
 				<apiParam>C:\Windows\System32\eTPKCS11.dll</apiParam>
 			</connectionInfo>
+			<connectionInfo>
+				<env>
+					<jreVendor>ORACLE</jreVendor>
+					<osName>Windows 10</osName>
+					<osArch>x86</osArch>
+					<osVersion>10.0</osVersion>
+					<arch>X86</arch>
+					<os>WINDOWS</os>
+				</env>
+				<selectedApi>PKCS11</selectedApi>
+				<apiParam>C:\Windows\System32\eTPKCS11.dll</apiParam>
+			</connectionInfo>			
 			<connectionInfo>
 				<env>
 					<jreVendor>ORACLE</jreVendor>
@@ -175,6 +211,60 @@
 			</connectionInfo>                  
 		</connectionInfos>
 	</smartcard>
+	<!-- new SafeNet 5110 tokens from ADACOM -->
+	<smartcard>
+		<atr>3BFF9600008131FE4380318065B0855956FB120FFE82900000</atr>
+		<connectionInfos>
+			<connectionInfo>
+				<env>
+					<jreVendor>ORACLE</jreVendor>
+					<osName>Windows 10</osName>
+					<osArch>amd64</osArch>
+					<osVersion>10.0</osVersion>
+					<arch>AMD64</arch>
+					<os>WINDOWS</os>
+				</env>
+				<selectedApi>PKCS11</selectedApi>
+				<apiParam>C:\Windows\System32\eTPKCS11.dll</apiParam>
+			</connectionInfo>
+			<connectionInfo>
+				<env>
+					<jreVendor>ORACLE</jreVendor>
+					<osName>Windows 10</osName>
+					<osArch>x86</osArch>
+					<osVersion>10.0</osVersion>
+					<arch>X86</arch>
+					<os>WINDOWS</os>
+				</env>
+				<selectedApi>PKCS11</selectedApi>
+				<apiParam>C:\Windows\System32\eTPKCS11.dll</apiParam>
+			</connectionInfo>	
+			<connectionInfo>
+				<env>
+					<jreVendor>ORACLE</jreVendor>
+					<osName>Windows 7</osName>
+					<osArch>amd64</osArch>
+					<osVersion>6.1</osVersion>
+					<arch>AMD64</arch>
+					<os>WINDOWS</os>
+				</env>
+				<selectedApi>PKCS11</selectedApi>
+				<apiParam>C:\Windows\System32\eTPKCS11.dll</apiParam>
+			</connectionInfo>			
+			<connectionInfo>
+				<env>
+					<jreVendor>ORACLE</jreVendor>
+					<osName>Windows 7</osName>
+					<osArch>x86</osArch>
+					<osVersion>6.1</osVersion>
+					<arch>X86</arch>
+					<os>WINDOWS</os>
+				</env>
+				<selectedApi>PKCS11</selectedApi>
+				<apiParam>C:\Windows\System32\eTPKCS11.dll</apiParam>
+			</connectionInfo>                  
+		</connectionInfos>
+	</smartcard>
 	<smartcard>
 		<atr>3BD518008131FE7D8073C82110F4</atr>
 		<connectionInfos>
@@ -231,6 +321,54 @@
 				<selectedApi>PKCS11</selectedApi>
 				<apiParam>C:\Program Files\oberthur Technologies\AWP\DLLs\OCSCryptoki.dll</apiParam>
 			</connectionInfo>
+			<connectionInfo>
+				<env>
+					<jreVendor>ORACLE</jreVendor>
+					<osName>Windows 10</osName>
+					<osArch>amd64</osArch>
+					<osVersion>10.0</osVersion>
+					<arch>AMD64</arch>
+					<os>WINDOWS</os>
+				</env>
+				<selectedApi>PKCS11</selectedApi>
+				<apiParam>C:\Program Files\Oberthur Technologies\AWP\DLLs\OCSCryptoki.dll</apiParam>
+			</connectionInfo>
+			<connectionInfo>
+				<env>
+					<jreVendor>ORACLE</jreVendor>
+					<osName>Windows 10</osName>
+					<osArch>x86</osArch>
+					<osVersion>10.0</osVersion>
+					<arch>X86</arch>
+					<os>WINDOWS</os>
+				</env>
+				<selectedApi>PKCS11</selectedApi>
+				<apiParam>C:\Program Files\oberthur Technologies\AWP\DLLs\OCSCryptoki.dll</apiParam>
+			</connectionInfo>
+			<connectionInfo>
+				<env>
+					<jreVendor>ORACLE</jreVendor>
+					<osName>Windows 7</osName>
+					<osArch>amd64</osArch>
+					<osVersion>6.1</osVersion>
+					<arch>AMD64</arch>
+					<os>WINDOWS</os>
+				</env>
+				<selectedApi>PKCS11</selectedApi>
+				<apiParam>C:\Program Files\oberthur Technologies\AWP\DLLs\OCSCryptoki.dll</apiParam>
+			</connectionInfo>			
+			<connectionInfo>
+				<env>
+					<jreVendor>ORACLE</jreVendor>
+					<osName>Windows 7</osName>
+					<osArch>x86</osArch>
+					<osVersion>6.1</osVersion>
+					<arch>X86</arch>
+					<os>WINDOWS</os>
+				</env>
+				<selectedApi>PKCS11</selectedApi>
+				<apiParam>C:\Program Files\oberthur Technologies\AWP\DLLs\OCSCryptoki.dll</apiParam>
+			</connectionInfo>			
 		</connectionInfos>
 	</smartcard>          
 </database>

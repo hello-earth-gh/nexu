@@ -68,14 +68,18 @@ class GetCertificateFlow extends AbstractCoreFlow<GetCertificateRequest, GetCert
     		while (true) {
     			final Product selectedProduct;
     			if(defaultProduct != null) {
+    				logger.info("defaultProduct is not null from previous operation - selecting it");
     				selectedProduct = defaultProduct;
     				defaultProduct = null; // this does not make sense - we should not reset the default product in case of multiple signatures, but we should reset it somewhere in case of an error, or a normal end of operation (i.e.logout)
     			} else {
+    				logger.info("defaultProduct is null, getting it from api.detectCards");
                     // unisystems change : setDefaultProduct on product selection for multiple signing
                     List<DetectedCard> cards = api.detectCards();
                     if (api.getAppConfig().isMakeSingleCardDefault() && cards != null && cards.size() == 1) {
+                    	logger.info("cards size is exactly 1, selecting it");
                         selectedProduct = cards.get(0); // setting of selectedProduct should be followed by setting of defaultProduct for the next operations to continue properly with this selected card
                         if (api != null && api.getAppConfig() != null && api.getAppConfig().getDefaultProduct() == null) {
+                        	logger.info("setting default product to this card");
                             api.getAppConfig().setDefaultProduct(selectedProduct);
                         }                              
                     }
@@ -138,7 +142,10 @@ class GetCertificateFlow extends AbstractCoreFlow<GetCertificateRequest, GetCert
     								resp.setKeyId(certificate.getDSSIdAsString());
     								// MOD 4535992 NEW CERTIFICATE TOKEN NOT HAVE ENCRYPTYION ANYMORE
     								//resp.setEncryptionAlgorithm(certificate.getEncryptionAlgorithm());
-    								resp.setEncryptionAlgorithm(certificate.getSignatureAlgorithm().getEncryptionAlgorithm());
+    								// OLD 4535992
+    								//resp.setEncryptionAlgorithm(certificate.getSignatureAlgorithm().getEncryptionAlgorithm());
+    								// NEW Zhukov Andreas
+    								resp.setEncryptionAlgorithm(key.getEncryptionAlgorithm());
     								// END MOD 4535992
     								final CertificateToken[] certificateChain = key.getCertificateChain();
     								if (certificateChain != null) {

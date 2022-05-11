@@ -49,7 +49,7 @@
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 		<encoding>UTF-8</encoding>
 		<skip.package>false</skip.package>
-		<dss.version>5.9.RC1</dss.version>
+		<dss.version>5.9</dss.version>
 		<maven.release.plugin.version>2.5.3</maven.release.plugin.version>
 		<slf4j.version>1.7.12</slf4j.version>
 		<jna.version>4.2.2</jna.version>
@@ -498,6 +498,8 @@ END MOD 4535992 -->
 				<groupId>eu.europa.ec.joinup.sd-dss</groupId>
 				<artifactId>sscd-mocca-adapter</artifactId>
 				<version>${dss.version}</version>
+				<scope>system</scope>
+	   			<systemPath>${project.basedir}/lib-override/sscd-mocca-adapter-5.10.1.jar</systemPath>
 			</dependency>		
 			<dependency>
 				<groupId>eu.europa.ec.joinup.sd-dss</groupId>

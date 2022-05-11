@@ -9,6 +9,17 @@
 	<artifactId>nexu-rest-plugin</artifactId>
 
 	<dependencies>
+	
+		<dependency>
+			<groupId>eu.europa.ec.joinup.sd-dss</groupId>
+			<artifactId>dss-enumerations</artifactId>
+			<version>${dss.version}</version>
+		</dependency>		
+		<dependency>
+			<groupId>eu.europa.ec.joinup.sd-dss</groupId>
+			<artifactId>dss-model</artifactId>
+			<version>${dss.version}</version>
+		</dependency> 
  
         <!-- MOD 4535992 -->
         

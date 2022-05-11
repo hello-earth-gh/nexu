@@ -13,6 +13,7 @@
  */
 package lu.nowina.nexu.view.ui;
 
+import eu.europa.esig.dss.enumerations.QCStatement;
 import java.awt.Desktop;
 import java.io.File;
 import java.io.FileWriter;
@@ -27,13 +28,15 @@ import java.util.ResourceBundle;
 import org.bouncycastle.asn1.ASN1Encodable;
 import org.bouncycastle.asn1.ASN1Sequence;
 import org.bouncycastle.asn1.x509.Extension;
-import org.bouncycastle.asn1.x509.qualified.QCStatement;
+//import org.bouncycastle.asn1.x509.qualified.QCStatement;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import eu.europa.esig.dss.spi.DSSASN1Utils;
 import eu.europa.esig.dss.spi.DSSUtils;
-//import eu.europa.esig.dss.QCStatementOids;
+import eu.europa.esig.dss.model.x509.CertificateToken;
+import eu.europa.esig.dss.model.x509.QcStatements;
+import eu.europa.esig.dss.spi.QcStatementUtils;
 import eu.europa.esig.dss.token.DSSPrivateKeyEntry;
 import eu.europa.esig.dss.model.x509.CertificateToken;
 import javafx.collections.FXCollections;
@@ -175,11 +178,9 @@ public class KeySelectionController extends AbstractUIOperationController<DSSPri
         if (qcStatements.contains(QCStatementOids.QC_SSCD.getOid())) {
             qcIconsImages.add(this.fetchImage(ICON_QCSD));
         }
-        if (qcIconsImages.isEmpty()) {
-            qcIconsImages.add(this.fetchImage(ICON_UNLOCKED));
-        }
-        return qcIconsImages;
         */
+        // OLD 4535992
+        /*
         final List<String> qcStatements = getQCStatementsIdList(certificateToken);
         if (qcStatements.contains(eu.europa.esig.dss.enumerations.QCStatement.QC_COMPLIANCE.getOid())) {
             qcIconsImages.add(this.fetchImage(ICON_QC));
@@ -187,6 +188,16 @@ public class KeySelectionController extends AbstractUIOperationController<DSSPri
         if (qcStatements.contains(eu.europa.esig.dss.enumerations.QCStatement.QC_SSCD.getOid())) {
             qcIconsImages.add(this.fetchImage(ICON_QCSD));
         }
+        */
+        // NEW Zhukov Andreas
+        final QcStatements qcStatements = QcStatementUtils.getQcStatements(certificateToken);
+        if (qcStatements.isQcCompliance()) {
+            qcIconsImages.add(this.fetchImage(ICON_QC));
+        }
+        if (qcStatements.isQcQSCD()) {
+            qcIconsImages.add(this.fetchImage(ICON_QCSD));
+        }
+        
         if (qcIconsImages.isEmpty()) {
             qcIconsImages.add(this.fetchImage(ICON_UNLOCKED));
         }
@@ -265,7 +276,7 @@ public class KeySelectionController extends AbstractUIOperationController<DSSPri
 			final ASN1Sequence seq = DSSASN1Utils.getAsn1SequenceFromDerOctetString(qcStatement);
 			// Sequence of QCStatement
 			for (int ii = 0; ii < seq.size(); ii++) {
-				final QCStatement statement = QCStatement.getInstance(seq.getObjectAt(ii));
+				final org.bouncycastle.asn1.x509.qualified.QCStatement statement = org.bouncycastle.asn1.x509.qualified.QCStatement.getInstance(seq.getObjectAt(ii));
 				extensionIdList.add(statement.getStatementId().getId());
 			}
 		}

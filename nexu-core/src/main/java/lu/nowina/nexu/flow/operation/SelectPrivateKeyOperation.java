@@ -88,11 +88,13 @@ public class SelectPrivateKeyOperation extends AbstractCompositeOperation<DSSPri
     @Override
     public OperationResult<DSSPrivateKeyEntry> perform() {
         final List<DSSPrivateKeyEntry> keys;
-
+        logger.debug("SelectPrivateKeyOperation.perform");
         try {
             if((this.productAdapter != null) && (this.product != null) && this.productAdapter.supportCertificateFilter(this.product) && (this.certificateFilter != null)) {
+            	logger.debug("SelectPrivateKeyOperation.perform getting keys from productAdapter");
                 keys = this.productAdapter.getKeys(this.token, this.certificateFilter);
             } else {
+            	logger.debug("SelectPrivateKeyOperation.perform getting keys from token");
                 keys = this.token.getKeys();
             }
         } catch(final CancelledOperationException e) {
@@ -107,6 +109,7 @@ public class SelectPrivateKeyOperation extends AbstractCompositeOperation<DSSPri
             if ("CN=Token Signing Public Key".equals(e.getCertificate().getCertificate().getIssuerDN().getName())) {
                 it.remove();
             }
+            logger.info("SelectPrivateKeyOperation found key " + e + " " + e.getCertificate().getCertificate().getSubjectDN() + " from " + e.getCertificate().getCertificate().getIssuerDN());
         }
 
         if (keys.isEmpty()) {
