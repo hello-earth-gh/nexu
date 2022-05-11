@@ -27,6 +27,7 @@
 	</developers>
 
 	<modules>
+		<module>sscd-mocca-adapter</module>
 		<module>nexu-core</module>
 		<module>nexu-rest-plugin</module>
 		<module>nexu-api</module>
@@ -498,8 +499,10 @@ END MOD 4535992 -->
 				<groupId>eu.europa.ec.joinup.sd-dss</groupId>
 				<artifactId>sscd-mocca-adapter</artifactId>
 				<version>${dss.version}</version>
+				<!--
 				<scope>system</scope>
 	   			<systemPath>${project.basedir}/lib-override/sscd-mocca-adapter-5.10.1.jar</systemPath>
+	   			-->
 			</dependency>		
 			<dependency>
 				<groupId>eu.europa.ec.joinup.sd-dss</groupId>
