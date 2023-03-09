@@ -127,8 +127,23 @@ public class Pkcs11SignatureTokenAdapter extends Pkcs11SignatureToken {
                 throw new DSSException("Unable to instantiate SunPKCS11", e);
             }
             */
-			provider = SunPKCS11Initializer.getProvider(configString);
-
+            /*
+            try (ByteArrayInputStream confStream = new ByteArrayInputStream(configString.getBytes("ISO-8859-1"))) {
+            	// resolve jdk17 problems
+                final sun.security.pkcs11.SunPKCS11 sunPKCS11 = new sun.security.pkcs11.SunPKCS11();
+                sunPKCS11.configure(configString);
+                // we need to add the provider to be able to sign later
+                Security.addProvider(sunPKCS11);
+                this.provider = sunPKCS11;
+                return this.provider;
+            } catch (final Exception e) {
+                logger.warn("Unable to instantiate SunPKCS11", e);
+            }
+            */
+            if (provider == null) {
+            	this.provider = SunPKCS11Initializer.getProvider(configString);
+            }
+            // END MOD 4535992
 			if (provider == null) {
 				throw new DSSException("Unable to create PKCS11 provider");
 			}
