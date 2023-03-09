@@ -43,7 +43,7 @@ How to debug: (https://github.com/nowina-solutions/nexu/issues/31)
 - [edit] The above way of running nexu seems to create a problem for Netbeans - because nexu-app uses Maven shade plugin to create the final JAR, Netbeans doesn't seem to detect the Main Class for execution, which is actually situated in a dependency artifact, nexu-standalone, and is appended to the MANIFEST.MF during the creation of the shaded JAR (... the only way I found to be able to debug NexU this way was to start up NexU from command line, supplying JDWP options to Java, and then to attach the Netbeans debugger to this process:
 
 ```
-java -Xdebug -Xrunjdwp:transport=dt_socket,server=y,suspend=y,address=8000 -jar nexu-app-1.23-SNAPSHOT-jar-with-dependencies.jar
+java -Xdebug -Xrunjdwp:transport=dt_socket,server=y,suspend=y,address=8000 -jar nexu-app-1.24-SNAPSHOT-jar-with-dependencies.jar
 ```
 
 **Additional Info**
