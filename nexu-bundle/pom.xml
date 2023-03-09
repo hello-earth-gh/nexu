@@ -170,7 +170,7 @@
                 <!-- CANNOT distribute JPS.exe outside JDK bundle - found solution with wmic instead
                <plugin>
                  <artifactId>maven-antrun-plugin</artifactId>
-                 <version>1.8</version>
+                 <version>${java.version}</version>
                  <executions>
                    <execution>
                      <phase>process-resources</phase>

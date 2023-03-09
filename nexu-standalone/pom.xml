@@ -134,7 +134,7 @@
         <dependency>
             <groupId>com.dorkbox</groupId>
             <artifactId>SystemTray</artifactId>
-            <version>4.1</version>
+            <version>4.2.1</version>
         </dependency>
 	</dependencies>
 	<build>
@@ -142,8 +142,8 @@
            <plugin>
 				<artifactId>maven-compiler-plugin</artifactId>
 				<configuration>
-					<source>11</source>
-					<target>11</target>
+					<source>${maven.compiler.source}</source>
+					<target>${maven.compiler.target}</target>
 	
                     <!-- jdk.crypto.cryptoki : SunPKCS11 -->
                     <compilerArgs>

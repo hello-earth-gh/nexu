@@ -61,7 +61,7 @@
 		<jnasmartcardio.version>0.2.7</jnasmartcardio.version>
 	    <!-- We MUST use last version because of https://github.com/mapstruct/mapstruct/issues/634. -->
 		<org.mapstruct.version>1.4.2.Final</org.mapstruct.version>
-		<javafx.version>11.0.2</javafx.version>	
+		<javafx.version>11.0.2</javafx.version><!--19.0.2.1-->
 		<sunpkcs11-wrapper.version>1.4.8</sunpkcs11-wrapper.version>
 		
 		<!-- dependencies necessary for jdk 11 -->
@@ -101,7 +101,7 @@
         <maven.clean.version>3.1.0</maven.clean.version>
         <maven.resources.version>3.1.0</maven.resources.version>
         <maven.dependency.version>3.1.2</maven.dependency.version>
-        <maven.compiler.version>3.8.1</maven.compiler.version>
+        <maven.compiler.version>3.11.0</maven.compiler.version><!-- 3.8.1 -->
         <maven.source.version>3.2.1</maven.source.version>
         <maven.javadoc.version>3.2.0</maven.javadoc.version>
         <maven.jar.version>3.2.0</maven.jar.version>
@@ -490,6 +490,7 @@ END MOD 4535992 -->
 			    <artifactId>javafx-fxml</artifactId>
 			    <version>${javafx.version}</version>
 			</dependency>
+			
 			<dependency>
 			    <groupId>org.xipki.iaik</groupId>
 			    <artifactId>sunpkcs11-wrapper</artifactId>
@@ -676,13 +677,13 @@ END MOD 4535992 -->
 					<version>${maven.compiler.version}</version>
 	                <configuration>
 	                    <encoding>${project.build.sourceEncoding}</encoding>
-						<source>11</source>
-						<target>11</target>
+						<source>${maven.compiler.source}</source>
+						<target>${maven.compiler.target}</target>
 						<verbose>true</verbose>
 						<fork>true</fork>
 						<encoding>${project.build.targetEncoding}</encoding>
 						<jdkToolchain>
-			                <version>11</version>
+			                <version>${java.version}</version>
 			            </jdkToolchain>							
 					</configuration>
 				</plugin>
@@ -701,13 +702,13 @@ END MOD 4535992 -->
 				<artifactId>maven-compiler-plugin</artifactId>
                 <configuration>
                     <encoding>${project.build.sourceEncoding}</encoding>
-					<source>11</source>
-					<target>11</target>
+					<source>${maven.compiler.source}</source>
+					<target>${maven.compiler.target}</target>
 					<verbose>true</verbose>
 					<fork>true</fork>
 					<encoding>${project.build.targetEncoding}</encoding>
 					<jdkToolchain>
-		                <version>11</version>
+		                <version>${java.version}</version>
 		            </jdkToolchain>							
 				</configuration>
 			</plugin>
@@ -739,11 +740,11 @@ END MOD 4535992 -->
 					</execution>
 				</executions>
 				<configuration>
-					<file>nexu-standalone/lib/SystemTray-4.1.jar</file>
-					<sources>nexu-standalone/lib/SystemTray-4.1-sources.jar</sources>
+					<file>nexu-standalone/lib/SystemTray-4.2.1.jar</file>
+					<sources>nexu-standalone/lib/SystemTray-4.2.1-sources.jar</sources>
 					<groupId>com.dorkbox</groupId>
 					<artifactId>SystemTray</artifactId>
-					<version>4.1</version>
+					<version>4.2.1</version>
 					<packaging>jar</packaging>
 				</configuration>
 			</plugin>
