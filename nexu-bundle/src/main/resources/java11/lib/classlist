@@ -114,6 +114,7 @@ java/lang/Byte
 java/lang/Short
 java/lang/Integer
 java/lang/Long
+java/util/Iterator
 java/lang/NullPointerException
 java/lang/ArithmeticException
 java/io/ObjectStreamField
@@ -156,8 +157,8 @@ java/lang/ref/Reference$1
 jdk/internal/misc/JavaLangRefAccess
 jdk/internal/misc/SharedSecrets
 java/lang/ref/Finalizer$FinalizerThread
-java/lang/StringLatin1
 jdk/internal/misc/VM
+java/lang/StringLatin1
 java/util/Properties$EntrySet
 java/util/concurrent/ConcurrentHashMap$EntrySetView
 java/util/concurrent/ConcurrentHashMap$CollectionView
@@ -172,7 +173,6 @@ java/util/Collections$SynchronizedSet
 java/util/Collections$SynchronizedCollection
 java/lang/reflect/Array
 java/util/concurrent/ConcurrentHashMap$EntryIterator
-java/util/Iterator
 java/util/concurrent/ConcurrentHashMap$BaseIterator
 java/util/concurrent/ConcurrentHashMap$Traverser
 java/util/concurrent/ConcurrentHashMap$MapEntry
@@ -421,10 +421,7 @@ jdk/internal/ref/WeakCleanable
 jdk/internal/ref/CleanerImpl$SoftCleanableRef
 jdk/internal/ref/SoftCleanable
 jdk/internal/ref/CleanerImpl$CleanerCleanable
-jdk/internal/ref/CleanerFactory$1$1
 jdk/internal/misc/InnocuousThread
-jdk/internal/misc/InnocuousThread$3
-jdk/internal/misc/InnocuousThread$2
 java/util/zip/ZipFile$Source
 java/util/zip/ZipFile$Source$Key
 java/nio/file/FileSystems
@@ -472,6 +469,7 @@ sun/nio/fs/WindowsNativeDispatcher
 sun/nio/fs/WindowsNativeDispatcher$1
 java/lang/ClassLoader$2
 java/lang/ClassLoader$NativeLibrary
+java/lang/ClassLoaderHelper
 java/util/ArrayDeque$DeqIterator
 java/util/concurrent/ConcurrentHashMap$ValuesView
 java/util/concurrent/ConcurrentHashMap$ValueIterator
@@ -547,11 +545,15 @@ jdk/internal/loader/URLClassPath$JarLoader$2
 jdk/internal/loader/Resource
 java/util/jar/Attributes
 java/util/jar/Manifest$FastInputStream
+java/io/ByteArrayOutputStream
 java/util/jar/Attributes$Name
 java/lang/Package
 java/lang/NamedPackage
 java/lang/Package$VersionInfo
 sun/nio/ByteBuffered
+java/util/zip/CRC32
+java/util/zip/Checksum
+java/util/zip/Checksum$1
 java/security/SecureClassLoader$CodeSourceKey
 java/security/SecureClassLoader$1
 sun/security/util/LazyCodeSourcePermissionCollection
@@ -804,7 +806,6 @@ java/nio/DirectIntBufferRU
 jdk/internal/jimage/ImageStringsReader
 jdk/internal/jimage/ImageStrings
 jdk/internal/jimage/decompressor/Decompressor
-jdk/internal/jimage/ImageLocation
 java/util/Collections$EmptyIterator
 java/util/Collections$EmptyEnumeration
 jdk/internal/loader/BuiltinClassLoader$1
@@ -1014,6 +1015,7 @@ sun/util/locale/provider/CalendarProviderImpl
 java/util/Calendar$Builder
 java/util/GregorianCalendar
 sun/util/calendar/CalendarSystem
+sun/util/calendar/CalendarSystem$GregorianHolder
 sun/util/calendar/Gregorian
 sun/util/calendar/BaseCalendar
 sun/util/calendar/AbstractCalendar
@@ -1141,6 +1143,7 @@ java/util/ResourceBundle$3
 sun/util/logging/resources/logging
 java/util/ResourceBundle$BundleReference
 jdk/internal/module/Checks
+jdk/internal/jimage/ImageLocation
 java/util/Formatter$DateTime
 java/util/Formatter$FixedString
 java/time/ZonedDateTime$1

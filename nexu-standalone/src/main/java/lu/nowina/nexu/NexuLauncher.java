@@ -80,7 +80,12 @@ public class NexuLauncher {
 
 		RollingFileAppender rfa = new RollingFileAppender();
 		rfa.setName("FileLogger");
-		File nexuHome = config.getNexuHome();
+		// MOD 4535992
+//		File nexuHome = config.getNexuHome();
+		String tmpdir = System.getProperty("java.io.tmpdir");
+	    System.out.println("Temp file path: " + tmpdir);
+	    // END MOD 4535992
+		File nexuHome = new File(tmpdir); //config.getNexuHome();
 		rfa.setFile(new File(nexuHome, "nexu.log").getAbsolutePath());
 		rfa.setLayout(new PatternLayout("%d %-5p [%c{1}] %m%n"));
 		rfa.setThreshold(config.isDebug() ? Level.DEBUG : Level.INFO);
@@ -178,7 +183,7 @@ public class NexuLauncher {
 		InputStream configFile = NexUApp.class.getClassLoader().getResourceAsStream("nexu-config.properties");
 		if (configFile != null) {
 			props.load(configFile);
-			logger.info("Loaded properties from inside JAR");
+			logger.info("Loaded properties from inside JAR :" + configFile);
 		}
 	}
 
