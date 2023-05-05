@@ -82,7 +82,7 @@
 			<groupId>lu.nowina.apps</groupId>
 			<artifactId>nexu-standalone</artifactId>
 			<version>${project.version}</version>
-			<scope>runtime</scope>
+			<scope>compile</scope><!-- MOD 4535992 replace 'runtime' with 'compile' not sure why... -->
 		</dependency>
 		<dependency>
 			<groupId>lu.nowina.apps</groupId>
