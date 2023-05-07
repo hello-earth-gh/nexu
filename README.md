@@ -36,7 +36,9 @@ InnoSetup has to be installed on the development machine. When building nexu-bun
 
 The install package will install NexU and place it into Windows Startup folder.
 
-How to debug: (https://github.com/nowina-solutions/nexu/issues/31)
+**IMPORTANT:** Due to strange issues with the javaFX library for java version 11 onwards (the library is no longer embedd in the jdk), the java machine to be used to start the nexu application must be the one packaged by Bellsoft https://bell-sw.com/pages/downloads/.
+
+**How to debug: (https://github.com/nowina-solutions/nexu/issues/31)**
 
 - [edit] I figured out that nexu-standalone is not supposed to run as a jar - it is supposed to be referenced in nexu-app, and nexu-app should be launched with java -jar ... command - this way the resources referenced in nexu-standalone are relative to root classpath, which is nexu-app - anyway, the references make sense then. - nexu-app SHOULD NOT be referenced by nexu-standalone of course, because this creates cyclic reference, and doesn't make sense anyway.
 
