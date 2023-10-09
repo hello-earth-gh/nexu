@@ -50,9 +50,6 @@ public class AboutController extends AbstractUIOperationController<Void> impleme
 		this.aboutTitle.setText(aboutTitle.getText() + " " + applicationName);
 		
 		final String applicationVersion = (String) params[1];
-		// NEW Zhukov Andreas
-		//this.applicationVersion.setText(applicationVersion);
-	    final String javaVersion = System.getProperty("java.version");
-	    this.applicationVersion.setText(applicationVersion + ", jvm: " + javaVersion);
+		this.applicationVersion.setText(applicationVersion);
 	}
 }

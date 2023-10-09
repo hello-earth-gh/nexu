@@ -13,7 +13,6 @@
  */
 package lu.nowina.nexu.view.ui;
 
-import eu.europa.esig.dss.enumerations.QCStatement;
 import java.awt.Desktop;
 import java.io.File;
 import java.io.FileWriter;
@@ -25,20 +24,14 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.ResourceBundle;
 
-import org.bouncycastle.asn1.ASN1Encodable;
-import org.bouncycastle.asn1.ASN1Sequence;
-import org.bouncycastle.asn1.x509.Extension;
-//import org.bouncycastle.asn1.x509.qualified.QCStatement;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import eu.europa.esig.dss.spi.DSSASN1Utils;
-import eu.europa.esig.dss.spi.DSSUtils;
-import eu.europa.esig.dss.model.x509.CertificateToken;
-import eu.europa.esig.dss.model.x509.QcStatements;
-import eu.europa.esig.dss.spi.QcStatementUtils;
+import eu.europa.esig.dss.DSSASN1Utils;
+import eu.europa.esig.dss.DSSUtils;
+import eu.europa.esig.dss.QCStatementOids;
 import eu.europa.esig.dss.token.DSSPrivateKeyEntry;
-import eu.europa.esig.dss.model.x509.CertificateToken;
+import eu.europa.esig.dss.x509.CertificateToken;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
@@ -169,8 +162,6 @@ public class KeySelectionController extends AbstractUIOperationController<DSSPri
 
     private List<ImageView> getQCIcons(final CertificateToken certificateToken) throws IOException {
         final List<ImageView> qcIconsImages = new ArrayList<>();
-        // MOD 4535995
-        /*
         final List<String> qcStatements = DSSASN1Utils.getQCStatementsIdList(certificateToken);
         if (qcStatements.contains(QCStatementOids.QC_COMPLIANCE.getOid())) {
             qcIconsImages.add(this.fetchImage(ICON_QC));
@@ -178,26 +169,6 @@ public class KeySelectionController extends AbstractUIOperationController<DSSPri
         if (qcStatements.contains(QCStatementOids.QC_SSCD.getOid())) {
             qcIconsImages.add(this.fetchImage(ICON_QCSD));
         }
-        */
-        // OLD 4535992
-        /*
-        final List<String> qcStatements = getQCStatementsIdList(certificateToken);
-        if (qcStatements.contains(eu.europa.esig.dss.enumerations.QCStatement.QC_COMPLIANCE.getOid())) {
-            qcIconsImages.add(this.fetchImage(ICON_QC));
-        }
-        if (qcStatements.contains(eu.europa.esig.dss.enumerations.QCStatement.QC_SSCD.getOid())) {
-            qcIconsImages.add(this.fetchImage(ICON_QCSD));
-        }
-        */
-        // NEW Zhukov Andreas
-        final QcStatements qcStatements = QcStatementUtils.getQcStatements(certificateToken);
-        if (qcStatements.isQcCompliance()) {
-            qcIconsImages.add(this.fetchImage(ICON_QC));
-        }
-        if (qcStatements.isQcQSCD()) {
-            qcIconsImages.add(this.fetchImage(ICON_QCSD));
-        }
-        
         if (qcIconsImages.isEmpty()) {
             qcIconsImages.add(this.fetchImage(ICON_UNLOCKED));
         }
@@ -261,29 +232,5 @@ public class KeySelectionController extends AbstractUIOperationController<DSSPri
         }
         
     }
-    
-    // MOD 4535992
-    
-	/**
-	 * @href https://github.com/jandebelder/java/blob/master/dss-spi/src/main/java/eu/europa/esig/dss/DSSASN1Utils.java
-	 * @param x509Certificate
-	 * @return
-	 */
-	public static List<String> getQCStatementsIdList(final CertificateToken certToken) {
-		final List<String> extensionIdList = new ArrayList<String>();
-		final byte[] qcStatement = certToken.getCertificate().getExtensionValue(Extension.qCStatements.getId());
-		if (qcStatement != null) {
-			final ASN1Sequence seq = DSSASN1Utils.getAsn1SequenceFromDerOctetString(qcStatement);
-			// Sequence of QCStatement
-			for (int ii = 0; ii < seq.size(); ii++) {
-				final org.bouncycastle.asn1.x509.qualified.QCStatement statement = org.bouncycastle.asn1.x509.qualified.QCStatement.getInstance(seq.getObjectAt(ii));
-				extensionIdList.add(statement.getStatementId().getId());
-			}
-		}
-		return extensionIdList;
-	}
-
-	
-    // END MOD 4535992
 
 }

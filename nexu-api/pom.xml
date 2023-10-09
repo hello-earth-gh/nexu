@@ -9,6 +9,11 @@
     <artifactId>nexu-api</artifactId>
 
     <properties>
+		<!--
+        <project.encoding>UTF-8</project.encoding>
+        <maven.compiler.source>1.8</maven.compiler.source>
+        <maven.compiler.target>1.8</maven.compiler.target>
+        -->
     </properties>
 
     <dependencies>

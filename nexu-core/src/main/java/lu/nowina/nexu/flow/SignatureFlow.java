@@ -11,9 +11,6 @@
  * SANS GARANTIES OU CONDITIONS QUELLES QU’ELLES SOIENT, expresses ou implicites.
  * Consultez la Licence pour les autorisations et les restrictions linguistiques spécifiques relevant de la Licence.
  */
-
-// Unisystems change: added condition if(token != null && req.isCloseToken()) for when to close token
-// Unisystems change: added setDefaultProduct to null
 package lu.nowina.nexu.flow;
 
 import java.util.Map;
@@ -21,13 +18,11 @@ import java.util.Map;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import eu.europa.esig.dss.model.SignatureValue;
+import eu.europa.esig.dss.SignatureValue;
 import eu.europa.esig.dss.token.DSSPrivateKeyEntry;
 import eu.europa.esig.dss.token.SignatureTokenConnection;
-import lu.nowina.nexu.InternalAPI;
 import lu.nowina.nexu.NexuException;
 import lu.nowina.nexu.api.Execution;
-import lu.nowina.nexu.api.LogoutRequest;
 import lu.nowina.nexu.api.NexuAPI;
 import lu.nowina.nexu.api.Product;
 import lu.nowina.nexu.api.ProductAdapter;
@@ -56,8 +51,6 @@ class SignatureFlow extends AbstractCoreFlow<SignatureRequest, SignatureResponse
 	@Override
 	@SuppressWarnings("unchecked")
 	protected Execution<SignatureResponse> process(NexuAPI api, SignatureRequest req) throws Exception {
-        logger.info("SignatureFlow.process called with doClearCache = " + req.getDoClearCache());
-        
 		if ((req.getToBeSigned() == null) || (req.getToBeSigned().getBytes() == null)) {
 			throw new NexuException("ToBeSigned is null");
 		}
@@ -67,13 +60,12 @@ class SignatureFlow extends AbstractCoreFlow<SignatureRequest, SignatureResponse
 		}
 
 		SignatureTokenConnection token = null;
-            TokenId tokenId = null;
 		try {
 			final OperationResult<Map<TokenOperationResultKey, Object>> getTokenOperationResult =
 					getOperationFactory().getOperation(GetTokenOperation.class, api, req.getTokenId()).perform();
 			if (getTokenOperationResult.getStatus().equals(BasicOperationStatus.SUCCESS)) {
 				final Map<TokenOperationResultKey, Object> map = getTokenOperationResult.getResult();
-				tokenId = (TokenId) map.get(TokenOperationResultKey.TOKEN_ID);
+				final TokenId tokenId = (TokenId) map.get(TokenOperationResultKey.TOKEN_ID);
 
 				final OperationResult<SignatureTokenConnection> getTokenConnectionOperationResult =
 						getOperationFactory().getOperation(GetTokenConnectionOperation.class, api, tokenId).perform();
@@ -131,17 +123,12 @@ class SignatureFlow extends AbstractCoreFlow<SignatureRequest, SignatureResponse
 			logger.error("Flow error", e);
 			throw handleException(e);
 		} finally {
-            // unisystems
 			if(token != null) {
-                        // MOD unisystem
-/*
 				try {
 					token.close();
 				} catch(final Exception e) {
 					logger.error("Exception when closing token", e);
 				}
-*/
-                api.logout(new LogoutRequest(tokenId, req.isDoClearCache(), true)); // always need to close token, because get certificates operation requires login to be called(?)
 			}
 		}
 	}

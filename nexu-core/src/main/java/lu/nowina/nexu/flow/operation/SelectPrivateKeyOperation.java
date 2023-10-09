@@ -18,9 +18,6 @@ import java.util.List;
 
 import eu.europa.esig.dss.token.DSSPrivateKeyEntry;
 import eu.europa.esig.dss.token.SignatureTokenConnection;
-import eu.europa.esig.dss.enumerations.KeyUsageBit;
-import eu.europa.esig.dss.model.x509.CertificateToken;
-import java.util.HashSet;
 import lu.nowina.nexu.CancelledOperationException;
 import lu.nowina.nexu.api.CertificateFilter;
 import lu.nowina.nexu.api.NexuAPI;
@@ -29,8 +26,6 @@ import lu.nowina.nexu.api.ProductAdapter;
 import lu.nowina.nexu.api.flow.BasicOperationStatus;
 import lu.nowina.nexu.api.flow.OperationResult;
 import lu.nowina.nexu.view.core.UIOperation;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 /**
  * This {@link CompositeOperation} allows to retrieve a private key for a given {@link SignatureTokenConnection}
@@ -56,8 +51,6 @@ public class SelectPrivateKeyOperation extends AbstractCompositeOperation<DSSPri
     private ProductAdapter productAdapter;
     private CertificateFilter certificateFilter;
     private String keyFilter;
-    
-    private static final Logger logger = LoggerFactory.getLogger(SelectPrivateKeyOperation.class.getName());
 
     public SelectPrivateKeyOperation() {
         super();
@@ -88,13 +81,11 @@ public class SelectPrivateKeyOperation extends AbstractCompositeOperation<DSSPri
     @Override
     public OperationResult<DSSPrivateKeyEntry> perform() {
         final List<DSSPrivateKeyEntry> keys;
-        logger.debug("SelectPrivateKeyOperation.perform");
+
         try {
             if((this.productAdapter != null) && (this.product != null) && this.productAdapter.supportCertificateFilter(this.product) && (this.certificateFilter != null)) {
-            	logger.debug("SelectPrivateKeyOperation.perform getting keys from productAdapter");
                 keys = this.productAdapter.getKeys(this.token, this.certificateFilter);
             } else {
-            	logger.debug("SelectPrivateKeyOperation.perform getting keys from token");
                 keys = this.token.getKeys();
             }
         } catch(final CancelledOperationException e) {
@@ -109,7 +100,6 @@ public class SelectPrivateKeyOperation extends AbstractCompositeOperation<DSSPri
             if ("CN=Token Signing Public Key".equals(e.getCertificate().getCertificate().getIssuerDN().getName())) {
                 it.remove();
             }
-            logger.info("SelectPrivateKeyOperation found key " + e + " " + e.getCertificate().getCertificate().getSubjectDN() + " from " + e.getCertificate().getCertificate().getIssuerDN());
         }
 
         if (keys.isEmpty()) {
@@ -122,12 +112,7 @@ public class SelectPrivateKeyOperation extends AbstractCompositeOperation<DSSPri
                 return new OperationResult<DSSPrivateKeyEntry>(key);
             }
         } else {
-            // this will choose the first found certificate on the same token with usage = digital signature
-            DSSPrivateKeyEntry digSignKey = findDigSignKey(keys);
-            if (this.api.getAppConfig().isFilterOnlyCertWithDigitalSignatureUsageBit() && digSignKey != null) {
-                return new OperationResult<DSSPrivateKeyEntry>(digSignKey);
-            }
-            else if (this.keyFilter != null) {
+            if (this.keyFilter != null) {
                 for (final DSSPrivateKeyEntry k : keys) {
                     if (k.getCertificate().getDSSIdAsString().equals(this.keyFilter)) {
                         key = k;
@@ -156,25 +141,5 @@ public class SelectPrivateKeyOperation extends AbstractCompositeOperation<DSSPri
             }
             return new OperationResult<DSSPrivateKeyEntry>(key);
         }
-    }
-
-    private static DSSPrivateKeyEntry findDigSignKey(List<DSSPrivateKeyEntry> keys) {
-        DSSPrivateKeyEntry ret = null;
-        if (keys != null) {
-            logger.info("findDigSignKey, keys.size = " + keys.size());
-            int i = 0;
-            for (DSSPrivateKeyEntry key : keys) {
-                CertificateToken cert = key.getCertificate();
-                logger.info("Checking cert " + (i++) + " with keyUsageBits: " + (cert != null && cert.getKeyUsageBits() != null ? cert.getKeyUsageBits().toString() : "null"));
-                if (cert != null &&
-                    cert.getKeyUsageBits() != null &&
-                    cert.getKeyUsageBits().contains(KeyUsageBit.DIGITAL_SIGNATURE)) {
-                    logger.info("Proper key found - selecting this key.");
-                    ret = key;
-                    break;
-                }
-            }
-        }
-        return ret;
     }
 }

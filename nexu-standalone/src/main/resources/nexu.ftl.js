@@ -12,19 +12,13 @@
 * Consultez la Licence pour les autorisations et les restrictions linguistiques spécifiques relevant de la Licence.
 */
 
-// Unisystems change : added closeToken to both nexu_get_certificates and nexu_sign_with_token_infos
-
-// setting closeToken false will tell nexU to not close the token - this caches the password
-// MOD 4535992 replace '{ "closeToken":false }' in '{ "closeToken":${close_token} }'
 function nexu_get_certificates(success_callback, error_callback) {
-	transmitRequest("certificates", '{ "closeToken":${close_token} }', success_callback, error_callback);
+	transmitRequest("certificates", {}, success_callback, error_callback);
 }
 
 /* function to use if we already know a certificate and its tokenId/keyId */
-// setting closeToken false will tell nexU to not close the token - this caches the password
-function nexu_sign_with_token_infos(tokenId, keyId, dataToSign, digestAlgo, success_callback, error_callback, doClearCache) {
-	var data = '{ "tokenId":{"id":"' + tokenId + '"}, "keyId":"' + keyId + '", "toBeSigned": { "bytes": "' + dataToSign + '" } , "digestAlgorithm":"' + digestAlgo + '", "doClearCache":' + doClearCache + ' }';
-	//console.log(data);
+function nexu_sign_with_token_infos(tokenId, keyId, dataToSign, digestAlgo, success_callback, error_callback) {
+	var data = '{ "tokenId":{"id":"' + tokenId + '"}, "keyId":"' + keyId + '", "toBeSigned": { "bytes": "' + dataToSign + '" } , "digestAlgorithm":"' + digestAlgo + '"}';
 	transmitRequest("sign", data, success_callback, error_callback);
 }
 

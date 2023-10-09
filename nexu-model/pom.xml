@@ -8,6 +8,13 @@
 	</parent>
 	<artifactId>nexu-model</artifactId>
 
+	<properties>
+                <!-- MOD
+		<project.encoding>UTF-8</project.encoding>
+		<maven.compiler.source>1.7</maven.compiler.source>
+		<maven.compiler.target>1.7</maven.compiler.target>
+                -->
+	</properties>
 
 	<dependencies>
 		<dependency>

@@ -62,8 +62,6 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import eu.europa.esig.dss.token.SignatureTokenConnection;
-import lu.nowina.nexu.api.LogoutRequest;
-import lu.nowina.nexu.api.LogoutResponse;
 
 /**
  * Implementation of the NexuAPI
@@ -242,14 +240,6 @@ public class InternalAPI implements NexuAPI {
 		flow.setOperationFactory(operationFactory);
 		return executeRequest(flow, request);
 	}
-      
-	@Override
-	public Execution<LogoutResponse> logout(LogoutRequest request) {
-		Flow<LogoutRequest, LogoutResponse> flow =
-				flowRegistry.getFlow(FlowRegistry.LOGOUT_FLOW, display, this);
-		flow.setOperationFactory(operationFactory);
-		return executeRequest(flow, request);
-	}      
 
 	@Override
 	public Execution<GetIdentityInfoResponse> getIdentityInfo(GetIdentityInfoRequest request) {
@@ -329,11 +319,4 @@ public class InternalAPI implements NexuAPI {
 			}
 		}
 	}
-        
-        // unisystems
-        public void resetDisplayState() {
-            if (this.display != null) {
-                this.display.setCachedPassword(null);
-            }
-        }
 }

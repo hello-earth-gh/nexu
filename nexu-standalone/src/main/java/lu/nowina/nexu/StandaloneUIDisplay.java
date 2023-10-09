@@ -19,14 +19,14 @@ import java.util.ResourceBundle;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import com.sun.javafx.scene.SceneHelper;
+
 import eu.europa.esig.dss.token.PasswordInputCallback;
-import java.util.Date;
 import javafx.application.Platform;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
-import lu.nowina.nexu.api.AppConfig;
 import lu.nowina.nexu.api.MessageDisplayCallback;
 import lu.nowina.nexu.api.NexuPasswordInputCallback;
 import lu.nowina.nexu.api.flow.BasicOperationStatus;
@@ -38,7 +38,6 @@ import lu.nowina.nexu.view.core.NonBlockingUIOperation;
 import lu.nowina.nexu.view.core.UIDisplay;
 import lu.nowina.nexu.view.core.UIOperation;
 
-// Unisystems change: added cachedPassword + logic
 /**
  * Implementation of {@link UIDisplay} used for standalone mode.
  *
@@ -52,21 +51,11 @@ public class StandaloneUIDisplay implements UIDisplay {
 	private Stage nonBlockingStage;
 	private UIOperation<?> currentBlockingOperation;
 	private OperationFactory operationFactory;
-	private AppConfig appConfig;
-    private char[] cachedPassword = null;
-    private Date cacheLastAccessTime = new Date();
-    private static final long CACHE_TIME_TO_LIVE_MS = 5000;
 	
 	public StandaloneUIDisplay() {
 		this.blockingStage = createStage(true, null);
 		this.nonBlockingStage = createStage(false, null);
 	}
-    
-    public StandaloneUIDisplay(AppConfig config) {
-        this();
-        this.appConfig = config;
-        LOGGER.info("Using cache_time_to_live_ms = " + config.getCacheTimeToLiveMs());
-    }
 
 	private void display(Parent panel, boolean blockingOperation) {
 		LOGGER.info("Display " + panel + " in display " + this + " from Thread " + Thread.currentThread().getName());
@@ -141,52 +130,33 @@ public class StandaloneUIDisplay implements UIDisplay {
 	private final class FlowPasswordCallback implements NexuPasswordInputCallback {
 		
 		private String passwordPrompt;
-		private char[] cachedPassword = null;
-        private StandaloneUIDisplay parent = null;
-                
+		
 		public FlowPasswordCallback() {
 			this.passwordPrompt = null;
 		}
-                
-        public FlowPasswordCallback(StandaloneUIDisplay parent, char[] cachedPassword) {
-            this.parent = parent;
-            this.cachedPassword = cachedPassword;
-        }
-
+		
 		@Override
 		public char[] getPassword() {
-            if (cachedPassword != null) {
-                LOGGER.info("Returning cached password");
-                char[] clone = cachedPassword.clone();
-                cachedPassword = null; // should need it only once per FlowPasswordCallback object, real cachedPassword saved in StandaloneUIDisplay, but check CACHE_TIME_TO_LIVE_MS
-                return clone;
-            }
-                    
 			LOGGER.info("Request password");
 			@SuppressWarnings("unchecked")
 			final OperationResult<char[]> passwordResult = StandaloneUIDisplay.this.operationFactory.getOperation(
 					UIOperation.class, "/fxml/password-input.fxml", passwordPrompt, NexuLauncher.getConfig().getApplicationName()).perform();
 			if(passwordResult.getStatus().equals(BasicOperationStatus.SUCCESS)) {
-                parent.setCachedPassword(passwordResult.getResult());
 				return passwordResult.getResult();
-			} 
-            else {
-                parent.setCachedPassword(null);
-                if (passwordResult.getStatus().equals(BasicOperationStatus.USER_CANCEL)) {
-                    throw new CancelledOperationException();
-                } else if (passwordResult.getStatus().equals(BasicOperationStatus.EXCEPTION)) {
-                    final Exception e = passwordResult.getException();
-                    if (e instanceof RuntimeException) {
-                        // Throw exception as is
-                        throw (RuntimeException) e;
-                    } else {
-                        // Wrap in a runtime exception
-                        throw new NexuException(e);
-                    }
-                } else {
-                    throw new IllegalArgumentException("Not managed operation status: " + passwordResult.getStatus().getCode());
-                }
-            }
+			} else if(passwordResult.getStatus().equals(BasicOperationStatus.USER_CANCEL)) {
+				throw new CancelledOperationException();
+			} else if(passwordResult.getStatus().equals(BasicOperationStatus.EXCEPTION)) {
+				final Exception e = passwordResult.getException();
+				if(e instanceof RuntimeException) {
+					// Throw exception as is
+					throw (RuntimeException) e;
+				} else {
+					// Wrap in a runtime exception
+					throw new NexuException(e);
+				}
+			} else {
+				throw new IllegalArgumentException("Not managed operation status: " + passwordResult.getStatus().getCode());
+			}
 		}
 
 		@Override
@@ -197,7 +167,7 @@ public class StandaloneUIDisplay implements UIDisplay {
 
 	@Override
 	public PasswordInputCallback getPasswordInputCallback() {
-		return new FlowPasswordCallback(this, getCachedPassword());
+		return new FlowPasswordCallback();
 	}
 	
 	private final class FlowMessageDisplayCallback implements MessageDisplayCallback {
@@ -252,31 +222,4 @@ public class StandaloneUIDisplay implements UIDisplay {
 	public void display(NonBlockingUIOperation operation) {
 		display(operation.getRoot(), false);
 	}
-
-    @Override
-    public void setCachedPassword(char[] value) {
-        if (value != null) {
-            cacheLastAccessTime = new Date();
-        }
-        this.cachedPassword = value;
-    }
-    
-    private char[] getCachedPassword() {
-        if (cachedPassword != null) {
-            Date now = new Date();
-            if (now.getTime() - cacheLastAccessTime.getTime() > appConfig.getCacheTimeToLiveMs()) {
-                LOGGER.info("Cache is stale, will request password");
-                cachedPassword = null;
-            } else {
-                cacheLastAccessTime = now;
-            }
-        }
-        
-        return cachedPassword;
-    }
-    
-    private boolean hasCachedPassword() {
-        Date now = new Date();
-        return this.cachedPassword != null && now.getTime() - cacheLastAccessTime.getTime() < appConfig.getCacheTimeToLiveMs();
-    }
 }
