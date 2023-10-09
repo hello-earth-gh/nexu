@@ -31,7 +31,7 @@ public class DssTest {
 		for(CertificatePolicy policy: policies) {
 			System.out.println(policy.getOid() + " " + policy.getCpsUrl());
 		}
-		/*
+		
 		List<String> qcStatementsIdList = DSSASN1Utils.getQCStatementsIdList(certificateToken);
 		System.out.println(qcStatementsIdList);
 
@@ -41,17 +41,6 @@ public class DssTest {
 		}
 
 		Set<KeyUsageBit> keyUsageBits = certificateToken.getKeyUsageBits();
-		*/
-		// NEW Zhukov Andreas
-		QcStatements qcStatementsIdList = QcStatementUtils.getQcStatements(certificateToken);
-		System.out.println(qcStatementsIdList);
-
-		for (QCStatement oid : QCStatement.values()) {
-
-			System.out.println(oid + " " + oid.getOid() + " " + oid.getDescription());
-		}
-
-		List<KeyUsageBit> keyUsageBits = certificateToken.getKeyUsageBits();
 		for (KeyUsageBit keyUsageBit : keyUsageBits) {
 			System.out.println(keyUsageBit);
 		}
@@ -62,16 +51,13 @@ public class DssTest {
 		System.out
 				.println("Other data : " + DSSASN1Utils.get(certificateToken.getIssuerX500Principal()).get("2.5.4.3"));
 		System.out.println("Extended key usage : " + DSSASN1Utils.getExtendedKeyUsage(certificateToken));
-		// NEW Zhukov Andreas
-		//Set<KeyUsageBit> kubs = certificateToken.getKeyUsageBits();
-		List<KeyUsageBit> kubs = certificateToken.getKeyUsageBits();
+		Set<KeyUsageBit> kubs = certificateToken.getKeyUsageBits();
 		for (KeyUsageBit kub : kubs) {
 			System.out.println("Usage : " + kub.name() + " | " + kub.toString());
 		}
-	      // in DSS 5.6 vs 5.3 getSources() has been removed and is part of CertificateWrapper instead of CertificateToken...
-//			Set<CertificateSourceType> set = certificateToken.getSources();
-//			for(CertificateSourceType cst : set) {
-//				System.out.println(cst);
-//			}
+		Set<CertificateSourceType> set = certificateToken.getSources();
+		for(CertificateSourceType cst : set) {
+			System.out.println(cst);
+		}
 	}
 }

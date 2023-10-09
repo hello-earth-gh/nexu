@@ -31,9 +31,6 @@ public class BasicFlowRegistry implements FlowRegistry {
 			return new GetCertificateFlow(display, api);
 		case SIGNATURE_FLOW:
 			return new SignatureFlow(display, api);
-		// Unisystems change
-		case LOGOUT_FLOW:
-			return new LogoutFlow(display, api);
 		default:
 			logger.warn("Unknown flow code " + code);
 			throw new NullPointerException("Flow not recognized/not implemented in this version.");

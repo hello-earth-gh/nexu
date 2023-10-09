@@ -25,9 +25,6 @@ public interface FlowRegistry {
 	static final String GET_IDENTITY_INFO_FLOW = "getIdentityInfo";
 
 	static final String AUTHENTICATE_FLOW = "authenticate";
-    
-	// Unisystems change  
-    static final String LOGOUT_FLOW = "logout";
 	
 	<I, O> Flow<I, O> getFlow(String code, UIDisplay display, NexuAPI api);
 

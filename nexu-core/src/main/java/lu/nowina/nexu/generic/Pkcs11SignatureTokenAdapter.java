@@ -13,26 +13,15 @@ import javax.security.auth.login.LoginException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import eu.europa.esig.dss.model.DSSException;
-import eu.europa.esig.dss.enumerations.DigestAlgorithm;
-import eu.europa.esig.dss.enumerations.MaskGenerationFunction;
-import eu.europa.esig.dss.model.SignatureValue;
-import eu.europa.esig.dss.model.ToBeSigned;
+import eu.europa.esig.dss.DSSException;
+import eu.europa.esig.dss.DigestAlgorithm;
+import eu.europa.esig.dss.MaskGenerationFunction;
+import eu.europa.esig.dss.SignatureValue;
+import eu.europa.esig.dss.ToBeSigned;
 import eu.europa.esig.dss.token.DSSPrivateKeyEntry;
 import eu.europa.esig.dss.token.PasswordInputCallback;
 import eu.europa.esig.dss.token.Pkcs11SignatureToken;
-import eu.europa.esig.dss.token.SunPKCS11Initializer;
 import lu.nowina.nexu.CancelledOperationException;
-import java.io.IOException;
-import java.lang.reflect.Field;
-import java.util.Map;
-import lu.nowina.nexu.CancelledOperationException;
-import sun.security.pkcs11.SunPKCS11;
-import sun.security.pkcs11.wrapper.CK_C_INITIALIZE_ARGS;
-import sun.security.pkcs11.wrapper.PKCS11;
-import sun.security.pkcs11.wrapper.PKCS11Constants;
-import static sun.security.pkcs11.wrapper.PKCS11Constants.CKF_OS_LOCKING_OK;
-import sun.security.pkcs11.wrapper.PKCS11Exception;
 
 /**
  * This adapter class allows to manage {@link CancelledOperationException}.
@@ -60,36 +49,14 @@ public class Pkcs11SignatureTokenAdapter extends Pkcs11SignatureToken {
                 if (this.provider instanceof AuthProvider) {
                     ((AuthProvider) this.provider).logout();
                 }
-                // MOD 4535992 https://github.com/nowina-solutions/nexu/pull/20/files, https://github.com/nowina-solutions/nexu/compare/master...sharedchains:nexu:master
-                // MOD  Zhukov Andreas https://github.com/hello-earth-gh/nexu/commit/2e1925e8dfca1a5e696cc625dd0c4d721fb63ec7
-                Class<?> sunPkcs11ProviderClass = (Class<?>) Class.forName("sun.security.pkcs11.SunPKCS11");
-            	
-            	if (this.provider instanceof SunPKCS11 || this.provider.getClass().equals(sunPkcs11ProviderClass)) {
-                    /*
-                     * IN CASE WE WANT TO USE MORE THAN ONE TOKEN WITH PKCS#11,
-                     * WE NEED TO FINALIZE AND REINITIALIZE THE MODULE EVERY
-                     * TIME. THIS REQUIRES A SMALL HACK
-                     */
-                    CK_C_INITIALIZE_ARGS initArgs = new CK_C_INITIALIZE_ARGS();
-                    initArgs.flags = CKF_OS_LOCKING_OK;
-                    PKCS11 pkcs11 = PKCS11.getInstance(this.getPkcs11Path(), "C_GetFunctionList", initArgs, true);
-                    pkcs11.C_Finalize(PKCS11Constants.NULL_PTR);
-
-                    Field privateStaticField = PKCS11.class.getDeclaredField("moduleMap");
-                    privateStaticField.setAccessible(true);
-                    ((Map) privateStaticField.get(null)).remove(this.getPkcs11Path());
-                }
-                // END MOD 4535992
             } catch (final LoginException e) {
-                logger.error("LoginException on logout of '" + this.provider.getName() + "'", e);
-	        } catch (IOException | PKCS11Exception | NoSuchFieldException | SecurityException | IllegalArgumentException | IllegalAccessException | ClassNotFoundException e) {
-	            logger.error("Exception finalizing '" + this.provider.getName() + "'", e);
-	        }
+                LOG.error("LoginException on logout of '" + this.provider.getName() + "'", e);
+            }
             this.provider.clear();
             try {
                 Security.removeProvider(this.provider.getName());
             } catch (final SecurityException e) {
-                logger.error("Unable to remove provider '" + this.provider.getName() + "'", e);
+                LOG.error("Unable to remove provider '" + this.provider.getName() + "'", e);
             } finally {
                 this.provider = null;
             }
@@ -114,9 +81,8 @@ public class Pkcs11SignatureTokenAdapter extends Pkcs11SignatureToken {
 
             final String configString = pkcs11Config.toString();
 
-            logger.debug("PKCS11 Config : \n{}", configString);
-            // MOD 4535992
-            /*
+            LOG.debug("PKCS11 Config : \n{}", configString);
+
             try (ByteArrayInputStream confStream = new ByteArrayInputStream(configString.getBytes("ISO-8859-1"))) {
                 final sun.security.pkcs11.SunPKCS11 sunPKCS11 = new sun.security.pkcs11.SunPKCS11(confStream);
                 // we need to add the provider to be able to sign later
@@ -126,31 +92,6 @@ public class Pkcs11SignatureTokenAdapter extends Pkcs11SignatureToken {
             } catch (final Exception e) {
                 throw new DSSException("Unable to instantiate SunPKCS11", e);
             }
-            */
-            /*
-            try (ByteArrayInputStream confStream = new ByteArrayInputStream(configString.getBytes("ISO-8859-1"))) {
-            	// resolve jdk17 problems
-                final sun.security.pkcs11.SunPKCS11 sunPKCS11 = new sun.security.pkcs11.SunPKCS11();
-                sunPKCS11.configure(configString);
-                // we need to add the provider to be able to sign later
-                Security.addProvider(sunPKCS11);
-                this.provider = sunPKCS11;
-                return this.provider;
-            } catch (final Exception e) {
-                logger.warn("Unable to instantiate SunPKCS11", e);
-            }
-            */
-            if (provider == null) {
-            	this.provider = SunPKCS11Initializer.getProvider(configString);
-            }
-            // END MOD 4535992
-			if (provider == null) {
-				throw new DSSException("Unable to create PKCS11 provider");
-			}
-			// we need to add the provider to be able to sign later
-			Security.addProvider(provider);
-    		return provider;
-    		// END MOD 4535992
         }
         return this.provider;
     }

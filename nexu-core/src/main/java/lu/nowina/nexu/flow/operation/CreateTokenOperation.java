@@ -147,15 +147,7 @@ public class CreateTokenOperation extends AbstractCompositeOperation<Map<TokenOp
         final Map<TokenOperationResultKey, Object> map = new HashMap<TokenOperationResultKey, Object>();
         map.put(TokenOperationResultKey.ADVANCED_CREATION, true);
         map.put(TokenOperationResultKey.SELECTED_API, result.getResult());
-        
-        // MOD Unisystems change - previously it was possible to set product parameters only if user has one single card - since index is hardcoded below
-        // final DetectedCard selectedCard = this.api.detectCards().get(0);
-        DetectedCard selectedCardTmp = (DetectedCard)this.api.getAppConfig().getDefaultProduct(); //this.api.detectCards().get(0);
-        if(selectedCardTmp == null) {
-            selectedCardTmp = this.api.detectCards().get(0);
-        }
-        final DetectedCard selectedCard = selectedCardTmp;
-        
+        final DetectedCard selectedCard = this.api.detectCards().get(0);
         map.put(TokenOperationResultKey.SELECTED_PRODUCT, selectedCard);
         final TokenId tokenId;
         switch (result.getResult()) {
