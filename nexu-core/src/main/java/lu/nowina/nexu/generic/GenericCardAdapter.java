@@ -16,7 +16,7 @@ package lu.nowina.nexu.generic;
 import java.io.File;
 import java.util.List;
 
-import eu.europa.esig.dss.DigestAlgorithm;
+import eu.europa.esig.dss.enumerations.DigestAlgorithm;
 import eu.europa.esig.dss.token.DSSPrivateKeyEntry;
 import eu.europa.esig.dss.token.MSCAPISignatureToken;
 import eu.europa.esig.dss.token.PasswordInputCallback;
@@ -26,13 +26,17 @@ import lu.nowina.nexu.api.AbstractCardProductAdapter;
 import lu.nowina.nexu.api.CertificateFilter;
 import lu.nowina.nexu.api.CertificateFilterHelper;
 import lu.nowina.nexu.api.DetectedCard;
+import lu.nowina.nexu.api.EnvironmentInfo;
 import lu.nowina.nexu.api.GetIdentityInfoResponse;
 import lu.nowina.nexu.api.MessageDisplayCallback;
 import lu.nowina.nexu.api.NexuAPI;
 import lu.nowina.nexu.api.ScAPI;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 public class GenericCardAdapter extends AbstractCardProductAdapter {
 
+    private final Logger logger = LoggerFactory.getLogger(GenericCardAdapter.class.getName());
     private final SCInfo info;
 
     public GenericCardAdapter(final SCInfo info) {
@@ -61,8 +65,26 @@ public class GenericCardAdapter extends AbstractCardProductAdapter {
     }
 
     @Override
-    protected SignatureTokenConnection connect(final NexuAPI api, final DetectedCard card, final PasswordInputCallback callback) {
-        final ConnectionInfo cInfo = this.info.getConnectionInfo(api.getEnvironmentInfo());
+    protected SignatureTokenConnection connect(final NexuAPI api, final DetectedCard card, final PasswordInputCallback callback) {        // az Unisystems change - to debug
+        int i = 0;
+        for (ConnectionInfo ci : this.info.getInfos()) {
+           String msg = "ConnectionInfo [" + i + "] : " + ci.getEnv().getOsArch() + " " + ci.getEnv().getOsName() + " " + ci.getEnv().getOsVersion();
+           logger.info(msg);
+        }
+        
+        EnvironmentInfo apiInfo = api.getEnvironmentInfo();
+        String msg = "EnvironmentInfo : " + apiInfo.getOsArch() + " " + apiInfo.getOsName() + " " + apiInfo.getOsVersion();
+        logger.info(msg);
+       
+        ConnectionInfo cInfo = this.info.getConnectionInfo(api.getEnvironmentInfo());
+        if (cInfo == null) {
+           logger.error("NO MATCH between available ConnectionInfos and EnvironmentInfo");
+           if (this.info != null && this.info.getInfos().size() > 0) {
+              logger.warn("Falling back to index 0");
+              cInfo = this.info.getInfos().get(0);
+           }
+        }
+
         final ScAPI scApi = cInfo.getSelectedApi();
         switch (scApi) {
             case MSCAPI:

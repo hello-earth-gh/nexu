@@ -55,6 +55,14 @@ public class MessageController extends AbstractUIOperationController<Void> imple
 						MessageFormat.format(resources.getString(value), Arrays.copyOfRange(params, 1, params.length)));
 			}
 			StageHelper.getInstance().setTitle((String) params[1], "message.title");
+            
+            // unisystems change - add details to the error message
+            if (params.length > 2) {
+                if (params[2] instanceof String) {
+                    message.setText(message.getText() + "\n\n" + (String)params[2]);
+                }
+            }
+            
 		} else {
 			StageHelper.getInstance().setTitle("", "message.title");
 			message.setText(defaultErrorText);
