@@ -188,6 +188,18 @@ class GetCertificateFlow extends AbstractCoreFlow<GetCertificateRequest, GetCert
             
     		throw this.handleException(e);
     	} finally {
+            // MOD Unisystem
+/*
+    		if (token != null) {
+    			if (req.isCloseToken()) {
+    				try {
+    					token.close();
+    				} catch (final Exception e) {
+    					logger.error("Exception when closing token", e);
+    				}
+    			}
+    		}
+*/
             if (bShouldLogoutCompletely) {
                 // in case of NexU error have to logout completely too - will reset all cache related stuff
                 // but note that above handleErrorOperationResult methods do not always throw an exception - must call logout in those cases too!
