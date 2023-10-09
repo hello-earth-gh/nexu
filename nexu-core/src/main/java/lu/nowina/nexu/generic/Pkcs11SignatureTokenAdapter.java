@@ -60,9 +60,9 @@ public class Pkcs11SignatureTokenAdapter extends Pkcs11SignatureToken {
                 if (this.provider instanceof AuthProvider) {
                     ((AuthProvider) this.provider).logout();
                 }
-                // MOD 4535992 https://github.com/nowina-solutions/nexu/pull/20/files
+                // MOD 4535992 https://github.com/nowina-solutions/nexu/pull/20/files, https://github.com/nowina-solutions/nexu/compare/master...sharedchains:nexu:master
                 // MOD  Zhukov Andreas https://github.com/hello-earth-gh/nexu/commit/2e1925e8dfca1a5e696cc625dd0c4d721fb63ec7
-            	Class<?> sunPkcs11ProviderClass = (Class<?>) Class.forName("sun.security.pkcs11.SunPKCS11");
+                Class<?> sunPkcs11ProviderClass = (Class<?>) Class.forName("sun.security.pkcs11.SunPKCS11");
             	
             	if (this.provider instanceof SunPKCS11 || this.provider.getClass().equals(sunPkcs11ProviderClass)) {
                     /*
