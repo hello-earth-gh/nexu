@@ -25,8 +25,8 @@ import org.apache.commons.lang.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import eu.europa.esig.dss.DigestAlgorithm;
-import eu.europa.esig.dss.ToBeSigned;
+import eu.europa.esig.dss.enumerations.DigestAlgorithm;
+import eu.europa.esig.dss.model.ToBeSigned;
 import lu.nowina.nexu.api.AuthenticateRequest;
 import lu.nowina.nexu.api.CertificateFilter;
 import lu.nowina.nexu.api.Execution;
@@ -34,6 +34,7 @@ import lu.nowina.nexu.api.Feedback;
 import lu.nowina.nexu.api.FeedbackStatus;
 import lu.nowina.nexu.api.GetCertificateRequest;
 import lu.nowina.nexu.api.GetIdentityInfoRequest;
+import lu.nowina.nexu.api.LogoutRequest;
 import lu.nowina.nexu.api.NexuAPI;
 import lu.nowina.nexu.api.NexuRequest;
 import lu.nowina.nexu.api.Purpose;
@@ -78,6 +79,8 @@ public class RestHttpPlugin implements HttpPlugin {
 			return getIdentityInfo(api, payload);
 		case "/authenticate":
 			return authenticate(api, req, payload);
+		case "/logout":
+			return logout(api, req, payload);
 		default:
 			throw new RuntimeException("Target not recognized " + target);
 		}
@@ -127,6 +130,21 @@ public class RestHttpPlugin implements HttpPlugin {
 		} else {
 			logger.info("Call API");
 			final Execution<?> respObj = api.sign(r);
+			return toHttpResponse(respObj);
+		}
+	}
+      
+      private HttpResponse logout(NexuAPI api, HttpRequest req, String payload) {
+		logger.info("Logout");
+        
+        // just logout from everywhere regardless of tokenId when this gets called through HTTP API
+        LogoutRequest r = new LogoutRequest(null, true, true);
+		final HttpResponse invalidRequestHttpResponse = checkRequestValidity(api, r);
+		if(invalidRequestHttpResponse != null) {
+			return invalidRequestHttpResponse;
+		} else {
+			logger.info("Call API");
+			final Execution<?> respObj = api.logout(r);
 			return toHttpResponse(respObj);
 		}
 	}

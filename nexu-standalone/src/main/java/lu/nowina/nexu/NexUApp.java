@@ -14,7 +14,10 @@
 package lu.nowina.nexu;
 
 import java.io.File;
+import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.InputStream;
+import java.io.OutputStream;
 import java.util.List;
 import java.util.Properties;
 
@@ -55,7 +58,7 @@ public class NexUApp extends Application {
 	public void start(Stage primaryStage) throws Exception {
 		Platform.setImplicitExit(false);
 
-		final StandaloneUIDisplay uiDisplay = new StandaloneUIDisplay();
+		final StandaloneUIDisplay uiDisplay = new StandaloneUIDisplay(getConfig());
 		final OperationFactory operationFactory = new BasicOperationFactory();
 		((BasicOperationFactory)operationFactory).setDisplay(uiDisplay);
 		uiDisplay.setOperationFactory(operationFactory);
@@ -74,12 +77,42 @@ public class NexUApp extends Application {
 
 		logger.info("Start finished");
 	}
+      
+      private void exportDefaultATRDriverStore(String path) {
+         InputStream stream = null;
+         FileOutputStream resStreamOut = null;
+         String jarFolder;
+         try {
+             stream = NexUApp.class.getResourceAsStream("/store.xml");//note that each / is a directory down in the "jar tree" been the jar the root of the tree
+             if(stream == null) {
+                 throw new Exception("Cannot get resource \"store.xml\" from Jar file.");
+             }
+
+             resStreamOut = new FileOutputStream(path);
+             int readBytes;
+             byte[] buffer = new byte[4096];
+             while ((readBytes = stream.read(buffer)) > 0) {
+                 resStreamOut.write(buffer, 0, readBytes);
+             }
+         } catch (Exception ex) {
+             logger.error("Cannot populate store.xml - starting with empty");
+         } finally {
+             try { if (stream != null) { stream.close(); } } catch (Exception ex) {}
+             try { if (resStreamOut != null) { resStreamOut.close(); } } catch (Exception ex) {}
+         }         
+      }
 
 	private NexuAPI buildAPI(final UIDisplay uiDisplay, final OperationFactory operationFactory) throws IOException {
 		File nexuHome = getConfig().getNexuHome();
 		SCDatabase db = null;
 		if (nexuHome != null) {
 			File store = new File(nexuHome, "store.xml");
+                  
+                  // unisystems change - provide the default store with known driver locations (these have to be installed first anyway)
+                  if (store != null && !store.exists()) {
+                     exportDefaultATRDriverStore(store.getPath());
+                  }
+                  
 			logger.info("Load database from " + store.getAbsolutePath());
 			db = ProductDatabaseLoader.load(SCDatabase.class, store);
 		} else {

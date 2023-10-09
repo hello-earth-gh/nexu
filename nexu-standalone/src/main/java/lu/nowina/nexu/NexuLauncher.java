@@ -14,6 +14,7 @@
 package lu.nowina.nexu;
 
 import java.io.File;
+import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.net.MalformedURLException;
@@ -47,7 +48,7 @@ public class NexuLauncher {
 		launcher.launch(args);
 	}
 
-	protected void launch(String[] args) throws IOException {
+	public void launch(String[] args) throws IOException {
 		props = loadProperties();
 		loadAppConfig(props);
 
@@ -79,7 +80,12 @@ public class NexuLauncher {
 
 		RollingFileAppender rfa = new RollingFileAppender();
 		rfa.setName("FileLogger");
-		File nexuHome = config.getNexuHome();
+		// MOD 4535992
+//		File nexuHome = config.getNexuHome();
+		String tmpdir = System.getProperty("java.io.tmpdir");
+	    System.out.println("Temp file path: " + tmpdir);
+	    // END MOD 4535992
+		File nexuHome = new File(tmpdir); //config.getNexuHome();
 		rfa.setFile(new File(nexuHome, "nexu.log").getAbsolutePath());
 		rfa.setLayout(new PatternLayout("%d %-5p [%c{1}] %m%n"));
 		rfa.setThreshold(config.isDebug() ? Level.DEBUG : Level.INFO);
@@ -142,16 +148,42 @@ public class NexuLauncher {
 
 	private final Properties loadProperties() throws IOException {
 
-		Properties props = new Properties();
+        Properties props = new Properties();
 		loadPropertiesFromClasspath(props);
+
+        if (!loadPropertiesFromJarFolder(props)) {        
+            loadPropertiesFromClasspath(props);
+        }
 		return props;
 
 	}
+	
+    private boolean loadPropertiesFromJarFolder(Properties props) {
+        // check location just outside jar file, to see if we have externalized properties there
+        try {
+            URL url = NexuLauncher.class.getProtectionDomain().getCodeSource().getLocation();
+            File jarFile = new File(NexuLauncher.class.getProtectionDomain().getCodeSource().getLocation().toURI().getPath());
+            String inputFilePath = jarFile.getParent() + File.separator + "nexu-config.properties";         
+            File propFile = new File(inputFilePath);
+            if (propFile.exists()) {
+                FileInputStream is = new FileInputStream(propFile);
+                props.load(is);
+                logger.info("Externalized properties found");
+                return true;
+            }
+        }
+        catch (Exception ex) {
+            logger.warn("Externalized properties not found, will use properties file inside JAR");
+        }
+
+        return false;
+    }
 
 	private void loadPropertiesFromClasspath(Properties props) throws IOException {
 		InputStream configFile = NexUApp.class.getClassLoader().getResourceAsStream("nexu-config.properties");
 		if (configFile != null) {
 			props.load(configFile);
+			logger.info("Loaded properties from inside JAR :" + configFile);
 		}
 	}
 

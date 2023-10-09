@@ -13,9 +13,9 @@
  */
 package lu.nowina.nexu.api;
 
-import eu.europa.esig.dss.DigestAlgorithm;
-import eu.europa.esig.dss.ToBeSigned;
-
+import eu.europa.esig.dss.enumerations.DigestAlgorithm;
+import eu.europa.esig.dss.model.ToBeSigned;
+//Unisystems change: added closeToken flag for multiple document signing (like in GetCertificateRequest)
 public class SignatureRequest extends NexuRequest {
 
 	private TokenId tokenId;
@@ -25,6 +25,8 @@ public class SignatureRequest extends NexuRequest {
 	private DigestAlgorithm digestAlgorithm;
 
 	private String keyId;
+   	// Unisystems change: added closeToken flag for multiple document signing (like in GetCertificateRequest)
+    	private String doClearCache;
 	
 	public SignatureRequest() {
 	}
@@ -61,4 +63,15 @@ public class SignatureRequest extends NexuRequest {
 		this.keyId = keyId;
 	}
 
+    public boolean isDoClearCache() {
+        return !"false".equals(this.doClearCache);
+    }
+
+    public void setDoClearCache(final String doClearCache) {
+        this.doClearCache = doClearCache;
+    }
+    
+    public String getDoClearCache() {
+        return this.doClearCache;
+    }
 }

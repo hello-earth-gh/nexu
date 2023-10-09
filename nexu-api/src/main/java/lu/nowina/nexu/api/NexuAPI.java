@@ -49,7 +49,9 @@ public interface NexuAPI {
 	Execution<GetCertificateResponse> getCertificate(GetCertificateRequest request);
 
 	Execution<SignatureResponse> sign(SignatureRequest request);
-
+    // Add from unsystem
+        Execution<LogoutResponse> logout(LogoutRequest request);
+    // End from unsystem
 	Execution<GetIdentityInfoResponse> getIdentityInfo(GetIdentityInfoRequest request);
 	
 	Execution<AuthenticateResponse> authenticate(AuthenticateRequest request);

@@ -37,6 +37,7 @@ import org.slf4j.LoggerFactory;
  *
  * @author David Naramski
  */
+// Unisystems change: added makeSingleCardDefault and other options
 public class AppConfig {
 
     private static final String ADVANCED_MODE_AVAILABLE = "advanced_mode_available";
@@ -80,6 +81,23 @@ public class AppConfig {
     private static final String DISPLAY_BACK_BUTTON = "display_back_button";
 
     private static final String DEFAULT_PRODUCT = "default_product_";
+    
+    private static final String MAKE_SINGLE_CARD_DEFAULT = "make_single_card_default";
+    
+    private static final String FILTER_ONLY_CERT_WITH_DIGITAL_SIGNATURE_USAGE_BIT = "filter_only_cert_with_digital_signature_usage_bit";
+    
+    // MOD 4535992
+    private static final String CLOSE_TOKEN = "close_token";
+    private boolean closeToken;
+    public boolean getCloseToken() {
+        return this.closeToken;
+    }
+    public void setCloseToken(final boolean closeToken) {
+        this.closeToken = closeToken;
+    }
+    // END MOD 4535992
+
+    private static final String CACHE_TIME_TO_LIVE_MS = "cache_time_to_live_ms";
 
     private static final Logger logger = LoggerFactory.getLogger(AppConfig.class.getName());
 
@@ -146,6 +164,12 @@ public class AppConfig {
     private boolean displayBackButton;
 
     private Product defaultProduct;
+    
+    private boolean makeSingleCardDefault;
+    
+    private boolean filterOnlyCertWithDigitalSignatureUsageBit;
+
+    private long cacheTimeToLiveMs;
 
     public AppConfig() {
         try {
@@ -324,6 +348,30 @@ public class AppConfig {
     public void setUserPreferencesEditable(final boolean userPreferencesEditable) {
         this.userPreferencesEditable = userPreferencesEditable;
     }
+    
+    public boolean isMakeSingleCardDefault() {
+        return this.makeSingleCardDefault;
+    }
+
+    public void setMakeSingleCardDefault(final boolean makeSingleCardDefault) {
+        this.makeSingleCardDefault = makeSingleCardDefault;
+    }
+
+    public boolean isFilterOnlyCertWithDigitalSignatureUsageBit() {
+        return this.filterOnlyCertWithDigitalSignatureUsageBit;
+    }
+    
+    public void setFilterOnlyCertWithDigitalSignatureUsageBit(final boolean value) {
+        this.filterOnlyCertWithDigitalSignatureUsageBit = value;
+    }
+    
+    public long getCacheTimeToLiveMs() {
+        return this.cacheTimeToLiveMs;
+    }
+
+    private void setCacheTimeToLiveMs(long ttl) {
+        this.cacheTimeToLiveMs = ttl;
+    }
 
     public String getRequestProcessorClass() {
         return this.requestProcessorClass;
@@ -412,6 +460,9 @@ public class AppConfig {
         this.setServerUrl(props.getProperty(SERVER_URL, "http://lab.nowina.solutions/nexu"));
         this.setInstallUrl(props.getProperty(INSTALL_URL, "http://nowina.lu/nexu/"));
         this.setNexuHostname(props.getProperty(NEXU_HOSTNAME, "localhost"));
+        // MOD 4535992
+        this.setCloseToken(Boolean.parseBoolean(props.getProperty(CLOSE_TOKEN, "true")));
+        // END MOD 4535992
         this.setHttpServerClass(props.getProperty(HTTP_SERVER_CLASS, "lu.nowina.nexu.jetty.JettyServer"));
         this.setDebug(Boolean.parseBoolean(props.getProperty(DEBUG, "false")));
         this.setAdvancedModeAvailable(Boolean.parseBoolean(props.getProperty(ADVANCED_MODE_AVAILABLE, "true")));
@@ -447,7 +498,10 @@ public class AppConfig {
         this.setTicketUrl(props.getProperty(TICKET_URL, "https://github.com/nowina-solutions/nexu/issues/new"));
         this.setEnableIncidentReport(Boolean.parseBoolean(props.getProperty(ENABLE_INCIDENT_REPORT, "false")));
         this.setShowSplashScreen(Boolean.parseBoolean(props.getProperty(SHOW_SPLASH_SCREEN, "false")));
-        this.setDisplayBackButton(Boolean.parseBoolean(props.getProperty(DISPLAY_BACK_BUTTON, "false")));
+        this.setDisplayBackButton(Boolean.parseBoolean(props.getProperty(DISPLAY_BACK_BUTTON, "false")));      
+        this.setMakeSingleCardDefault(Boolean.parseBoolean(props.getProperty(MAKE_SINGLE_CARD_DEFAULT, "false")));
+        this.setFilterOnlyCertWithDigitalSignatureUsageBit(Boolean.parseBoolean(props.getProperty(FILTER_ONLY_CERT_WITH_DIGITAL_SIGNATURE_USAGE_BIT, "false")));
+        this.setCacheTimeToLiveMs(Long.parseLong(props.getProperty(CACHE_TIME_TO_LIVE_MS, "5000")));
     }
 
     public void initDefaultProduct(final Properties props) {

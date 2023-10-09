@@ -1,5 +1,5 @@
 /**
- * © Nowina Solutions, 2015-2016
+ * © Nowina Solutions, 2015-2015
  *
  * Concédée sous licence EUPL, version 1.1 ou – dès leur approbation par la Commission européenne - versions ultérieures de l’EUPL (la «Licence»).
  * Vous ne pouvez utiliser la présente œuvre que conformément à la Licence.
@@ -11,15 +11,10 @@
  * SANS GARANTIES OU CONDITIONS QUELLES QU’ELLES SOIENT, expresses ou implicites.
  * Consultez la Licence pour les autorisations et les restrictions linguistiques spécifiques relevant de la Licence.
  */
-package lu.nowina.nexu.object.model;
+package lu.nowina.nexu.api;
 
-/**
- * Enumerates JRE Vendors detected by NexU.
- * 
- * @author Jean Lepropre (jean.lepropre@nowina.lu)
- */
-public enum JREVendor {
+public class LogoutResponse {
 
-	ORACLE, OPENJDK, NOT_RECOGNIZED;
-
+	public LogoutResponse() {
+	}
 }
