@@ -8,6 +8,19 @@ signature tool called NexU.
 
 http://nowina.lu/solutions/java-less-browser-signing-nexu/
 
+# NOTE
+
+If nexu do not "see" the connected smartcard try to delete the folder `C:\Users\<YOUR USER>\AppData\Local\Nowina\NexU-Nowina`
+
+Example of the file `luxtrust-database.xml` :
+
+```
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<database>
+	<pkcs11LibPath>C:\applet\win32\pkcs11wrapper.dll</pkcs11LibPath>
+</database>
+```
+
 # INFORMATION ABOUT THIS FORK
 
 This project is a friendly fork of the [nowina-solutions/nexu project](https://github.com/nowina-solutions/nexu). We will provide pull requests as needed.
