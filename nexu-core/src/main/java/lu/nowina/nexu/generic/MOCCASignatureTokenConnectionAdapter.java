@@ -109,23 +109,7 @@ public class MOCCASignatureTokenConnectionAdapter implements SignatureTokenConne
 	}
 	
 	public List<DSSPrivateKeyEntry> getKeys() throws DSSException {
-		try {
-			setSignatureCard();
-			return adapted.getKeys();
-		} catch(final Exception e) {
-			Throwable t = e;
-			while(t != null) {
-				if((t instanceof CancelledException) ||
-						(t instanceof TimeoutException)) {
-					throw new CancelledOperationException(e);
-				} else if(t instanceof CancelledOperationException) {
-					throw (CancelledOperationException) t;
-				}
-				t = t.getCause();
-			}
-			// Rethrow exception as is.
-			throw e;
-		}
+        throw new UnsupportedOperationException("DSS no longer distributes MOCCA implementation, had to remove it here.");
 	}
 
 	@Deprecated
@@ -136,23 +120,7 @@ public class MOCCASignatureTokenConnectionAdapter implements SignatureTokenConne
 	@Override
 	public SignatureValue sign(ToBeSigned toBeSigned, DigestAlgorithm digestAlgorithm, MaskGenerationFunction mgf,
 			DSSPrivateKeyEntry keyEntry) throws DSSException {
-		try {
-			setSignatureCard();
-			return adapted.sign(toBeSigned, digestAlgorithm, mgf, keyEntry);
-		} catch(final Exception e) {
-			Throwable t = e;
-			while(t != null) {
-				if((t instanceof CancelledException) ||
-						(t instanceof TimeoutException)) {
-					throw new CancelledOperationException(e);
-				} else if(t instanceof CancelledOperationException) {
-					throw (CancelledOperationException) t;
-				}
-				t = t.getCause();
-			}
-			// Rethrow exception as is.
-			throw e;
-		}
+		throw new UnsupportedOperationException("DSS no longer distributes MOCCA implementation, had to remove it here.");
 	}
 
    @Override

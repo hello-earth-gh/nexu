@@ -19,12 +19,11 @@
 			<artifactId>nexu-api</artifactId>
 			<version>${project.version}</version>
 		</dependency>
-		<!-- unisystems change 
+		<!-- unisystems change -->
 		<dependency>
 			<groupId>lu.nowina</groupId>
 			<artifactId>nexu_for_mocca</artifactId>
 		</dependency>      
-            -->
 		<dependency>
 			<groupId>lu.nowina.apps</groupId>
 			<artifactId>nexu-model</artifactId>
@@ -50,12 +49,13 @@
 			<groupId>eu.europa.ec.joinup.sd-dss</groupId>
 			<artifactId>dss-spi</artifactId>
 			<version>${dss.version}</version>
-		</dependency>      
+		</dependency>   
+        <!--   
 		<dependency>
 			<groupId>eu.europa.ec.joinup.sd-dss</groupId>
 			<artifactId>sscd-mocca-adapter</artifactId>
-			<version>5.6</version> <!-- 5.9 is missing -->
-		</dependency>      
+			<version>5.6</version>  5.9 is missing 
+		</dependency>   DSS seem to have removed 5.6 as well   -->
 		<dependency>
 			<groupId>org.mockito</groupId>
 			<artifactId>mockito-all</artifactId>
