@@ -1,3 +1,4 @@
+(20240530) added LGPLv2.1 license according to esig/dss practice which was AFAIK the initial reason behind NexU development
 (20220329) added Windows 7 64-bit drivers and new SafeNet 5110 ATR to store.xml
 (20220216) bumped DSS version to 5.9 (also contains 2e1925e8df commit from
 luca.bonora@sharedchains.com fork regarding proper closing when multiple tokens are used)
